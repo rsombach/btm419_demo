@@ -8,51 +8,85 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'Welder'
-        db.create_table(u'welderlist_welder', (
+        # Adding model 'fNumberLov'
+        db.create_table(u'core_fnumberlov', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('created', self.gf('model_utils.fields.AutoCreatedField')(default=datetime.datetime.now)),
             ('modified', self.gf('model_utils.fields.AutoLastModifiedField')(default=datetime.datetime.now)),
-            ('first_name', self.gf('django.db.models.fields.CharField')(max_length=128)),
-            ('last_name', self.gf('django.db.models.fields.CharField')(max_length=128)),
-            ('absa_number', self.gf('django.db.models.fields.CharField')(max_length=16)),
+            ('f_number_code', self.gf('django.db.models.fields.CharField')(max_length=16)),
+            ('f_number_description', self.gf('django.db.models.fields.CharField')(max_length=256)),
         ))
-        db.send_create_signal(u'welderlist', ['Welder'])
+        db.send_create_signal(u'core', ['fNumberLov'])
 
-        # Adding model 'WelderStamp'
-        db.create_table(u'welderlist_welderstamp', (
+        # Adding model 'ProcessLov'
+        db.create_table(u'core_processlov', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('created', self.gf('model_utils.fields.AutoCreatedField')(default=datetime.datetime.now)),
             ('modified', self.gf('model_utils.fields.AutoLastModifiedField')(default=datetime.datetime.now)),
-            ('stamp', self.gf('django.db.models.fields.CharField')(max_length=4)),
+            ('process_code', self.gf('django.db.models.fields.CharField')(max_length=16)),
+            ('process_description', self.gf('django.db.models.fields.CharField')(max_length=256)),
         ))
-        db.send_create_signal(u'welderlist', ['WelderStamp'])
+        db.send_create_signal(u'core', ['ProcessLov'])
 
-        # Adding model 'PerformanceQualification'
-        db.create_table(u'welderlist_performancequalification', (
+        # Adding model 'tQualLov'
+        db.create_table(u'core_tquallov', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('created', self.gf('model_utils.fields.AutoCreatedField')(default=datetime.datetime.now)),
             ('modified', self.gf('model_utils.fields.AutoLastModifiedField')(default=datetime.datetime.now)),
-            ('pq_card_number', self.gf('django.db.models.fields.IntegerField')()),
-            ('f_number', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.fNumberLov'])),
-            ('process', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.ProcessLov'])),
-            ('t_qual', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.tQualLov'])),
-            ('minimum_diameter', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.DiameterLov'])),
-            ('position', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.PositionLov'])),
-            ('cessco_weld_procedure', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.CesscoWeldProcedureLov'])),
+            ('t_qual_code', self.gf('django.db.models.fields.CharField')(max_length=16)),
+            ('t_qual_description', self.gf('django.db.models.fields.CharField')(max_length=256)),
         ))
-        db.send_create_signal(u'welderlist', ['PerformanceQualification'])
+        db.send_create_signal(u'core', ['tQualLov'])
+
+        # Adding model 'DiameterLov'
+        db.create_table(u'core_diameterlov', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('created', self.gf('model_utils.fields.AutoCreatedField')(default=datetime.datetime.now)),
+            ('modified', self.gf('model_utils.fields.AutoLastModifiedField')(default=datetime.datetime.now)),
+            ('diameter_code', self.gf('django.db.models.fields.CharField')(max_length=16)),
+            ('diameter_description', self.gf('django.db.models.fields.CharField')(max_length=256)),
+        ))
+        db.send_create_signal(u'core', ['DiameterLov'])
+
+        # Adding model 'PositionLov'
+        db.create_table(u'core_positionlov', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('created', self.gf('model_utils.fields.AutoCreatedField')(default=datetime.datetime.now)),
+            ('modified', self.gf('model_utils.fields.AutoLastModifiedField')(default=datetime.datetime.now)),
+            ('position_code', self.gf('django.db.models.fields.CharField')(max_length=16)),
+            ('position_description', self.gf('django.db.models.fields.CharField')(max_length=256)),
+        ))
+        db.send_create_signal(u'core', ['PositionLov'])
+
+        # Adding model 'CesscoWeldProcedureLov'
+        db.create_table(u'core_cesscoweldprocedurelov', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('created', self.gf('model_utils.fields.AutoCreatedField')(default=datetime.datetime.now)),
+            ('modified', self.gf('model_utils.fields.AutoLastModifiedField')(default=datetime.datetime.now)),
+            ('cessco_weld_procedure_code', self.gf('django.db.models.fields.CharField')(max_length=16)),
+            ('cessco_weld_procedure_description', self.gf('django.db.models.fields.CharField')(max_length=256)),
+        ))
+        db.send_create_signal(u'core', ['CesscoWeldProcedureLov'])
 
 
     def backwards(self, orm):
-        # Deleting model 'Welder'
-        db.delete_table(u'welderlist_welder')
+        # Deleting model 'fNumberLov'
+        db.delete_table(u'core_fnumberlov')
 
-        # Deleting model 'WelderStamp'
-        db.delete_table(u'welderlist_welderstamp')
+        # Deleting model 'ProcessLov'
+        db.delete_table(u'core_processlov')
 
-        # Deleting model 'PerformanceQualification'
-        db.delete_table(u'welderlist_performancequalification')
+        # Deleting model 'tQualLov'
+        db.delete_table(u'core_tquallov')
+
+        # Deleting model 'DiameterLov'
+        db.delete_table(u'core_diameterlov')
+
+        # Deleting model 'PositionLov'
+        db.delete_table(u'core_positionlov')
+
+        # Deleting model 'CesscoWeldProcedureLov'
+        db.delete_table(u'core_cesscoweldprocedurelov')
 
 
     models = {
@@ -103,36 +137,7 @@ class Migration(SchemaMigration):
             'modified': ('model_utils.fields.AutoLastModifiedField', [], {'default': 'datetime.datetime.now'}),
             't_qual_code': ('django.db.models.fields.CharField', [], {'max_length': '16'}),
             't_qual_description': ('django.db.models.fields.CharField', [], {'max_length': '256'})
-        },
-        u'welderlist.performancequalification': {
-            'Meta': {'object_name': 'PerformanceQualification'},
-            'cessco_weld_procedure': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.CesscoWeldProcedureLov']"}),
-            'created': ('model_utils.fields.AutoCreatedField', [], {'default': 'datetime.datetime.now'}),
-            'f_number': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.fNumberLov']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'minimum_diameter': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.DiameterLov']"}),
-            'modified': ('model_utils.fields.AutoLastModifiedField', [], {'default': 'datetime.datetime.now'}),
-            'position': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.PositionLov']"}),
-            'pq_card_number': ('django.db.models.fields.IntegerField', [], {}),
-            'process': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.ProcessLov']"}),
-            't_qual': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.tQualLov']"})
-        },
-        u'welderlist.welder': {
-            'Meta': {'object_name': 'Welder'},
-            'absa_number': ('django.db.models.fields.CharField', [], {'max_length': '16'}),
-            'created': ('model_utils.fields.AutoCreatedField', [], {'default': 'datetime.datetime.now'}),
-            'first_name': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'last_name': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
-            'modified': ('model_utils.fields.AutoLastModifiedField', [], {'default': 'datetime.datetime.now'})
-        },
-        u'welderlist.welderstamp': {
-            'Meta': {'object_name': 'WelderStamp'},
-            'created': ('model_utils.fields.AutoCreatedField', [], {'default': 'datetime.datetime.now'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'modified': ('model_utils.fields.AutoLastModifiedField', [], {'default': 'datetime.datetime.now'}),
-            'stamp': ('django.db.models.fields.CharField', [], {'max_length': '4'})
         }
     }
 
-    complete_apps = ['welderlist']
+    complete_apps = ['core']
