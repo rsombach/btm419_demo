@@ -124,8 +124,9 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'welderlist',
     'south',
+    'core', # Core models / functionality that can be used by all apps
+    'welderlist',
 )
 
 # A sample logging configuration. The only tangible logging
