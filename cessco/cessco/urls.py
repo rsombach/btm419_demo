@@ -1,8 +1,13 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns
+from django.conf.urls import include
+from django.conf.urls import url
+
+from welderlist.views import WelderListView
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
+
 
 urlpatterns = patterns('',
     # Examples:
@@ -14,4 +19,10 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+
+    # Pattern for core app
+    url(r'^$', 'core.views.index'),
+
+    # Pattern for Welder List
+    url(r'^welderlist/$', WelderListView.as_view(), name='welder-list'),
 )

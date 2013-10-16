@@ -1,0 +1,8 @@
+{% block content %}
+    <h2>Welders</h2>
+    <ul>
+        {% for welder in object_list %}
+            <li>{{ welder.last_name }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
