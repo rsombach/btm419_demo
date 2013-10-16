@@ -1,4 +1,8 @@
 # Django settings for cessco project.
+from os.path import abspath, dirname, join
+
+DIR = dirname(abspath(dirname(__file__)))
+
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -72,7 +76,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    '/Users/rsombach/Dropbox/Development/Cessco/src/static',
+    join(DIR, "media"),
 )
 
 # List of finder classes that know how to find static files in
@@ -112,7 +116,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    '/Users/rsombach/Developer/django/working_20131015/cessco/templates',
+    join(DIR, "templates"),
 )
 
 INSTALLED_APPS = (

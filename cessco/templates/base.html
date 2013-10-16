@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Cessco - {% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+    <!-- <link href="{{ STATIC_URL }}/bootstrap/css/bootstrap-responsive.css" rel="stylesheet"> -->
+    <link href="/static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="#">Quality Control</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active"><a href="/welderlist/">Welder List</a></li>
+              <li class="active"><a href="/admin/">Administration</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+    
+    <div class="container">
+    <div style="float:right;">{% if user.is_authenticated %} Welcome {{ user }} / <a href="/logout/">Logout</a> {% else %} <a href="/login/">Login</a> {% endif %}</div>
+    {% block content %}
+    {% endblock %}
+    </div> <!-- /container -->
+  </body>
+</html>
