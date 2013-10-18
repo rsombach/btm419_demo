@@ -24,5 +24,5 @@ urlpatterns = patterns('',
     url(r'^$', 'core.views.index'),
 
     # Pattern for Welder List
-    url(r'^welderlist/$', WelderListView.as_view(), name='welder-list'),
+    url(r'^welderlist/$', WelderListView.as_view(), name='welderlist-index'),
 )

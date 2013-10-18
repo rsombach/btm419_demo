@@ -12,14 +12,14 @@
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
     </style>
-    <!-- <link href="{{ STATIC_URL }}/bootstrap/css/bootstrap-responsive.css" rel="stylesheet"> -->
     <link href="/static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
   </head>
   <body>
+
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-          <a class="brand" href="#">Quality Control</a>
+          <a class="brand" href="/">Quality Control</a>
           <div class="nav-collapse">
             <ul class="nav">
               <li class="active"><a href="/welderlist/">Welder List</a></li>
@@ -35,5 +35,14 @@
     {% block content %}
     {% endblock %}
     </div> <!-- /container -->
+
+    <div class="navbar navbar-fixed-bottom">
+      <div align=center>
+        <table width=80% border=0>
+          <tr align=center><td>&copy 2013 Cessco Fabrication and Engineering Ltd.</td></tr>
+        </table>
+      </div>
+    </div>
+
   </body>
 </html>
