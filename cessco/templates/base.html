@@ -31,9 +31,13 @@
     </div>
     
     <div class="container">
-    <div style="float:right;">{% if user.is_authenticated %} Welcome {{ user }} / <a href="/logout/">Logout</a> {% else %} <a href="/login/">Login</a> {% endif %}</div>
-    {% block content %}
-    {% endblock %}
+      <div style="float:right;">
+        {% if user.is_authenticated %} Welcome {{ user }} / <a href="/logout/">Logout</a>
+        {% else %} <a href="/login/">Login</a> {% endif %}
+      </div>
+      {% block content %}
+
+      {% endblock %}
     </div> <!-- /container -->
 
     <div class="navbar navbar-fixed-bottom">

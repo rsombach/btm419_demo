@@ -164,3 +164,5 @@ LOGGING = {
         },
     }
 }
+
+LOGIN_REDIRECT_URL='/'

@@ -9,11 +9,29 @@
 
 {% block nav-global %}{% endblock %}
 
+
 {% block content %}
-    <h2>Welders</h2>
-    <ul>
-        {% for welder in object_list %}
-            <li>{{ welder.last_name }}</li>
-        {% endfor %}
-    </ul>
+
+	{% if user.is_authenticated %}
+    
+	    <h2>Welders</h2>
+	    <ul>
+	        {% for welder in object_list %}
+	            <li>{{ welder_list.last_name }}</li>
+	        {% endfor %}
+	    </ul>
+
+	{% else %}
+
+		Access denied, please <a href="/login/">login</a>.
+
+	{% endif %}
+
 {% endblock %}
+
+
+
+
+
+
+
