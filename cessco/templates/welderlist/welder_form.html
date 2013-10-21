@@ -20,13 +20,11 @@
 
 	{% if user.is_authenticated %}
     
-	    <h2>Welder List</h2>
+	    <h2>Welder Form</h2>
 	    <table width="90%" border=1>
-	        {% for welder in object_list %}
-	            <tr><td>{{ welder_list.last_name }}</td></tr>
-	        {% empty %}
-	        	<tr><td>Sorry, there are no welders in the database.</td></tr>
-	        {% endfor %}
+
+	        <tr><td>welder create form</td></tr>
+
 	    </table>
 
 	{% else %}

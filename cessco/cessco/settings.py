@@ -132,6 +132,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'south',
+    'crispy_forms',
     'core', # Core models / functionality that can be used by all apps
     'welderlist',
 )
@@ -165,4 +166,6 @@ LOGGING = {
     }
 }
 
+# Cessco specific settings
 LOGIN_REDIRECT_URL='/'
+CRISPY_TEMPLATE_PACK = 'bootstrap'

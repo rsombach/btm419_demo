@@ -31,9 +31,15 @@
     </div>
     
     <div class="container">
-      <div style="float:right;">
-        {% if user.is_authenticated %} Welcome {{ user }} / <a href="/logout/">Logout</a>
+      <div style="float:right;" align="right">
+        {% if user.is_authenticated %} <a href="/logout/">Logout</a> ({{ user }})
         {% else %} <a href="/login/">Login</a> {% endif %}
+
+        <div class="nav pull-right">
+          <div style="float:right;" align="right">
+            {% block navbar-right %} {% endblock %}
+          </div>
+        </div>
       </div>
       {% block content %}
 

@@ -3,6 +3,9 @@ from django.conf.urls import include
 from django.conf.urls import url
 
 # from welderlist.views import WelderListView
+# from welderlist.views import WelderCreateView
+
+from welderlist import views
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -26,6 +29,27 @@ urlpatterns = patterns('',
     url(r'^$', 'core.views.index'),
 
     # Pattern for Welder List
-    # url(r'^welderlist/$', WelderListView.as_view(), name='welderlist-index'),
-    url(r'^welderlist/$', 'welderlist.views.index'),
+    url(
+        regex=r'^welderlist/$',
+        view=views.WelderListView.as_view(),
+        name='welder_list',
+        ),
+    url(
+        regex=r'^welderlist/add/$',
+        view=views.WelderCreateView.as_view(),
+        name='welder_add',
+        ),
+    # url(
+    #     regex=r"^welderlist/update/(?P<pk>\d+)/$",
+    #     view=views.WelderUpdateView.as_view(),
+    #     name="welder_update",
+    #     ),
+    # url(
+    #     regex=r"^/welderlist/(?P<pk>\d+)/$",
+    #     view=views.WelderDetailView.as_view(),
+    #     name="welder_detail",
+    #     ),
+    
+    # url(r'^welderlist/$', 'welderlist.views.index'),
+    # url(r'^welderlist/add/$', 'welderlist.views.WelderCreateView'),
 )
