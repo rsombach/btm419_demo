@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 from model_utils.models import TimeStampedModel
 
 # Welder
@@ -7,6 +8,9 @@ class Welder(TimeStampedModel):
 	first_name = models.CharField(max_length=128)
 	last_name = models.CharField(max_length=128)
 	absa_number = models.CharField(max_length=16)
+
+	def get_absolute_url(self):
+		return reverse('welder_detail', kwargs={'pk': self.pk})
 
 # WelderStamp
 class WelderStamp(TimeStampedModel):

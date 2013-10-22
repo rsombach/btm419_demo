@@ -10,7 +10,7 @@
 {% block nav-global %}{% endblock %}
 
 {% block navbar-right %}
-<li>List
+<li><a href="/welderlist/">List</a>
 <li><a href="/welderlist/add/">Create</a>
 <li>Delete
 {% endblock %}
@@ -23,12 +23,45 @@
 	    <h2>Welder List</h2>
 	    <table width="90%" border=1>
 	        {% for welder in object_list %}
-	            <tr><td>{{ welder_list.last_name }}</td></tr>
+	        	
+	        	<tr>
+		        	<td><a href="/welderlist/{{ welder.id }}/">{{ welder.id }}<a></td>
+		        	<td>{{ welder.first_name }}</td>
+		            <td>{{ welder.last_name }}</td>
+		            <td>{{ welder.absa_number }}</td>
+	            </tr>
+
+
 	        {% empty %}
 	        	<tr><td>Sorry, there are no welders in the database.</td></tr>
 	        {% endfor %}
 	    </table>
+	    <table width="90%" border="0">
+	    <tr>
 
+	    {% if is_paginated %}
+	        <div class="pagination">
+	            <span class="page-links">
+	                {% if page_obj.has_previous %}
+
+	                    <td width="33%" align="left"><a href="/welderlist?page={{ page_obj.previous_page_number }}">previous</a></td>
+	                {% else %}
+	                	<td width="33%"></td>
+	                {% endif %}
+	                <span class="page-current">
+	                    <td width="34%" align="center">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</td>
+	                </span>
+	                {% if page_obj.has_next %}
+	                    <td width="33%" align="right"><a href="/welderlist?page={{ page_obj.next_page_number }}">next</a></td>
+	                {% else %}
+	                	<td width="33%"></td>
+	                {% endif %}
+	            </span>
+	        </div>
+    	{% endif %}
+
+    	</tr>
+    	</table>
 	{% else %}
 
 		Access denied, please <a href="/login/">login</a>.

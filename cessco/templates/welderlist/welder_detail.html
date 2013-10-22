@@ -10,7 +10,7 @@
 {% block nav-global %}{% endblock %}
 
 {% block navbar-right %}
-<li>List
+<li><a href="/welderlist/">List</a>
 <li><a href="/welderlist/add/">Create</a>
 <li>Delete
 {% endblock %}
@@ -19,14 +19,28 @@
 {% block content %}
 
 	{% if user.is_authenticated %}
-    
+
+	{% if messages %} 
+		<ul class="messages"> 
+			{% for message in messages %} 
+				<li id="message_{{ forloop.counter }}"
+				{% if message.tags %} class="{{ message.tags }}"{% endif %}> 
+				{{ message }} 
+				</li> 
+			{% endfor %} 
+		</ul> 
+	{% endif %}
+
 	    <h2>Welder Details</h2>
 	    <table width="90%" border=1>
-	        {% for welder in object_list %}
-	            <tr><td>{{ welder_list.last_name }}</td></tr>
-	        {% empty %}
-	        	<tr><td>Sorry, there are no welders in the database.</td></tr>
-	        {% endfor %}
+	        {% if welder %}
+	            <tr><td>{{ welder.id }}</td></tr>
+	            <tr><td>{{ welder.first_name }}</td></tr>
+	            <tr><td>{{ welder.last_name }}</td></tr>
+	            <tr><td>{{ welder.absa_number }}</td></tr>
+	        {% else %}
+	        	<tr><td>Sorry, there is no information for welder for id {{welder.pk }}</td></tr>
+	        {% endif %}
 	    </table>
 
 	{% else %}

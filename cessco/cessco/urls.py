@@ -22,10 +22,12 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+
+    # User authentication forms
     url(r'^login/$', 'django.contrib.auth.views.login'),
     url(r'^logout/$', 'django.contrib.auth.views.logout'),
 
-    # Pattern for core app
+    # Pattern for core app ~ index.html
     url(r'^$', 'core.views.index'),
 
     # Pattern for Welder List
@@ -44,12 +46,9 @@ urlpatterns = patterns('',
     #     view=views.WelderUpdateView.as_view(),
     #     name="welder_update",
     #     ),
-    # url(
-    #     regex=r"^/welderlist/(?P<pk>\d+)/$",
-    #     view=views.WelderDetailView.as_view(),
-    #     name="welder_detail",
-    #     ),
-    
-    # url(r'^welderlist/$', 'welderlist.views.index'),
-    # url(r'^welderlist/add/$', 'welderlist.views.WelderCreateView'),
+    url(
+        regex=r"^welderlist/(?P<pk>\d+)/$",
+        view=views.WelderDetailView.as_view(),
+        name="welder_detail",
+        ),
 )

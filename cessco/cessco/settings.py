@@ -168,4 +168,4 @@ LOGGING = {
 
 # Cessco specific settings
 LOGIN_REDIRECT_URL='/'
-CRISPY_TEMPLATE_PACK = 'bootstrap'
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
