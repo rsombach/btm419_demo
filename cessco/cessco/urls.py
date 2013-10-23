@@ -30,14 +30,14 @@ urlpatterns = patterns('',
     # Pattern for core app ~ index.html
     url(r'^$', 'core.views.index'),
 
-    # Pattern for Welder List
+    # Patterns for Welders
     url(
-        regex=r'^welderlist/$',
+        regex=r'^welderlist/welder/$',
         view=views.WelderListView.as_view(),
         name='welder_list',
         ),
     url(
-        regex=r'^welderlist/add/$',
+        regex=r'^welderlist/welder/add/$',
         view=views.WelderCreateView.as_view(),
         name='welder_add',
         ),
@@ -47,8 +47,11 @@ urlpatterns = patterns('',
     #     name="welder_update",
     #     ),
     url(
-        regex=r"^welderlist/(?P<pk>\d+)/$",
+        regex=r"^welderlist/welder/(?P<pk>\d+)/$",
         view=views.WelderDetailView.as_view(),
         name="welder_detail",
         ),
+
+    # Patterns for Performance Qualifications
+
 )

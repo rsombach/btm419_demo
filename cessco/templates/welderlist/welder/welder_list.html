@@ -10,9 +10,11 @@
 {% block nav-global %}{% endblock %}
 
 {% block navbar-right %}
-<li><a href="/welderlist/">List</a>
-<li><a href="/welderlist/add/">Create</a>
-<li>Delete
+<h4>Welder</h4>
+<li><a href="/welderlist/welder/">List Welders</a>
+<li><a href="/welderlist/welder/add/">Create Welder</a>
+<h4>Performance Qualification</h4>
+<li><a href="/welderlist/">List Performance Qualifications</a>
 {% endblock %}
 
 
@@ -21,11 +23,17 @@
 	{% if user.is_authenticated %}
     
 	    <h2>Welder List</h2>
-	    <table width="90%" border=1>
+	    <table width="90%" border=0 class="table table-striped table-bordered table-condensed">
+	    		 <tr>
+		        	<th>ID</th>
+		        	<th>First Name</th>
+		            <th>Last Name</th>
+		            <th>ABSA Number</th>
+	            </tr>
 	        {% for welder in object_list %}
 	        	
 	        	<tr>
-		        	<td><a href="/welderlist/{{ welder.id }}/">{{ welder.id }}<a></td>
+		        	<td><a href="/welderlist/welder/{{ welder.id }}/">{{ welder.id }}<a></td>
 		        	<td>{{ welder.first_name }}</td>
 		            <td>{{ welder.last_name }}</td>
 		            <td>{{ welder.absa_number }}</td>

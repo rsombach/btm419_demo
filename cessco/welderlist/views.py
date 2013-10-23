@@ -30,20 +30,19 @@ class WelderListActionMixin(object):
         return super(WelderListActionMixin, self).form_valid(form) 
 
 class WelderListView(LoginRequiredMixin, ListView):
-	login_url = "/login/"
-	model = Welder
-	paginate_by = 20
-
+    login_url = "/login/"
+    template_name = 'welder_list.html'
+    model = Welder
+    paginate_by = 20
 
 class WelderDetailView(LoginRequiredMixin, DetailView):
-	login_url = "/login/"
-	model = Welder
-
-
+    login_url = "/login/"
+    template_name = 'welder_detail.html'
+    model = Welder
 
 class WelderCreateView(LoginRequiredMixin, WelderListActionMixin, CreateView):
 	login_url = "/login/"
 	model = Welder
-	template_name = '/welderlist/welderlist_create.html'
+	template_name = 'welder_form.html'
 	form_class = WelderCreateForm
 	action = "created"
