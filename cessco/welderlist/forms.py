@@ -3,6 +3,7 @@ from django import forms
 
 from .models import Welder
 from .models import PerformanceQualification
+from .models import PerformanceQualificationHistory
 from core.models import fNumberLov
 
 from crispy_forms.helper import FormHelper
@@ -10,14 +11,12 @@ from crispy_forms.layout import Submit
 
 # WelderPerformanceQualificationFormSet = inlineformset_factory(
 #     Welder,
-#     PerformanceQualification,
+#     PerformanceQualificationHistory,
 # )
-
 
 class WelderCreateForm(forms.ModelForm):
 	class Meta:
 		model = Welder
-		# form_class = forms.WelderPerformanceQualificationFormSet
 		# Welder.first_name = forms.CharField(max_length=128)
 		# Welder.last_name = forms.CharField(max_length=128)
 		# Welder.absa_number = forms.CharField(max_length=16)
