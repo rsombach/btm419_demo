@@ -44,22 +44,28 @@
               {% block content %}
 
               {% endblock %}
-        </div> <!-- span4 -->
+        </div> <!-- span10 -->
 
         <div class="span2">
-
-          <div style="float:right;" align="right">
-            {% if user.is_authenticated %} <a href="/logout/">Logout</a> ({{ user }})
-            {% else %} <a href="/login/">Login</a> {% endif %}  
-          </div>
-
-          <div class="nav pull-right">
-            <div style="float:right;" align="right">
-              {% block navbar-right %} {% endblock %}
+        
+          <div class="row">
+            <div class="nav pull-right">
+              <div style="float:right;" align="right">
+                {% if user.is_authenticated %} <a href="/logout/">Logout</a> ({{ user }})
+                {% else %} <a href="/login/">Login</a> {% endif %}  
+              </div>
             </div>
           </div>
 
-        </div> <!-- span3 -->
+          </div class="row">
+            <div class="nav pull-right">
+              <div style="float:right;" align="right">
+                {% block navbar-right %} {% endblock %} 
+              </div>
+            </div>
+          </div>
+
+        </div> <!-- span2 -->
 
       </div> <!-- row -->
 

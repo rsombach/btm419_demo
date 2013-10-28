@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ title }} | Home {% endblock %}
+
+{% block branding %}
+<h1 id="site-name">Cessco Quality Control</h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block navbar-right %}
+<h4>Welder</h4>
+<li><a href="/welderlist/welder/">List</a>
+<li><a href="/welderlist/welder/add/">Create</a>
+{% endblock %}
+
+
+{% block content %}
+
+	{% if user.is_authenticated %}
+
+	{% if messages %} 
+		<ul class="messages"> 
+			{% for message in messages %} 
+				<li id="message_{{ forloop.counter }}"
+				{% if message.tags %} class="{{ message.tags }}"{% endif %}> 
+				{{ message }} 
+				</li> 
+			{% endfor %} 
+		</ul> 
+	{% endif %}
+
+	    <h2>Performance Qualification Details</h2>
+	    
+	        {% if performancequalification %}
+	        	<table width="90%" border=0 class="table table-striped table-bordered table-condensed">
+		            <tr><td width="20%">ID</td><td>{{ performancequalification.id }}</td></tr>
+		            <tr><td width="20%">PQ Card Number</td><td>{{ performancequalification.pq_card_number }}</td></tr>
+		            <tr><td width="20%">Minimum Diameter</td><td>{{ performancequalification.minimum_diameter }}</td></tr>
+		            <tr><td width="20%">t Qual Number</td><td>{{ performancequalification.t_qual }}</td></tr>
+		        </table>
+
+	        {% else %}
+	    		<table width="90%" border=0 class="table table-striped table-bordered table-condensed">
+	        		<tr><td>Sorry, there is no information for welder for id {{welder.pk }}</td></tr>
+	        	</table>
+	        {% endif %}
+
+
+	{% else %}
+
+		Access denied, please <a href="/login/">login</a>.
+
+	{% endif %}
+
+{% endblock %}
+
+
+
+
+
+
+

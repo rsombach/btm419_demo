@@ -8,8 +8,10 @@ from django.views.generic import (CreateView, ListView, DetailView)
 from braces.views import LoginRequiredMixin
 
 from .models import Welder
+from .models import PerformanceQualification
 
 from forms import WelderCreateForm
+from forms import PerformanceQualificationCreateForm
 
 
 class WelderListActionMixin(object): 
@@ -46,3 +48,17 @@ class WelderCreateView(LoginRequiredMixin, WelderListActionMixin, CreateView):
 	template_name = 'welder_form.html'
 	form_class = WelderCreateForm
 	action = "created"
+
+
+class PerformanceQualificationCreateView(LoginRequiredMixin, WelderListActionMixin, CreateView):
+    login_url = "/login/"
+    model = PerformanceQualification
+    template_name = 'performancequalification_form.html'
+    form_class = PerformanceQualificationCreateForm
+    action = "created"
+
+class PerformanceQualificationDetailView(LoginRequiredMixin, DetailView):
+    login_url = "/login/"
+    template_name = 'performancequalification_detail.html'
+    model = PerformanceQualification
+    

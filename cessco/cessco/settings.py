@@ -118,6 +118,7 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     join(DIR, "templates"),
     join(DIR, "templates/welderlist/welder"),
+    join(DIR, "templates/welderlist/pq"),
 )
 
 INSTALLED_APPS = (

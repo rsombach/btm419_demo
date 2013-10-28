@@ -51,7 +51,17 @@ urlpatterns = patterns('',
         view=views.WelderDetailView.as_view(),
         name="welder_detail",
         ),
-
     # Patterns for Performance Qualifications
+    url(
+        regex=r'^welderlist/pq/add/$',
+        view=views.PerformanceQualificationCreateView.as_view(),
+        name='performanequalification_add',
+        ),
+    url(
+        regex=r"^welderlist/pq/(?P<pk>\d+)/$",
+        view=views.PerformanceQualificationDetailView.as_view(),
+        name="performancequalification_detail",
+        ),
+
 
 )

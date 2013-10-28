@@ -28,6 +28,9 @@ class PerformanceQualification(TimeStampedModel):
 	position = models.ForeignKey('core.PositionLov')
 	cessco_weld_procedure = models.ForeignKey('core.CesscoWeldProcedureLov')
 
+	def get_absolute_url(self):
+		return reverse('performancequalification_detail', kwargs={'pk': self.pk})
+
 
 # WelderStampHistory
 
