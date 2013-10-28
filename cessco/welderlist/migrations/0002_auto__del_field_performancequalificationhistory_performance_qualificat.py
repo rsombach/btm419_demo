@@ -8,66 +8,39 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'WelderStamp'
-        db.create_table(u'welderlist_welderstamp', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('created', self.gf('model_utils.fields.AutoCreatedField')(default=datetime.datetime.now)),
-            ('modified', self.gf('model_utils.fields.AutoLastModifiedField')(default=datetime.datetime.now)),
-            ('stamp', self.gf('django.db.models.fields.CharField')(max_length=4)),
-        ))
-        db.send_create_signal(u'welderlist', ['WelderStamp'])
+        # Deleting field 'PerformanceQualificationHistory.performance_qualification_id'
+        db.delete_column(u'welderlist_performancequalificationhistory', 'performance_qualification_id_id')
 
-        # Adding model 'Welder'
-        db.create_table(u'welderlist_welder', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('created', self.gf('model_utils.fields.AutoCreatedField')(default=datetime.datetime.now)),
-            ('modified', self.gf('model_utils.fields.AutoLastModifiedField')(default=datetime.datetime.now)),
-            ('first_name', self.gf('django.db.models.fields.CharField')(max_length=128)),
-            ('last_name', self.gf('django.db.models.fields.CharField')(max_length=128)),
-            ('absa_number', self.gf('django.db.models.fields.CharField')(max_length=16)),
-        ))
-        db.send_create_signal(u'welderlist', ['Welder'])
+        # Deleting field 'PerformanceQualificationHistory.welder_id'
+        db.delete_column(u'welderlist_performancequalificationhistory', 'welder_id_id')
 
-        # Adding model 'PerformanceQualificationHistory'
-        db.create_table(u'welderlist_performancequalificationhistory', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('created', self.gf('model_utils.fields.AutoCreatedField')(default=datetime.datetime.now)),
-            ('modified', self.gf('model_utils.fields.AutoLastModifiedField')(default=datetime.datetime.now)),
-            ('welder_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['welderlist.Welder'])),
-            ('performance_qualification_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['welderlist.PerformanceQualification'])),
-            ('original_test_date', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
-            ('renewal_date', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
-        ))
-        db.send_create_signal(u'welderlist', ['PerformanceQualificationHistory'])
+        # Adding field 'PerformanceQualificationHistory.welder'
+        db.add_column(u'welderlist_performancequalificationhistory', 'welder',
+                      self.gf('django.db.models.fields.related.ForeignKey')(default=0, to=orm['welderlist.Welder']),
+                      keep_default=False)
 
-        # Adding model 'PerformanceQualification'
-        db.create_table(u'welderlist_performancequalification', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('created', self.gf('model_utils.fields.AutoCreatedField')(default=datetime.datetime.now)),
-            ('modified', self.gf('model_utils.fields.AutoLastModifiedField')(default=datetime.datetime.now)),
-            ('pq_card_number', self.gf('django.db.models.fields.IntegerField')()),
-            ('f_number', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.fNumberLov'])),
-            ('process', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.ProcessLov'])),
-            ('t_qual', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.tQualLov'])),
-            ('minimum_diameter', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.DiameterLov'])),
-            ('position', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.PositionLov'])),
-            ('cessco_weld_procedure', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.CesscoWeldProcedureLov'])),
-        ))
-        db.send_create_signal(u'welderlist', ['PerformanceQualification'])
+        # Adding field 'PerformanceQualificationHistory.performance_qualification'
+        db.add_column(u'welderlist_performancequalificationhistory', 'performance_qualification',
+                      self.gf('django.db.models.fields.related.ForeignKey')(default=0, to=orm['welderlist.PerformanceQualification']),
+                      keep_default=False)
 
 
     def backwards(self, orm):
-        # Deleting model 'WelderStamp'
-        db.delete_table(u'welderlist_welderstamp')
+        # Adding field 'PerformanceQualificationHistory.performance_qualification_id'
+        db.add_column(u'welderlist_performancequalificationhistory', 'performance_qualification_id',
+                      self.gf('django.db.models.fields.related.ForeignKey')(default=0, to=orm['welderlist.PerformanceQualification']),
+                      keep_default=False)
 
-        # Deleting model 'Welder'
-        db.delete_table(u'welderlist_welder')
+        # Adding field 'PerformanceQualificationHistory.welder_id'
+        db.add_column(u'welderlist_performancequalificationhistory', 'welder_id',
+                      self.gf('django.db.models.fields.related.ForeignKey')(default=0, to=orm['welderlist.Welder']),
+                      keep_default=False)
 
-        # Deleting model 'PerformanceQualificationHistory'
-        db.delete_table(u'welderlist_performancequalificationhistory')
+        # Deleting field 'PerformanceQualificationHistory.welder'
+        db.delete_column(u'welderlist_performancequalificationhistory', 'welder_id')
 
-        # Deleting model 'PerformanceQualification'
-        db.delete_table(u'welderlist_performancequalification')
+        # Deleting field 'PerformanceQualificationHistory.performance_qualification'
+        db.delete_column(u'welderlist_performancequalificationhistory', 'performance_qualification_id')
 
 
     models = {
@@ -138,9 +111,9 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'modified': ('model_utils.fields.AutoLastModifiedField', [], {'default': 'datetime.datetime.now'}),
             'original_test_date': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
-            'performance_qualification_id': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['welderlist.PerformanceQualification']"}),
+            'performance_qualification': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['welderlist.PerformanceQualification']"}),
             'renewal_date': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
-            'welder_id': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['welderlist.Welder']"})
+            'welder': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['welderlist.Welder']"})
         },
         u'welderlist.welder': {
             'Meta': {'object_name': 'Welder'},

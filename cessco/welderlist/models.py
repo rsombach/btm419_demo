@@ -31,9 +31,14 @@ class PerformanceQualification(TimeStampedModel):
 	def get_absolute_url(self):
 		return reverse('performancequalification_detail', kwargs={'pk': self.pk})
 
+# PeformanceQualificationHistory
+class PerformanceQualificationHistory(TimeStampedModel):
+	# id
+	welder = models.ForeignKey('Welder')
+	performance_qualification = models.ForeignKey('PerformanceQualification')
+	original_test_date = models.DateField(null=True, blank=True)
+	renewal_date = models.DateField(null=True, blank=True)
+
+
 
 # WelderStampHistory
-
-
-# PeformanceQualificationHistory
-
