@@ -9,22 +9,21 @@ from braces.views import LoginRequiredMixin
 
 from .models import Welder
 from .models import PerformanceQualification
-# from .models import PerformanceQualificationHistory
 
 from forms import WelderCreateForm
 from forms import PerformanceQualificationCreateForm
-# from forms import WelderPerformanceQualificationFormSet
+
 
 
 class WelderListActionMixin(object): 
     @property 
     def action(self): 
-        msg = "{0} is missing action." 
+        msg = "{0} is missing action" 
         msg = msg.format(self.__class__) 
         raise NotImplementedError(msg) 
  
     def form_valid(self, form): 
-        msg = "Welder {0}!" 
+        msg = "Record {0}" 
         msg = msg.format(self.action) 
         messages.info(self.request, msg) 
         return super(WelderListActionMixin, self).form_valid(form) 
@@ -40,12 +39,21 @@ class WelderDetailView(LoginRequiredMixin, DetailView):
     template_name = 'welder_detail.html'
     model = Welder 
     # form_class = WelderPerformanceQualificationForm
+
+
+
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super(WelderDetailView, self).get_context_data(**kwargs)
-        # Add in a QuerySet of all the performnace qualifications
-        context['performance_qualification_list'] = PerformanceQualification.objects.all()
+        
+        # Add in a QuerySet of all the performance qualifications for the current welder
+        kwargs_welder_id = kwargs["object"].id
+        context['performance_qualification_list'] = PerformanceQualification.objects.filter(welder_id=kwargs_welder_id, active=True)
+        self.request.session['current_welder'] = kwargs_welder_id
+
         return context
+
+
 
 class WelderCreateView(LoginRequiredMixin, WelderListActionMixin, CreateView):
     login_url = "/login/"
@@ -61,8 +69,17 @@ class PerformanceQualificationCreateView(LoginRequiredMixin, WelderListActionMix
     form_class = PerformanceQualificationCreateForm
     action = "created"
 
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(PerformanceQualificationCreateView, self).get_context_data(**kwargs)
+        context['current_welder'] = self.request.session['current_welder']
+        return context
+
+
+
 class PerformanceQualificationDetailView(LoginRequiredMixin, DetailView):
     login_url = "/login/"
     template_name = 'performancequalification_detail.html'
     model = PerformanceQualification
+
     
