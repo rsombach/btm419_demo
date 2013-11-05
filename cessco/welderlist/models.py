@@ -38,8 +38,4 @@ class PerformanceQualification(TimeStampedModel):
 	def get_absolute_url(self):
 		return reverse('performancequalification_detail', kwargs={'pk': self.pk})
 
-	# def save(self, *args, **kwargs):
-	# 	# Call the "real" save() method.
-	# 	super(PerformanceQualification, self).save(*args, **kwargs)
-
 # WelderStampHistory

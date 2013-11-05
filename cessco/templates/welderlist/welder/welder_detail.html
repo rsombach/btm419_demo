@@ -72,7 +72,6 @@
 		            </tr>
 
 						{% for pq in performance_qualification_list %}
-
 				            <tr>
 				            	<td>{{ pq.pq_card_number }}</td>
 				            	<td>{{ pq.f_number }}</td>
@@ -82,12 +81,18 @@
 				            	<td>{{ pq.position }}</td>
 				            	<td>{{ pq.cessco_weld_procedure }}</td>
 				            	<td align="right">
+				            	    
 					            	<button type="button" class="btn btn-default btn-lg">
-					  					<span class="glyphicon icon-pencil"></span>        		
+					            	    <a href="/welderlist/pq/{{ pq.id }}/">
+					  					<span class="glyphicon icon-pencil"></span> 
+					  					</a>       		
 					            	</button>
+					            	
 
 									<button type="button" class="btn btn-default btn-lg">
+									    <a href="/welderlist/pq/{{ pq.id }}/">
 		  								<span class="glyphicon icon-minus"></span>
+		  								</a>
 									</button>
 								</td>
 				            </tr>
