@@ -23,10 +23,10 @@
 	{% if user.is_authenticated %}
     
 	    <h2>Performance Qualification Form</h2>
+		<h4>{{ current_welder_first_name }} {{ current_welder_last_name }} ({{ current_welder }})</h4>
+	    <table width="90%" border="0">
 
-	    <table width="90%" border="1">
-			<tr><td align="right">Welder ID</td><td width="90%" align="left">{{ current_welder }}</td></tr>
-	        <tr><td colspan="2">{% crispy form %}</td></tr>
+	        <tr><td>{% crispy form %}</td></tr>
 
 	    </table>
 
