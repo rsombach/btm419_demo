@@ -4,7 +4,7 @@ from django.template import RequestContext
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 
-from django.views.generic import (CreateView, ListView, DetailView)
+from django.views.generic import (CreateView, ListView, DetailView, UpdateView)
 from braces.views import LoginRequiredMixin
 
 from .models import Welder
@@ -12,6 +12,8 @@ from .models import PerformanceQualification
 
 from forms import WelderCreateForm
 from forms import PerformanceQualificationCreateForm
+from forms import PerformanceQualificationUpdateForm
+
 
 
 
@@ -40,8 +42,6 @@ class WelderDetailView(LoginRequiredMixin, DetailView):
     model = Welder 
     # form_class = WelderPerformanceQualificationForm
 
-
-
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super(WelderDetailView, self).get_context_data(**kwargs)
@@ -55,7 +55,6 @@ class WelderDetailView(LoginRequiredMixin, DetailView):
         self.request.session['current_welder_last_name'] = kwargs["object"].last_name
 
         return context
-
 
 
 class WelderCreateView(LoginRequiredMixin, WelderListActionMixin, CreateView):
@@ -90,5 +89,31 @@ class PerformanceQualificationDetailView(LoginRequiredMixin, DetailView):
     login_url = "/login/"
     template_name = 'performancequalification_detail.html'
     model = PerformanceQualification
+    
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(PerformanceQualificationDetailView, self).get_context_data(**kwargs)
+        context['current_welder'] = self.request.session['current_welder']
+        context['current_welder_first_name'] = self.request.session['current_welder_first_name']
+        context['current_welder_last_name'] = self.request.session['current_welder_last_name']
+        
+        return context
+    
+
+class PerformanceQualificationUpdateView(LoginRequiredMixin, WelderListActionMixin, UpdateView):
+    login_url = "/login/"
+    template_name = 'performancequalification_update.html'
+    form_class = PerformanceQualificationUpdateForm
+    model = PerformanceQualification
+    action = "updated"
+    
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(PerformanceQualificationUpdateView, self).get_context_data(**kwargs)
+        context['current_welder'] = self.request.session['current_welder']
+        context['current_welder_first_name'] = self.request.session['current_welder_first_name']
+        context['current_welder_last_name'] = self.request.session['current_welder_last_name']
+        
+        return context
 
     

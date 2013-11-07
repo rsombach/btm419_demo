@@ -73,7 +73,7 @@
 
 						{% for pq in performance_qualification_list %}
 				            <tr>
-				            	<td>{{ pq.pq_card_number }}</td>
+				            	<td>{{ pq.id }}</td>
 				            	<td>{{ pq.f_number }}</td>
 				            	<td>{{ pq.process }}</td>
 				            	<td>{{ pq.t_qual }}</td>
@@ -83,17 +83,11 @@
 				            	<td align="right">
 				            	    
 					            	<button type="button" class="btn btn-default btn-lg">
-					            	    <a href="/welderlist/pq/{{ pq.id }}/">
+					            	    <a href="/welderlist/pq/update/{{ pq.id }}/">
 					  					<span class="glyphicon icon-pencil"></span> 
 					  					</a>       		
 					            	</button>
-					            	
 
-									<button type="button" class="btn btn-default btn-lg">
-									    <a href="/welderlist/pq/{{ pq.id }}/">
-		  								<span class="glyphicon icon-minus"></span>
-		  								</a>
-									</button>
 								</td>
 				            </tr>
 

@@ -63,6 +63,10 @@ urlpatterns = patterns('',
         view=views.PerformanceQualificationDetailView.as_view(),
         name='performancequalification_detail',
         ),
-
+    url(
+        regex=r'^welderlist/pq/update/(?P<pk>\d+)/$',
+        view=views.PerformanceQualificationUpdateView.as_view(),
+        name='performanequalification_update',
+        ),
 
 )

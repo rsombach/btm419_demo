@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}{{ title }} | Home {% endblock %}
+
+{% block branding %}
+<h1 id="site-name">Cessco Quality Control</h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block navbar-right %}
+<h4>Welder</h4>
+<li><a href="/welderlist/welder/">List</a>
+<li><a href="/welderlist/welder/add/">Create</a>
+{% endblock %}
+
+
+{% block content %}
+
+	{% if user.is_authenticated %}
+    
+	    <h2>Performance Qualification Form</h2>
+	    <table width="90%" border="0" class="table table-striped table-bordered table-condensed">
+
+	        <tr><td><h4>{{ current_welder_first_name }} {{ current_welder_last_name }} ({{ current_welder }})</h4></td></tr>
+	        <tr>
+	            <td>
+                {% if performancequalification %}
+                    <b>Card Number</b> {{ performancequalification.id }}
+                {% endif %}		     
+	            </td>
+	        </tr>
+
+	    </table>
+	    
+
+	    <table width="90%" border="0" class="table table-striped table-bordered table-condensed">
+
+	        <tr><td>{% crispy form %}</td></tr>
+
+	    </table>
+
+
+	{% else %}
+
+		Access denied, please <a href="/login/">login</a>.
+
+	{% endif %}
+
+{% endblock %}
+
+
+
+
+
+
+

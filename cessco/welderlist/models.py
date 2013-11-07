@@ -22,9 +22,9 @@ class WelderStamp(TimeStampedModel):
 
 # PerformanceQualification
 class PerformanceQualification(TimeStampedModel):
-	# id
+    # id
+	# pq_card_number = models.AutoField()
 	welder = models.ForeignKey('Welder')
-	pq_card_number = models.IntegerField()
 	f_number = models.ForeignKey('core.fNumberLov')
 	process = models.ForeignKey('core.ProcessLov')
 	t_qual = models.ForeignKey('core.tQualLov')
