@@ -41,11 +41,11 @@ urlpatterns = patterns('',
         view=views.WelderCreateView.as_view(),
         name='welder_add',
         ),
-    # url(
-    #     regex=r"^welderlist/update/(?P<pk>\d+)/$",
-    #     view=views.WelderUpdateView.as_view(),
-    #     name="welder_update",
-    #     ),
+    url(
+        regex=r"^welderlist/welder/update/(?P<pk>\d+)/$",
+        view=views.WelderUpdateView.as_view(),
+        name="welder_update",
+        ),
     url(
         regex=r'^welderlist/welder/(?P<pk>\d+)/$',
         view=views.WelderDetailView.as_view(),

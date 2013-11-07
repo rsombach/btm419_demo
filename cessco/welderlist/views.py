@@ -11,6 +11,8 @@ from .models import Welder
 from .models import PerformanceQualification
 
 from forms import WelderCreateForm
+from forms import WelderUpdateForm
+
 from forms import PerformanceQualificationCreateForm
 from forms import PerformanceQualificationUpdateForm
 
@@ -63,6 +65,14 @@ class WelderCreateView(LoginRequiredMixin, WelderListActionMixin, CreateView):
     template_name = 'welder_form.html'
     form_class = WelderCreateForm
     action = "created"
+    
+class WelderUpdateView(LoginRequiredMixin, WelderListActionMixin, UpdateView):
+    login_url = "/login/"
+    template_name = 'welder_update.html'
+    form_class = WelderUpdateForm
+    model = Welder
+    action = "updated"
+
 
 class PerformanceQualificationCreateView(LoginRequiredMixin, WelderListActionMixin, CreateView):
     login_url = "/login/"
