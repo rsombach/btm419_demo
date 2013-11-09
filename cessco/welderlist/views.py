@@ -17,8 +17,6 @@ from forms import PerformanceQualificationCreateForm
 from forms import PerformanceQualificationUpdateForm
 
 
-
-
 class WelderListActionMixin(object): 
     @property 
     def action(self): 
@@ -36,7 +34,7 @@ class WelderListView(LoginRequiredMixin, ListView):
     login_url = "/login/"
     template_name = 'welder_list.html'
     model = Welder
-    paginate_by = 20
+    paginate_by = 200
 
 class WelderDetailView(LoginRequiredMixin, DetailView):
     login_url = "/login/"

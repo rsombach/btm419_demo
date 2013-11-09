@@ -11,15 +11,14 @@
     <link href="/static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="http://jquery-ui.googlecode.com/svn/tags/latest/themes/base/jquery-ui.css" media="all" />
     
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-    <script type="text/javascript">
-        $( function() {
-            $('.dateinput').datepicker({ dateFormat: 'yy-mm-dd' });
-        } );
-    </script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     
-    {% block scripts %}{% endblock %}
+    <script type="text/javascript" src="/static/js/tablesorter/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="/static/js/tablesorter/jquery.tablesorter.widgets.js"></script>
+    
+    {% block js_scripts %}{% endblock %}
+    
 
     <title>Cessco - {% block title %}{% endblock %}</title>
         
