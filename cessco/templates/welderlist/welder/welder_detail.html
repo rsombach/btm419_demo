@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load render_table from django_tables2 %}
 
 {% block js_scripts %}
 
@@ -117,6 +118,8 @@
 						{% endfor %}
 
 		        	</table>
+		        	
+		        	
 
 
 	        {% else %}
@@ -124,6 +127,7 @@
 	        		<tr><td>Sorry, there is no information for welder for id {{welder.pk }}</td></tr>
 	        	</table>
 	        {% endif %}
+
 
 
 	{% else %}
