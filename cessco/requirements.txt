@@ -3,8 +3,6 @@ South==0.8.2
 bootstrap-admin==0.2.5
 django-braces==1.2.2
 django-crispy-forms==1.4.0
-django-jquery==1.9.1
-django-jquery-tablesorter==2.12.0
 django-model-utils==1.5.0
 psycopg2==2.5.1
 six==1.4.1

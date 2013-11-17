@@ -135,8 +135,6 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'south',
     'crispy_forms',
-    'jquery',
-    'jquery_tablesorter',
     'core', # Core models / functionality that can be used by all apps
     'welderlist',
 )
