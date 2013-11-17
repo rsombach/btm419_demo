@@ -5,18 +5,22 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 
 from django.views.generic import (CreateView, ListView, DetailView, UpdateView)
+from django_tables2 import SingleTableView
+# import django_tables2 as tables
+
 from braces.views import LoginRequiredMixin
 
 from .models import Welder
 from .models import PerformanceQualification
 
+# forms.py import
 from forms import WelderCreateForm
 from forms import WelderUpdateForm
-
 from forms import PerformanceQualificationCreateForm
 from forms import PerformanceQualificationUpdateForm
 
-
+# tables.py import
+from tables import WelderTable, PerformanceQualificationTable
 
 
 class WelderListActionMixin(object): 
@@ -30,18 +34,24 @@ class WelderListActionMixin(object):
         msg = "Record {0}" 
         msg = msg.format(self.action) 
         messages.info(self.request, msg) 
-        return super(WelderListActionMixin, self).form_valid(form) 
+        return super(WelderListActionMixin, self).form_valid(form)
 
-class WelderListView(LoginRequiredMixin, ListView):
+
+class WelderListView(SingleTableView, LoginRequiredMixin, ListView):
     login_url = "/login/"
     template_name = 'welder_list.html'
     model = Welder
-    paginate_by = 20
+    context_object_name = 'welder_list'
+    table_class = WelderTable
+    table_pagination = {'per_page': 2}
+
 
 class WelderDetailView(LoginRequiredMixin, DetailView):
     login_url = "/login/"
     template_name = 'welder_detail.html'
-    model = Welder 
+    model = Welder
+    table_class = PerformanceQualificationTable
+    
     # form_class = WelderPerformanceQualificationForm
 
     def get_context_data(self, **kwargs):
@@ -52,6 +62,7 @@ class WelderDetailView(LoginRequiredMixin, DetailView):
         kwargs_welder_id = kwargs["object"].id
         
         context['performance_qualification_list'] = PerformanceQualification.objects.filter(welder_id=kwargs_welder_id, active=True)
+
         self.request.session['current_welder'] = kwargs_welder_id
         self.request.session['current_welder_first_name'] = kwargs["object"].first_name
         self.request.session['current_welder_last_name'] = kwargs["object"].last_name

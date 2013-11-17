@@ -1,5 +1,6 @@
 # Django settings for cessco project.
 from os.path import abspath, dirname, join
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 
 DIR = dirname(abspath(dirname(__file__)))
 
@@ -97,6 +98,10 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS += (
+    'django.core.context_processors.request',
+)
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -135,6 +140,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'south',
     'crispy_forms',
+    'django_tables2',
     'core', # Core models / functionality that can be used by all apps
     'welderlist',
 )
