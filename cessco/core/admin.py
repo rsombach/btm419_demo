@@ -5,6 +5,7 @@ from core.models import tQualLov
 from core.models import DiameterLov
 from core.models import PositionLov
 from core.models import CesscoWeldProcedureLov
+from core.models import WelderStampLov
 
 admin.site.register(fNumberLov)
 admin.site.register(ProcessLov)
@@ -12,3 +13,4 @@ admin.site.register(tQualLov)
 admin.site.register(DiameterLov)
 admin.site.register(PositionLov)
 admin.site.register(CesscoWeldProcedureLov)
+admin.site.register(WelderStampLov)

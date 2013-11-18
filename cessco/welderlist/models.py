@@ -8,21 +8,23 @@ class Welder(TimeStampedModel):
 	first_name = models.CharField(max_length=128)
 	last_name = models.CharField(max_length=128)
 	absa_number = models.CharField(max_length=16)
+	welder_stamp = models.ForeignKey('core.WelderStampLov', unique="True")
 
 	def __unicode__(self):
 		return self.id
-
+	
 	def get_absolute_url(self):
 		return reverse('welder_detail', kwargs={'pk': self.pk})
 
 # WelderStamp
-class WelderStamp(TimeStampedModel):
-	# id
-	stamp = models.CharField(max_length=4)
+# class WelderStamp(TimeStampedModel):
+#     # id
+#     stamp = models.CharField(max_length=4)
 
 # PerformanceQualification
 class PerformanceQualification(TimeStampedModel):
-    # id
+	# id
+	# id = models.AutoField(primary_key=True)
 	# pq_card_number = models.AutoField()
 	welder = models.ForeignKey('Welder')
 	f_number = models.ForeignKey('core.fNumberLov')
