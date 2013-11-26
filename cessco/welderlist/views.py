@@ -137,4 +137,21 @@ class PerformanceQualificationUpdateView(LoginRequiredMixin, WelderListActionMix
         
         return context
 
-    
+class PerformanceQualificationListView(LoginRequiredMixin, ListView):
+    login_url = "/login/"
+    template_name = 'performancequalification_list.html'
+    model = PerformanceQualification
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(PerformanceQualificationListView, self).get_context_data(**kwargs)
+        
+        # Add in a QuerySet of all the performance qualifications for the current welder
+        session_welder_id = self.request.session['current_welder']
+        
+        context['performance_qualification_list'] = PerformanceQualification.objects.filter(welder_id=session_welder_id)
+        context['current_welder'] = self.request.session['current_welder']
+        context['current_welder_first_name'] = self.request.session['current_welder_first_name']
+        context['current_welder_last_name'] = self.request.session['current_welder_last_name']
+
+        return context
