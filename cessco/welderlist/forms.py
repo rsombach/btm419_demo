@@ -6,11 +6,17 @@ from crispy_forms.layout import *
 
 from .models import Welder
 from .models import PerformanceQualification
+from core.models import WelderStampLov
 
 
 class WelderCreateForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
 		super(WelderCreateForm, self).__init__(*args, **kwargs)
+		
+		# self.fields['welder_stamp'] = forms.ModelChoiceField(queryset=WelderStampLov.objects.filter(welder_stamp_code__contains='A'))
+
+		self.fields['welder_stamp'] = forms.ModelChoiceField(queryset=WelderStampLov.objects.exclude(id__in=Welder.objects.values_list('welder_stamp', flat=True)))
+		
 
 		self.helper = FormHelper(self)
 		self.helper.form_method = 'POST'

@@ -8,7 +8,7 @@ class Welder(TimeStampedModel):
 	first_name = models.CharField(max_length=128)
 	last_name = models.CharField(max_length=128)
 	absa_number = models.CharField(max_length=16)
-	welder_stamp = models.ForeignKey('core.WelderStampLov', unique="True")
+	welder_stamp = models.ForeignKey('core.WelderStampLov')
 
 	def __unicode__(self):
 		return self.id
