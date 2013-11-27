@@ -16,11 +16,6 @@ class Welder(TimeStampedModel):
 	def get_absolute_url(self):
 		return reverse('welder_detail', kwargs={'pk': self.pk})
 
-# WelderStamp
-# class WelderStamp(TimeStampedModel):
-#     # id
-#     stamp = models.CharField(max_length=4)
-
 # PerformanceQualification
 class PerformanceQualification(TimeStampedModel):
 	# id
