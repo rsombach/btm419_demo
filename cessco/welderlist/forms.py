@@ -1,5 +1,4 @@
 from django import forms
-from itertools import chain
 
 from crispy_forms.helper import *
 from crispy_forms.bootstrap import *
@@ -29,12 +28,11 @@ class WelderCreateForm(forms.ModelForm):
 
 class WelderUpdateForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
-		super(WelderUpdateForm, self).__init__(*args, **kwargs)
-
-		# self.fields['welder_stamp'] = forms.ModelChoiceField(queryset=WelderStampLov.objects.exclude(id__in=Welder.objects.values_list('welder_stamp', flat=True)))
+		self.current_welder_id = kwargs.pop('current_welder_id', None)
 		
-		# welder_stamp = WelderStampLov.objects.filter(id__in=Welder.objects.values_list('welder_stamp', flat=True).filter(pk=1))
-		welder_stamp = WelderStampLov.objects.all()
+		super(WelderUpdateForm, self).__init__(*args, **kwargs)
+		
+		welder_stamp = WelderStampLov.objects.filter(id__in=Welder.objects.values_list('welder_stamp', flat=True).filter(pk=self.current_welder_id))
 		assigned_welder_stamp = WelderStampLov.objects.exclude(id__in=Welder.objects.values_list('welder_stamp', flat=True))
 		
 		# Combine the available welder_stamp list with the currently assigned stamp		

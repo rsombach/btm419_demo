@@ -84,6 +84,8 @@ class WelderUpdateView(LoginRequiredMixin, WelderListActionMixin, UpdateView):
     model = Welder
     action = "updated"
 
+    def get_form_kwargs(self, *args, **kwargs):
+        return dict ( super(WelderUpdateView, self).get_form_kwargs(*args, **kwargs), **{'current_welder_id':  self.request.session['current_welder']} )
 
 class PerformanceQualificationCreateView(LoginRequiredMixin, WelderListActionMixin, CreateView):
     login_url = "/login/"
