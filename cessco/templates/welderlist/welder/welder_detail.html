@@ -59,8 +59,6 @@
 					<tr><td width="20%">Welder Stamp</td><td>{{ welder.welder_stamp }}</td></tr>
 		            <tr><td width="20%">First Name</td><td>{{ welder.first_name }}</td></tr>
 		            <tr><td width="20%">Last Name</td><td>{{ welder.last_name }}</td></tr>
-		            <tr><td width="20%">ABSA Number</td><td>{{ welder.absa_number }}</td></tr>
-					
 		        </table>
 
 				<table width="100%" border="0">
@@ -78,6 +76,7 @@
 		        <table width="90%" border="0" class="table table-striped table-bordered table-condensed">
 		            <tr>
 		            	<th>PQ Card Number</th>
+						<th>ABSA Number</th>
 		            	<th>f Number</th>
 		            	<th>Process</th>
 		            	<th>t Qual</th>
@@ -92,14 +91,15 @@
 						{% for pq in performance_qualification_list %}
 				            <tr>
 				            	<td>{{ pq.id }}</td>
+								<td>{{ pq.absa_number }}</td>
 				            	<td>{{ pq.f_number }}</td>
 				            	<td>{{ pq.process }}</td>
 				            	<td>{{ pq.t_qual }}</td>
 				            	<td>{{ pq.minimum_diameter }}</td>
 				            	<td>{{ pq.position }}</td>
 				            	<td>{{ pq.cessco_weld_procedure }}</td>
-								<td>{{ pq.original_test_date|date:"Y-m-d" }}</td>
-								<td>{{ pq.renewal_date|date:"Y-m-d" }}</td>
+								<td>{{ pq.start_date|date:"Y-m-d" }}</td>
+								<td>{{ pq.end_date|date:"Y-m-d" }}</td>
 				            	<td>
 				            	    
 					            	<button type="button" class="btn btn-default btn-lg">
@@ -112,7 +112,7 @@
 				            </tr>
 
 						{% empty %}
-				        		<tr><td colspan="8">Sorry, there is no performance qualifications for welder for id {{welder.pk }}</td></tr>
+				        		<tr><td colspan="11">Sorry, there is no performance qualifications for welder for id {{welder.pk }}</td></tr>
 
 						{% endfor %}
 

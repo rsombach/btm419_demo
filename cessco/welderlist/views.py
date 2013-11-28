@@ -43,7 +43,7 @@ class WelderListView(SingleTableView, LoginRequiredMixin, ListView):
     model = Welder
     context_object_name = 'welder_list'
     table_class = WelderTable
-    table_pagination = {'per_page': 25}
+    table_pagination = {'per_page': 200}
 
 
 class WelderDetailView(LoginRequiredMixin, DetailView):
