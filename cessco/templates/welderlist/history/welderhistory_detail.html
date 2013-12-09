@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ title }} | Home {% endblock %}
+
+{% block branding %}
+<h1 id="site-name">Cessco Quality Control</h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block navbar-right %}
+<h4>Welder</h4>
+<li><a href="/welderlist/welder/">List</a>
+<li><a href="/welderlist/welder/add/">Create</a>
+{% endblock %}
+
+
+{% block content %}
+
+	{% if user.is_authenticated %}
+
+	{% if messages %} 
+		<ul class="messages"> 
+			{% for message in messages %} 
+				<li id="message_{{ forloop.counter }}"
+				{% if message.tags %} class="{{ message.tags }}"{% endif %}> 
+				{{ message }} 
+				</li> 
+			{% endfor %} 
+		</ul> 
+	{% endif %}
+
+	    <h2>Welder History Details</h2>
+	    <table width="90%" border="0" class="table table-striped table-bordered table-condensed">
+	        <tr><td><h4><a href="/welderlist/welder/{{ current_welder }}/">{{ current_welder_first_name }} {{ current_welder_last_name }} ({{ current_welder }})</a></h4></td></tr>
+	    </table>
+	    
+	        {% if welderhistory %}
+	        	<table width="90%" border=0 class="table table-striped table-bordered table-condensed">
+		            <tr><td width="20%">Original Test Date</td><td>{{ welderhistory.start_date|date:"Y-m-d" }}</td></tr>
+		            <tr><td width="20%">Renewal Date</td><td>{{ welderhistory.end_date|date:"Y-m-d" }}</td></tr>
+		        </table>
+
+	        {% else %}
+	    		<table width="90%" border=0 class="table table-striped table-bordered table-condensed">
+	        		<tr><td>Sorry, there are no record for welder id {{welder.pk }}</td></tr>
+	        	</table>
+	        {% endif %}
+
+
+	{% else %}
+
+		Access denied, please <a href="/login/">login</a>.
+
+	{% endif %}
+
+{% endblock %}
+
+
+
+
+
+
+

@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load render_table from django_tables2 %}
+
+{% block title %}{{ title }} | Home {% endblock %}
+
+{% block branding %}
+<h1 id="site-name">Cessco Quality Control</h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block navbar-right %}
+<h4>Welder</h4>
+<li><a href="/welderlist/welder/">List</a>
+<li><a href="/welderlist/welder/add/">Create</a>
+{% endblock %}
+
+
+{% block content %}
+
+	{% if user.is_authenticated %}
+
+	{% if messages %} 
+		<ul class="messages"> 
+			{% for message in messages %} 
+				<li id="message_{{ forloop.counter }}"
+				{% if message.tags %} class="{{ message.tags }}"{% endif %}> 
+				{{ message }} 
+				</li> 
+			{% endfor %} 
+		</ul> 
+	{% endif %}
+
+    <h2>Welder History</h2>
+	<h4>{{ current_welder_first_name }} {{ current_welder_last_name }} ({{ current_welder }})</h4>
+	
+	        {% if welder_history_list %}
+			
+				<table width="100%" border="0">
+		            <tr>
+		           		<td align="left" padding="2">
+		            		<h4>Welder History</h4>
+		            	</td>
+		            	<td align="right" padding="2">
+							<a href="/welderlist/history/add/">
+								<button type="button" class="btn btn-default btn-lg">
+	  								<span class="glyphicon icon-plus"></span>Add
+								</button>
+							</a>
+		            	</td>
+		            </tr>
+		        </table>
+
+		        <table width="90%" border="0" class="table table-striped table-bordered table-condensed">
+		            <tr>
+						<th>Start Date</th>
+						<th>End Date</th>
+		            	<th></th>
+		            </tr>
+
+						{% for wh in welder_history_list %}
+				            <tr>
+								<td>{{ wh.start_date|date:"Y-m-d" }}</td>
+								<td>{{ wh.end_date|date:"Y-m-d" }}</td>
+
+				            	<td width="2%">
+				            	    
+					            	<button type="button" class="btn btn-default btn-lg">
+					            	    <a href="/welderlist/history/update/{{ wh.id }}/">
+					  					<span class="glyphicon icon-pencil"></span> 
+					  					</a>       		
+					            	</button>
+
+								</td>
+				            </tr>
+
+						{% empty %}
+				        		<tr><td colspan="12">Sorry, there are no history records for welder id {{welder.pk }}</td></tr>
+
+						{% endfor %}
+
+		        	</table>
+		        	
+		        	
+
+
+	        {% else %}
+	    		<table width="90%" border=0 class="table table-striped table-bordered table-condensed">
+	        		<tr><td>Sorry, there is no information for welder for id {{welder.pk }}</td></tr>
+	        	</table>
+	        {% endif %}
+
+
+
+	{% else %}
+
+		Access denied, please <a href="/login/">login</a>.
+
+	{% endif %}
+
+{% endblock %}
+
+
+
+
+
+
+

@@ -73,5 +73,27 @@ urlpatterns = patterns('',
         view=views.PerformanceQualificationUpdateView.as_view(),
         name='performanequalification_update',
         ),
+        
+    # Patterns for Welder History
+    url(
+        regex=r'^welderlist/history/add/$',
+        view=views.WelderHistoryCreateView.as_view(),
+        name='welderhistory_add',
+        ),
+    url(
+        regex=r'^welderlist/history/(?P<pk>\d+)/$',
+        view=views.WelderHistoryDetailView.as_view(),
+        name='welderhistory_detail',
+        ),
+    url(
+        regex=r'^welderlist/history/$',
+        view=views.WelderHistoryListView.as_view(),
+        name='welderhistory_list',
+        ),
+    url(
+        regex=r'^welderlist/history/update/(?P<pk>\d+)/$',
+        view=views.WelderHistoryUpdateView.as_view(),
+        name='welderhistory_update',
+        ),
 
 )

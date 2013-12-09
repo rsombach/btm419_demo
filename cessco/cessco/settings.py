@@ -123,6 +123,7 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     join(DIR, "templates"),
     join(DIR, "templates/welderlist/welder"),
+    join(DIR, "templates/welderlist/history"),
     join(DIR, "templates/welderlist/pq"),
 )
 

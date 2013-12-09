@@ -1,6 +1,17 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% load render_table from django_tables2 %}
+
+{% load crispy_forms_tags %}
+
+{% block js_scripts %}
+    
+    <script type="text/javascript">
+        $( function() {
+            $('.dateinput').datepicker({ dateFormat: 'yy-mm-dd' });
+        } );
+    </script>
+
+{% endblock %}
 
 {% block title %}{{ title }} | Home {% endblock %}
 
@@ -14,13 +25,6 @@
 <h4>Welder</h4>
 <li><a href="/welderlist/welder/">List</a>
 <li><a href="/welderlist/welder/add/">Create</a>
-
-<h4>Report</h4>
-<li><a href="/welderlist/welder/">All Welders</a>
-	
-<h4>Search</h4>
-<li><input class="input-small" type="text" name="omnibox">
-
 {% endblock %}
 
 
@@ -28,10 +32,14 @@
 
 	{% if user.is_authenticated %}
     
-	    <h2>Cessco Qualified Pressure Welders Log</h2>
-	    
-	    {% render_table table %}
-	    
+	    <h2>Add Welder History</h2>
+		<h4>{{ current_welder_first_name }} {{ current_welder_last_name }} ({{ current_welder }})</h4>
+	    <table width="90%" border=0>
+
+	        <tr><td>{% crispy form %}</td></tr>
+
+	    </table>
+
 	{% else %}
 
 		Access denied, please <a href="/login/">login</a>.

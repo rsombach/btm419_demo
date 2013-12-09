@@ -11,11 +11,14 @@ from django_tables2 import SingleTableView
 from braces.views import LoginRequiredMixin
 
 from .models import Welder
+from .models import WelderHistory
 from .models import PerformanceQualification
 
 # forms.py import
 from forms import WelderCreateForm
 from forms import WelderUpdateForm
+from forms import WelderHistoryCreateForm
+from forms import WelderHistoryUpdateForm
 from forms import PerformanceQualificationCreateForm
 from forms import PerformanceQualificationUpdateForm
 
@@ -62,7 +65,10 @@ class WelderDetailView(LoginRequiredMixin, DetailView):
         kwargs_welder_id = kwargs["object"].id
         
         context['performance_qualification_list'] = PerformanceQualification.objects.filter(welder_id=kwargs_welder_id, active=True)
-
+        # context['welder_history_list'] = WelderHistory.objects.filter(welder_id=kwargs_welder_id).order_by('-start_date')
+        
+        context['welder_history_list'] = WelderHistory.objects.values_list('start_date', flat=True).filter(welder_id=kwargs_welder_id).order_by('-start_date')
+        
         self.request.session['current_welder'] = kwargs_welder_id
         self.request.session['current_welder_first_name'] = kwargs["object"].first_name
         self.request.session['current_welder_last_name'] = kwargs["object"].last_name
@@ -156,4 +162,75 @@ class PerformanceQualificationListView(LoginRequiredMixin, ListView):
         context['current_welder_first_name'] = self.request.session['current_welder_first_name']
         context['current_welder_last_name'] = self.request.session['current_welder_last_name']
 
+        return context
+        
+class WelderHistoryCreateView(LoginRequiredMixin, WelderListActionMixin, CreateView):
+    login_url = "/login/"
+    model = WelderHistory
+    template_name = 'welderhistory_form.html'
+    form_class = WelderHistoryCreateForm
+    action = "created"
+    
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(WelderHistoryCreateView, self).get_context_data(**kwargs)
+        context['current_welder'] = self.request.session['current_welder']
+        context['current_welder_first_name'] = self.request.session['current_welder_first_name']
+        context['current_welder_last_name'] = self.request.session['current_welder_last_name']
+        
+        return context
+    
+    def form_valid(self, form):
+        form.instance.welder_id = self.request.session['current_welder']
+        return super(WelderHistoryCreateView, self).form_valid(form)
+        
+class WelderHistoryDetailView(LoginRequiredMixin, DetailView):
+    login_url = "/login/"
+    template_name = 'welderhistory_detail.html'
+    model = WelderHistory
+    
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(WelderHistoryDetailView, self).get_context_data(**kwargs)
+        context['current_welder'] = self.request.session['current_welder']
+        context['current_welder_first_name'] = self.request.session['current_welder_first_name']
+        context['current_welder_last_name'] = self.request.session['current_welder_last_name']
+        
+        return context
+
+class WelderHistoryListView(LoginRequiredMixin, ListView):
+    login_url = "/login/"
+    template_name = 'welderhistory_list.html'
+    model = WelderHistory
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(WelderHistoryListView, self).get_context_data(**kwargs)
+        
+        # Add in a QuerySet of all the history records for the current welder
+        session_welder_id = self.request.session['current_welder']
+        
+        # print "***** welder_id = %d" % session_welder_id
+        
+        context['welder_history_list'] = WelderHistory.objects.filter(welder_id=session_welder_id).order_by('-start_date')
+        context['current_welder'] = self.request.session['current_welder']
+        context['current_welder_first_name'] = self.request.session['current_welder_first_name']
+        context['current_welder_last_name'] = self.request.session['current_welder_last_name']
+        
+        return context
+        
+class WelderHistoryUpdateView(LoginRequiredMixin, WelderListActionMixin, UpdateView):
+    login_url = "/login/"
+    template_name = 'welderhistory_update.html'
+    form_class = WelderHistoryUpdateForm
+    model = WelderHistory
+    action = "updated"
+    
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(WelderHistoryUpdateView, self).get_context_data(**kwargs)
+        context['current_welder'] = self.request.session['current_welder']
+        context['current_welder_first_name'] = self.request.session['current_welder_first_name']
+        context['current_welder_last_name'] = self.request.session['current_welder_last_name']
+        
         return context
