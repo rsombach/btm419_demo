@@ -2,6 +2,7 @@
 {% load i18n %}
 
 {% load crispy_forms_tags %}
+{% load django_bootstrap_breadcrumbs %}
 
 {% block title %}{{ title }} | Home {% endblock %}
 
@@ -28,8 +29,21 @@
 {% block content %}
 
 	{% if user.is_authenticated %}
-    
-	    <h2>Update Welder</h2>
+	
+		{% block breadcrumbs %}
+
+			{{ block.super }}
+			{% breadcrumb "Welder List" "welder_list" %}
+			{% breadcrumb_for welder_detail welder.id %}
+				{{ welder.first_name }}
+			    {{ welder.last_name }}
+			{% endbreadcrumb_for %}
+			{% breadcrumb "Update" "welder_update" %}
+	
+		{% endblock %}
+
+		{% render_breadcrumbs %}
+
 	    <table width="90%" border=0>
 
 	        <tr><td>{% crispy form %}</td></tr>

@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load django_bootstrap_breadcrumbs %}
 
 {% block title %}{{ title }} | Home {% endblock %}
 
@@ -27,6 +28,22 @@
 
 	{% if user.is_authenticated %}
 
+	{% block breadcrumbs %}
+
+		{{ block.super }}
+		{% breadcrumb "Welder List" "welder_list" %}
+
+		{% breadcrumb_for welder_detail current_welder %}
+			{{ current_welder_first_name }}
+		    {{ current_welder_last_name }}
+		{% endbreadcrumb_for %}
+
+		{% breadcrumb "Performance Qualification" "performancequalification_detail" %}
+
+	{% endblock %}
+
+	{% render_breadcrumbs %}
+
 	{% if messages %} 
 		<ul class="messages"> 
 			{% for message in messages %} 
@@ -37,11 +54,6 @@
 			{% endfor %} 
 		</ul> 
 	{% endif %}
-
-	    <h2>Performance Qualification Details</h2>
-	    <table width="90%" border="0" class="table table-striped table-bordered table-condensed">
-	        <tr><td><h4><a href="/welderlist/welder/{{ current_welder }}/">{{ current_welder_first_name }} {{ current_welder_last_name }} ({{ current_welder }})</a></h4></td></tr>
-	    </table>
 	    
 	        {% if performancequalification %}
 	        	<table width="90%" border=0 class="table table-striped table-bordered table-condensed">

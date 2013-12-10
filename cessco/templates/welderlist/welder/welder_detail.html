@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load render_table from django_tables2 %}
+{% load django_bootstrap_breadcrumbs %}
 
 {% block js_scripts %}
 
@@ -39,7 +40,21 @@
 {% block content %}
 
 	{% if user.is_authenticated %}
+	
+	{% block breadcrumbs %}
 
+		{{ block.super }}
+		{% breadcrumb "Welder List" "welder_list" %}
+		
+		{% breadcrumb_for welder_detail %}
+			{{ welder.first_name }}
+		    {{ welder.last_name }}
+		{% endbreadcrumb_for %}
+
+	{% endblock %}
+
+	{% render_breadcrumbs %}
+	
 	{% if messages %} 
 		<ul class="messages"> 
 			{% for message in messages %} 
@@ -51,7 +66,7 @@
 		</ul> 
 	{% endif %}
 
-	    <h2>Welder Details
+	    <h4>Welder Details
 	        {% if welder %}
                 <button type="button" class="btn btn-default btn-lg">
                     <a href="/welderlist/welder/update/{{ welder.id }}/">
@@ -59,7 +74,7 @@
                     </a>       		
                 </button>
             {% endif %}
-	    </h2>
+	    </h4>
 		
 	        {% if welder %}
 	        	<table id="performancequalificationTable" width="90%" border=0 class="table table-striped table-bordered table-condensed tablesorter">

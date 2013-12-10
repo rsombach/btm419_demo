@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load render_table from django_tables2 %}
+{% load django_bootstrap_breadcrumbs %}
 
 {% block js_scripts %}
 
@@ -40,6 +41,22 @@
 
 	{% if user.is_authenticated %}
 
+	{% block breadcrumbs %}
+
+		{{ block.super }}
+		{% breadcrumb "Welder List" "welder_list" %}
+
+		{% breadcrumb_for welder_detail current_welder %}
+			{{ current_welder_first_name }}
+		    {{ current_welder_last_name }}
+		{% endbreadcrumb_for %}
+	
+		{% breadcrumb "Performance Qualification History" "performancequalification_list" %}
+
+	{% endblock %}
+
+	{% render_breadcrumbs %}
+
 	{% if messages %} 
 		<ul class="messages"> 
 			{% for message in messages %} 
@@ -50,17 +67,12 @@
 			{% endfor %} 
 		</ul> 
 	{% endif %}
-
-    <h2>Performance Qualification History</h2>
-	<h4>{{ current_welder_first_name }} {{ current_welder_last_name }} ({{ current_welder }})</h4>
 	
 	        {% if performance_qualification_list %}
 			
 				<table width="100%" border="0">
 		            <tr>
-		           		<td align="left" padding="2">
-		            		<h4>Performance Qualifications</h4>
-		            	</td>
+
 		            	<td align="right" padding="2">
 							<a href="/welderlist/pq/add/">
 								<button type="button" class="btn btn-default btn-lg">

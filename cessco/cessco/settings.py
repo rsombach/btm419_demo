@@ -143,6 +143,7 @@ INSTALLED_APPS = (
     'south',
     'crispy_forms',
     'django_tables2',
+    'django_bootstrap_breadcrumbs',
     'core', # Core models / functionality that can be used by all apps
 	'search', # simple search utilities
     'welderlist',

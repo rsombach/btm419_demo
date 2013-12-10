@@ -2,6 +2,7 @@
 {% load i18n %}
 
 {% load crispy_forms_tags %}
+{% load django_bootstrap_breadcrumbs %}
 
 {% block js_scripts %}
     
@@ -38,14 +39,24 @@
 {% block content %}
 
 	{% if user.is_authenticated %}
-    
-	    <h2>Welder History Form</h2>
-	    <table width="90%" border="0" class="table table-striped table-bordered table-condensed">
+	
+		{% block breadcrumbs %}
 
-	        <tr><td><h4>{{ current_welder_first_name }} {{ current_welder_last_name }} ({{ current_welder }})</h4></td></tr>
+			{{ block.super }}
+			{% breadcrumb "Welder List" "welder_list" %}
+	
+			{% breadcrumb_for welder_detail current_welder %}
+				{{ current_welder_first_name }}
+			    {{ current_welder_last_name }}
+			{% endbreadcrumb_for %}
+		
+			{% breadcrumb "Welder History" "welderhistory_list" %}
+			
+			{% breadcrumb "Update" "welderhistory_update" %}
 
-	    </table>
-	    
+		{% endblock %}
+
+		{% render_breadcrumbs %}
 
 	    <table width="90%" border="0" class="table table-striped table-bordered table-condensed">
 
