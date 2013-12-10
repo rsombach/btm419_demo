@@ -4,7 +4,7 @@ from django.template import RequestContext
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 
-from django.views.generic import (CreateView, ListView, DetailView, UpdateView)
+from django.views.generic import (CreateView, ListView, DetailView, UpdateView, TemplateView)
 from django_tables2 import SingleTableView
 # import django_tables2 as tables
 
@@ -25,6 +25,18 @@ from forms import PerformanceQualificationUpdateForm
 # tables.py import
 from tables import WelderTable, PerformanceQualificationTable
 
+# search/util.py import
+from search.utils import generic_search
+from django.shortcuts  import render_to_response, redirect
+
+QUERY="q"
+WELDER_MODEL_MAP = { 	
+				Welder: [ "first_name", "last_name", "welder_stamp__welder_stamp_code" ],
+			}
+			
+PERFORMANCE_QUALIFICATION_MODEL_MAP = {
+				PerformanceQualification  : [ "id", "absa_number" ], 
+}
 
 class WelderListActionMixin(object): 
     @property 
@@ -47,7 +59,26 @@ class WelderListView(SingleTableView, LoginRequiredMixin, ListView):
     context_object_name = 'welder_list'
     table_class = WelderTable
     table_pagination = {'per_page': 200}
+	
+	
+class SearchResultView(LoginRequiredMixin, TemplateView):
+	login_url = "/login/"
+	template_name = 'search_results.html'
 
+	def get_context_data(self, **kwargs):
+		context = super(SearchResultView, self).get_context_data(**kwargs)
+		welder_search_result = []
+		performance_qualification_search_result = []
+	
+		for model, fields in WELDER_MODEL_MAP.iteritems():
+			welder_search_result += generic_search( self.request, model, fields, QUERY)
+			
+		for model, fields in PERFORMANCE_QUALIFICATION_MODEL_MAP.iteritems():
+			performance_qualification_search_result += generic_search( self.request, model, fields, QUERY)	
+		
+		context['welder_search_result'] = welder_search_result
+		context['performance_qualification_search_result'] = performance_qualification_search_result
+		return context
 
 class WelderDetailView(LoginRequiredMixin, DetailView):
     login_url = "/login/"
@@ -65,8 +96,6 @@ class WelderDetailView(LoginRequiredMixin, DetailView):
         kwargs_welder_id = kwargs["object"].id
         
         context['performance_qualification_list'] = PerformanceQualification.objects.filter(welder_id=kwargs_welder_id, active=True)
-        # context['welder_history_list'] = WelderHistory.objects.filter(welder_id=kwargs_welder_id).order_by('-start_date')
-        
         context['welder_history_list'] = WelderHistory.objects.values_list('start_date', flat=True).filter(welder_id=kwargs_welder_id).order_by('-start_date')
         
         self.request.session['current_welder'] = kwargs_welder_id
@@ -74,7 +103,6 @@ class WelderDetailView(LoginRequiredMixin, DetailView):
         self.request.session['current_welder_last_name'] = kwargs["object"].last_name
 
         return context
-
 
 class WelderCreateView(LoginRequiredMixin, WelderListActionMixin, CreateView):
     login_url = "/login/"

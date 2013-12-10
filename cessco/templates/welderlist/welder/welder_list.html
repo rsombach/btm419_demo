@@ -19,7 +19,10 @@
 <li><a href="/welderlist/welder/">All Welders</a>
 	
 <h4>Search</h4>
-<li><input class="input-small" type="text" name="omnibox">
+<form action="/welderlist/search/" method="get">
+	<li><input class="input-medium" id="id_q" name="q" type="text">
+	<li><input type="submit" value="Submit">
+</form>
 
 {% endblock %}
 

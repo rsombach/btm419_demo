@@ -30,6 +30,18 @@ urlpatterns = patterns('',
     # Pattern for core app ~ index.html
     url(r'^$', 'core.views.index'),
 
+	# Patterns for Simple search
+    # url(
+    #     regex=r'^welderlist/search/$',
+    #     view='welderlist.views.search',
+    #     name='searchresults_list',
+    #     ),
+    url(
+        regex=r'^welderlist/search/$',
+        view=views.SearchResultView.as_view(),
+        name='searchresult',
+        ),
+		
     # Patterns for Welders
     url(
         regex=r'^welderlist/welder/$',

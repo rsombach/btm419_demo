@@ -122,6 +122,7 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     join(DIR, "templates"),
+    join(DIR, "templates/welderlist/search/"),
     join(DIR, "templates/welderlist/welder"),
     join(DIR, "templates/welderlist/history"),
     join(DIR, "templates/welderlist/pq"),
@@ -143,6 +144,7 @@ INSTALLED_APPS = (
     'crispy_forms',
     'django_tables2',
     'core', # Core models / functionality that can be used by all apps
+	'search', # simple search utilities
     'welderlist',
 )
 
