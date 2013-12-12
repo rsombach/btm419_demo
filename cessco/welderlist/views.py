@@ -35,7 +35,7 @@ WELDER_MODEL_MAP = {
 			}
 			
 PERFORMANCE_QUALIFICATION_MODEL_MAP = {
-				PerformanceQualification  : [ "id", "absa_number" ], 
+				PerformanceQualification  : [ "id", "f_number__f_number_code", "process__process_code", "cessco_weld_procedure__cessco_weld_procedure_code" ], 
 }
 
 class WelderListActionMixin(object): 

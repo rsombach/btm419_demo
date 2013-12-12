@@ -36,21 +36,35 @@
 			
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
-        <div class="container">
-          <a class="brand" href="/">Quality Control</a>
-		  
-            <ul class="nav nav-pills">
-              <li class="active"><a href="/welderlist/welder/">Welder List</a></li>
-              
-              {% if request.user.is_superuser %}
-                  <li class="active"><a href="/admin/">Administration</a></li>
-              {% endif %}
-            </ul>
 
+        <div class="container navbar-left">
+			
+			<a class="brand" href="/">Quality Control</a>
+		  
+            <ul class="nav nav-pills navbar-left">
+              <li class="active"><a href="/welderlist/welder/">Welder List</a></li>
+            </ul> 
+			
+			{% if request.user.is_superuser %}
+				<ul class="nav nav-pills navbar-left">
+					<li class="active"><a href="/admin/">Administration</a></li>
+				</ul>
+			{% endif %}
+			
+			<div class="col-sm-3 col-md-3 pull-right">
+				<form class="navbar-form navbar-right" role="search" action="/search/" method="get">
+					<div class="form-group">
+						<input class="input-medium" id="id_q" name="q" type="text" placeholder="Search">
+						<input type="submit" class="btn btn-default" value="Submit">
+					</div>
+				</form>
+			</div>
+			
         </div>
+
       </div>
     </div>
-    
+
     <div class="container">
 
       <div class="row">
@@ -104,7 +118,7 @@
     <div class="navbar navbar-default">
       <div class="container" align="center">
         <table width="80%" border="0">
-          <tr align="center"><td>&copy 2013 Cessco Fabrication and Engineering Ltd.<br>version: 0.95</td></tr>
+          <tr align="center"><td>&copy 2013 Cessco Fabrication and Engineering Ltd.<br>version: 0.97</td></tr>
         </table>
       </div>
     </div>

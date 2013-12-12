@@ -31,13 +31,9 @@ urlpatterns = patterns('',
     url(r'^$', 'core.views.index'),
 
 	# Patterns for Simple search
-    # url(
-    #     regex=r'^welderlist/search/$',
-    #     view='welderlist.views.search',
-    #     name='searchresults_list',
-    #     ),
+
     url(
-        regex=r'^welderlist/search/$',
+        regex=r'^search/$',
         view=views.SearchResultView.as_view(),
         name='searchresult',
         ),
