@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>My Title</title>
+        <style type="text/css">
+            @page {
+                size: {{ pagesize }} landscape;
+/*                margin: 1cm;*/
+				top: 1.2cm;
+				right: 1.2cm;
+				left: 1.2cm;
+				bottom: 2cm;
+				
+		        @frame header_frame {
+		            -pdf-frame-content: header_content;
+                    bottom: 19.5cm;
+                    margin-left: 1cm;
+                    margin-right: 1cm;
+                    height: 1cm;
+/*					-pdf-frame-border: 0;*/
+		        }
+				
+		        @frame content_frame {
+					-pdf-frame-content: report_content;
+                    bottom: 2cm;
+                    margin-left: 1cm;
+                    margin-right: 1cm;
+                    height: 18cm;
+					-pdf-frame-border: 0;
+		        }
+				
+                @frame footer_frame {
+                    -pdf-frame-content: footer_content;
+                    bottom: 0.5cm;
+                    margin-left: 1cm;
+                    margin-right: 1cm;
+                    height: 1cm;
+/*					-pdf-frame-border: 0;*/
+                }
+				
+				table {
+					-pdf-keep-in-frame-mode: shrink;
+				}
+            }
+        </style>
+    </head>
+    <body>
+
+		<div id="header_content">
+			<div align="center"><h2>Cessco Qualified Pressure Welders Log<h2></div>
+		</div>
+		
+	    <div id="footer_content">
+			<table width="100%">
+				<tr>
+					<td align="left">Page 
+						<pdf:pagenumber>
+					</td>
+					<td align="right">Printed on {% now "Y-m-d H:i" %}</td>
+				</tr>
+			</table>
+		</div>
+		
+        <div>
+		<table width="100%">
+			{% for welder in welder_list %}
+
+				        <tr>
+							<td colspan="10"><h2>{{ welder.last_name }}, {{ welder.first_name }} ({{ welder.welder_stamp }})</h1></td>
+						</tr>
+						<tr>
+			            	<td><h4>PQ Card Number</h4></td>
+							<td><h4>ABSA Number</h4></td>
+			            	<td><h4>f Number</h4></td>
+			            	<td><h4>Process</h4></td>
+			            	<td><h4>t Qual</h4></td>
+			            	<td><h4>Minimum Diameter</h4></td>
+			            	<td><h4>Position</h4></td>
+			            	<td><h4>CWP</h4></td>
+							<td><h4>Original Test Date</h4></td>
+							<td><h4>Renewal Date</h4></td>
+						</tr>
+						{% for pq in performance_qualification_list %}
+
+							{% if welder.id == pq.welder_id %}
+						        <tr>
+					            	<td>{{ pq.id }}</td>
+									<td>{{ pq.absa_number }}</td>
+					            	<td>{{ pq.f_number }}</td>
+					            	<td>{{ pq.process }}</td>
+					            	<td>{{ pq.t_qual }}</td>
+					            	<td>{{ pq.minimum_diameter }}</td>
+					            	<td>{{ pq.position }}</td>
+					            	<td>{{ pq.cessco_weld_procedure }}</td>
+									<td>{{ pq.start_date|date:"Y-m-d" }}</td>
+									<td>{{ pq.end_date|date:"Y-m-d" }}</td>
+								</tr>
+							{% endif %}
+						{% endfor %}
+				<tr>
+					<td colspan="10">&nbsp;</td>
+				</tr>
+				
+
+		    {% endfor %}
+		</table>
+        </div>
+		
+
+		
+    </body>
+</html>

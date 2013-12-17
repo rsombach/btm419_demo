@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.template import RequestContext
 
+
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 
@@ -28,6 +29,8 @@ from tables import WelderTable, PerformanceQualificationTable
 # search/util.py import
 from search.utils import generic_search
 from django.shortcuts  import render_to_response, redirect
+
+
 
 QUERY="q"
 WELDER_MODEL_MAP = { 	
@@ -262,3 +265,47 @@ class WelderHistoryUpdateView(LoginRequiredMixin, WelderListActionMixin, UpdateV
         context['current_welder_last_name'] = self.request.session['current_welder_last_name']
         
         return context
+                
+# PDF Rendering
+from django.template.loader import get_template
+from django.template import Context
+from django.http import HttpResponse
+from django.shortcuts import get_list_or_404
+
+import ho.pisa as pisa
+import cStringIO as StringIO
+import cgi
+
+# def write_pdf(template_src, context_dict):
+#     template = get_template(template_src)
+#     context = Context(context_dict)
+#     html  = template.render(context)
+#     result = StringIO.StringIO()
+#     pdf = pisa.pisaDocument(StringIO.StringIO(
+#         html.encode("UTF-8")), result)
+#     if not pdf.err:
+#         return http.HttpResponse(result.getvalue(), \
+#              mimetype='application/pdf')
+#     return http.HttpResponse('Gremlin's ate your pdf! %s' % cgi.escape(html))
+    
+def render_to_pdf(template_src, context_dict):
+    template = get_template(template_src)
+    context = Context(context_dict)
+    html  = template.render(context)
+    result = StringIO.StringIO()
+
+    pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("ISO-8859-1")), result)
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), mimetype='application/pdf')
+    return HttpResponse('There were errors when generating the report:<pre>%s</pre>' % escape(html))
+    
+def WelderReport(request):
+    welder_list = get_list_or_404(Welder.objects.order_by('last_name'))
+    performance_qualification_list = get_list_or_404(PerformanceQualification.objects.filter(active=True))
+
+    return render_to_pdf( 'welder_report.html', 
+    {
+        'pagesize' : 'A4',
+        'welder_list' : welder_list,
+        'performance_qualification_list' : performance_qualification_list,
+     } )

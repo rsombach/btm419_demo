@@ -60,6 +60,13 @@ urlpatterns = patterns('',
         name='welder_detail',
         ),
         
+    # PDF Welder Report
+    url(
+        regex=r'^welderlist/report/$',
+        view=views.WelderReport,
+        name='welder_report',
+        ),
+        
     # Patterns for Performance Qualifications
     url(
         regex=r'^welderlist/pq/$',

@@ -126,6 +126,7 @@ TEMPLATE_DIRS = (
     join(DIR, "templates/welderlist/welder"),
     join(DIR, "templates/welderlist/history"),
     join(DIR, "templates/welderlist/pq"),
+    join(DIR, "templates/welderlist/report"),
 )
 
 INSTALLED_APPS = (
