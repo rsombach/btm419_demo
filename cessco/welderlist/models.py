@@ -9,6 +9,11 @@ class Welder(TimeStampedModel):
 	last_name = models.CharField(max_length=128, verbose_name='Last Name')
 	welder_stamp = models.ForeignKey('core.WelderStampLov', verbose_name='Welder Stamp')
 
+	class Meta:
+		permissions = (
+			("select_welderlist", "Can select welder"),
+		)
+
 	def __unicode__(self):
 		return self.id
 	

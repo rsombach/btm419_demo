@@ -147,7 +147,7 @@ INSTALLED_APPS = (
     'django_bootstrap_breadcrumbs',
     'core', # Core models / functionality that can be used by all apps
 	'search', # simple search utilities
-    'welderlist',
+    'welderlist', # [1] Cessco Qualified Pressure Welder List
 )
 
 # A sample logging configuration. The only tangible logging
