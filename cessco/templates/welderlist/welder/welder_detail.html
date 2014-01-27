@@ -146,7 +146,7 @@
 					            	<td>{{ pq.position }}</td>
 					            	<td>{{ pq.cessco_weld_procedure }}</td>
 									<td>{{ pq.start_date|date:"Y-m-d" }}</td>
-									<td>{{ pq.end_date|date:"Y-m-d" }}</td>
+									<td><a href="/welderlist/pq/continuity/{{ pq.id }}/">{{ pq.calculated_renewal_date|date:"Y-m-d" }}</a></td>
 								
 									{% if perms.welderlist.edit_welder %}
 					            	<td>

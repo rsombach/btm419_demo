@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.template import RequestContext
 
+from datetime import datetime, timedelta
 
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
@@ -265,7 +266,53 @@ class WelderHistoryUpdateView(LoginRequiredMixin, WelderListActionMixin, UpdateV
         context['current_welder_last_name'] = self.request.session['current_welder_last_name']
         
         return context
-                
+     
+# Performance Qualification Continuity Report
+class PerformanceQualificationContinuityReport(LoginRequiredMixin, ListView):
+    login_url = "/login/"
+    template_name = 'performancequalification_continuity_report.html'
+    model = PerformanceQualification
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(PerformanceQualificationContinuityReport, self).get_context_data(**kwargs)
+
+        
+        # Add in a QuerySet of all the performance qualifications for the current welder
+        session_welder_id = self.request.session['current_welder']
+        current_pq = self.kwargs['pk']
+
+        context['current_pq'] = current_pq
+
+        # calculate pq continutity and store in context
+        pq = PerformanceQualification.objects.get(id=current_pq, welder_id=session_welder_id)
+
+        pq_continuity = [pq.start_date]
+        # print pq_continuity[0]
+
+        days_in_year=365.2425
+
+        # Get the current date
+        today = datetime.now().date()
+
+        # add initial two years to original test date
+        pq_date = pq.start_date + timedelta(days=(days_in_year*2))
+        pq_continuity.append(pq_date)
+
+        if pq_date < today:
+            while (pq_date < today):
+                # temp_date = datetime.datetime.strptime(pq_continuity[pq_date_count], "%Y-%m-%d").date()
+                pq_date = pq_date + timedelta(days=(days_in_year/2))
+                pq_continuity.append(pq_date)
+
+        context['pq_continuity'] = pq_continuity
+        context['performance_qualification'] = PerformanceQualification.objects.filter(id=current_pq, welder_id=session_welder_id).values('start_date', 'end_date')
+        context['current_welder'] = self.request.session['current_welder']
+        context['current_welder_first_name'] = self.request.session['current_welder_first_name']
+        context['current_welder_last_name'] = self.request.session['current_welder_last_name']
+
+        return context
+
 # PDF Rendering
 from django.template.loader import get_template
 from django.template import Context

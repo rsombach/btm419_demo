@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load render_table from django_tables2 %}
+{% load django_bootstrap_breadcrumbs %}
+
+{% block title %}{{ title }} | Home {% endblock %}
+
+{% block branding %}
+<h1 id="site-name">Cessco Quality Control</h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block navbar-right %}
+
+{% if user.is_authenticated and perms.welderlist.select_welderlist %}
+	
+	<h4>Welder</h4>
+	<li><a href="/welderlist/welder/">List</a>
+
+	{% if perms.welderlist.add_welder %}
+		<li><a href="/welderlist/welder/add/">Create</a>
+	{% endif %}
+
+	<h4>Report</h4>
+	<li><a href="/welderlist/report/">All Welders</a>
+
+{% endif %}
+	
+{% endblock %}
+
+
+{% block content %}
+
+	{% if user.is_authenticated %}
+	
+		{% if perms.welderlist.select_welderlist %}
+
+			{% block breadcrumbs %}
+
+				{{ block.super }}
+				{% breadcrumb "Welder List" "welder_list" %}
+	
+				{% breadcrumb_for welder_detail current_welder %}
+					{{ current_welder_first_name }}
+				    {{ current_welder_last_name }}
+				{% endbreadcrumb_for %}
+
+				{% breadcrumb_for performancequalification_detail current_pq %}
+			    	{{ current_pq }}
+				{% endbreadcrumb_for %}
+
+				{% breadcrumb "Performance Qualification Continuity" "performanequalification_update_continutity_report" %}
+
+			{% endblock %}
+
+			{% render_breadcrumbs %}
+
+			{% if messages %} 
+				<ul class="messages"> 
+					{% for message in messages %} 
+						<li id="message_{{ forloop.counter }}"
+						{% if message.tags %} class="{{ message.tags }}"{% endif %}> 
+						{{ message }} 
+						</li> 
+					{% endfor %} 
+				</ul> 
+			{% endif %}
+
+			{% if pq_continuity %}
+				<table width="90%" border="0" class="table table-striped table-bordered table-condensed">
+
+				{% for pq in pq_continuity %}
+
+					<tr><td>{{ pq|date:"Y-m-d" }}</td></tr>
+
+				{% empty %}
+						
+	        		<tr><td>Sorry, there is no performance qualifications for welder for id {{welder.pk }}</td></tr>
+
+				{% endfor %}
+				</table>
+			{% endif %}
+	
+		{% else %}
+	
+			You do not have permission to access this page. Please contact your System Administrator.
+	
+		{% endif %}
+
+	{% else %}
+
+		Access denied, please <a href="/login/">login</a>.
+
+	{% endif %}
+
+{% endblock %}
+
+
+
+
+
+
+

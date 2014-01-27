@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 from model_utils.models import TimeStampedModel
+from datetime import datetime, timedelta
 
 # Welder
 class Welder(TimeStampedModel):
@@ -37,6 +38,23 @@ class PerformanceQualification(TimeStampedModel):
 
 	def get_absolute_url(self):
 		return reverse('performancequalification_detail', kwargs={'pk': self.pk})
+
+	@property
+	def calculated_renewal_date(self):
+		days_in_year=365.2425
+
+		# Get the current date
+		today = datetime.now().date()
+
+		# add initial two years to original test date
+		continuity_date = self.start_date + timedelta(days=(days_in_year*2))
+
+		if continuity_date < today:
+			count = 0
+			while (continuity_date < today):
+				continuity_date = continuity_date + timedelta(days=(days_in_year/2))
+
+		return continuity_date
 
 # WelderHistory
 class WelderHistory(TimeStampedModel):

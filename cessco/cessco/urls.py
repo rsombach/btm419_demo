@@ -88,6 +88,13 @@ urlpatterns = patterns('',
         view=views.PerformanceQualificationUpdateView.as_view(),
         name='performanequalification_update',
         ),
+
+    # Performance Qualification Continutity Report
+    url(
+        regex=r'^welderlist/pq/continuity/(?P<pk>\d+)/$',
+        view=views.PerformanceQualificationContinuityReport.as_view(),
+        name='performanequalification_update_continutity_report',
+        ),
         
     # Patterns for Welder History
     url(
