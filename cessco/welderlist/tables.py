@@ -12,6 +12,7 @@ class WelderTable(tables.Table):
 
     class Meta:
         model = Welder
+        order_by = ('welder_stamp', )
         exclude = ( 'id', 'created', 'modified', )
         sequence = ("welder_stamp", "first_name", "last_name")
         attrs = { "class": "table table-striped table-bordered table-condensed", }

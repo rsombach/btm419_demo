@@ -23,47 +23,61 @@
 {% block nav-global %}{% endblock %}
 
 {% block navbar-right %}
-<h4>Welder</h4>
-<li><a href="/welderlist/welder/">List</a>
-<li><a href="/welderlist/welder/add/">Create</a>
+	{% if user.is_authenticated and perms.welderlist.select_welderlist %}
 		
+		<h4>Welder</h4>
+		<li><a href="/welderlist/welder/">List</a>
 
-	
+		{% if perms.welderlist.add_welder %}
+			<li><a href="/welderlist/welder/add/">Create</a>
+		
+			<h4>Report</h4>
+			<li><a href="/welderlist/report/">All Welders</a>
+		{% endif %}
+
+	{% endif %}
 {% endblock %}
 
 
 {% block content %}
 
 	{% if user.is_authenticated %}
+
+		{% if perms.welderlist.edit_welder %}
 	
-		{% block breadcrumbs %}
+			{% block breadcrumbs %}
 
-			{{ block.super }}
-			{% breadcrumb "Welder List" "welder_list" %}
+				{{ block.super }}
+				{% breadcrumb "Welder List" "welder_list" %}
 
-			{% breadcrumb_for welder_detail current_welder %}
-				{{ current_welder_first_name }}
-			    {{ current_welder_last_name }}
-			{% endbreadcrumb_for %}
+				{% breadcrumb_for welder_detail current_welder %}
+					{{ current_welder_first_name }}
+				    {{ current_welder_last_name }}
+				{% endbreadcrumb_for %}
 
-			{% breadcrumb "Performance Qualification History" "performancequalification_list" %}
+				{% breadcrumb "Performance Qualification History" "performancequalification_list" %}
 
-			{% breadcrumb_for performancequalification_detail performancequalification.id %}
-				Update Card Number
-			    {{ performancequalification.id }}
-			{% endbreadcrumb_for %}
+				{% breadcrumb_for performancequalification_detail performancequalification.id %}
+					Update Card Number
+				    {{ performancequalification.id }}
+				{% endbreadcrumb_for %}
 
-		{% endblock %}
+			{% endblock %}
 
-		{% render_breadcrumbs %}
+			{% render_breadcrumbs %}
 
-	    <table width="90%" border="0" class="table table-striped table-bordered table-condensed">
+		    <table width="90%" border="0" class="table table-striped table-bordered table-condensed">
 
-	        <tr><td>{% crispy form %}</td></tr>
+		        <tr><td>{% crispy form %}</td></tr>
 
-	    </table>
+		    </table>
 
-
+		{% else %}
+		
+			You do not have permission to access this page. Please contact your System Administrator.
+		
+		{% endif %}
+		
 	{% else %}
 
 		Access denied, please <a href="/login/">login</a>.

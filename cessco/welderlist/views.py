@@ -99,7 +99,7 @@ class WelderDetailView(LoginRequiredMixin, DetailView):
         # Add in a QuerySet of all the performance qualifications for the current welder
         kwargs_welder_id = kwargs["object"].id
         
-        context['performance_qualification_list'] = PerformanceQualification.objects.filter(welder_id=kwargs_welder_id, active=True)
+        context['performance_qualification_list'] = PerformanceQualification.objects.filter(welder_id=kwargs_welder_id, active=True).order_by('id')
         context['welder_history_list'] = WelderHistory.objects.values_list('start_date', flat=True).filter(welder_id=kwargs_welder_id).order_by('-start_date')
         
         self.request.session['current_welder'] = kwargs_welder_id
@@ -189,7 +189,7 @@ class PerformanceQualificationListView(LoginRequiredMixin, ListView):
         # Add in a QuerySet of all the performance qualifications for the current welder
         session_welder_id = self.request.session['current_welder']
         
-        context['performance_qualification_list'] = PerformanceQualification.objects.filter(welder_id=session_welder_id)
+        context['performance_qualification_list'] = PerformanceQualification.objects.filter(welder_id=session_welder_id).order_by('id')
         context['current_welder'] = self.request.session['current_welder']
         context['current_welder_first_name'] = self.request.session['current_welder_first_name']
         context['current_welder_last_name'] = self.request.session['current_welder_last_name']

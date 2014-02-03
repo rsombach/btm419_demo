@@ -13,19 +13,19 @@
 
 {% block navbar-right %}
 
-{% if user.is_authenticated and perms.welderlist.select_welderlist %}
+	{% if user.is_authenticated and perms.welderlist.select_welderlist %}
 	
-	<h4>Welder</h4>
-	<li><a href="/welderlist/welder/">List</a>
+		<h4>Welder</h4>
+		<li><a href="/welderlist/welder/">List</a>
 
-	{% if perms.welderlist.add_welder %}
-		<li><a href="/welderlist/welder/add/">Create</a>
+		{% if perms.welderlist.add_welder %}
+			<li><a href="/welderlist/welder/add/">Create</a>
+		
+			<h4>Report</h4>
+			<li><a href="/welderlist/report/">All Welders</a>
+		{% endif %}
+
 	{% endif %}
-
-	<h4>Report</h4>
-	<li><a href="/welderlist/report/">All Welders</a>
-
-{% endif %}
 	
 {% endblock %}
 

@@ -24,11 +24,20 @@
 {% block nav-global %}{% endblock %}
 
 {% block navbar-right %}
-<h4>Welder</h4>
-<li><a href="/welderlist/welder/">List</a>
-<li><a href="/welderlist/welder/add/">Create</a>
-		
 
+	{% if user.is_authenticated and perms.welderlist.select_welderlist %}
+		
+		<h4>Welder</h4>
+		<li><a href="/welderlist/welder/">List</a>
+
+		{% if perms.welderlist.add_welder %}
+			<li><a href="/welderlist/welder/add/">Create</a>
+		
+			<h4>Report</h4>
+			<li><a href="/welderlist/report/">All Welders</a>
+		{% endif %}
+
+	{% endif %}
 	
 {% endblock %}
 
@@ -37,30 +46,37 @@
 
 	{% if user.is_authenticated %}
 
-		{% block breadcrumbs %}
+		{% if perms.welderlist.edit_welderlist %}
 
-			{{ block.super }}
-			{% breadcrumb "Welder List" "welder_list" %}
+			{% block breadcrumbs %}
 
-			{% breadcrumb_for welder_detail current_welder %}
-				{{ current_welder_first_name }}
-			    {{ current_welder_last_name }}
-			{% endbreadcrumb_for %}
-			
-			{% breadcrumb "Performance Qualification History" "performancequalification_list" %}
-	
-			{% breadcrumb "Add" "performancequalification_add" %}
+				{{ block.super }}
+				{% breadcrumb "Welder List" "welder_list" %}
 
-		{% endblock %}
+				{% breadcrumb_for welder_detail current_welder %}
+					{{ current_welder_first_name }}
+				    {{ current_welder_last_name }}
+				{% endbreadcrumb_for %}
+				
+				{% breadcrumb "Performance Qualification History" "performancequalification_list" %}
+		
+				{% breadcrumb "Add" "performancequalification_add" %}
 
-		{% render_breadcrumbs %}
+			{% endblock %}
 
-	    <table width="90%" border="0">
+			{% render_breadcrumbs %}
 
-	        <tr><td>{% crispy form %}</td></tr>
+		    <table width="90%" border="0">
 
-	    </table>
+		        <tr><td>{% crispy form %}</td></tr>
 
+		    </table>
+
+		{% else %}
+		
+			You do not have permission to access this page. Please contact your System Administrator.
+		
+		{% endif %}
 
 	{% else %}
 
