@@ -6,7 +6,7 @@ from .models import PerformanceQualification
 # django_tables2 definitions
 
 class WelderTable(tables.Table):
-    welder_stamp = tables.LinkColumn('welder_detail', args=[tables.A('pk')], attrs={"th": {"width": "20%"}})
+    welder_stamp = tables.LinkColumn('welder_detail', args=[tables.A('pk')], attrs={"th": {"width": "20%"}}, accessor='welder_stamp.welder_stamp_code', verbose_name=('Welder Stamp'))
     first_name = tables.LinkColumn('welder_detail', args=[tables.A('pk')])
     last_name = tables.LinkColumn('welder_detail', args=[tables.A('pk')])
 
