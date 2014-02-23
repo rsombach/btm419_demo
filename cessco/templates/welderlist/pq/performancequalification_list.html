@@ -104,6 +104,7 @@
 		            	<th>CWP</th>
 						<th>Original Test Date</th>
 						<th>Renewal Date</th>
+						<th>End Date</th>
 						<th>Active</th>
 						{% if perms.welderlist.add_welder %}
 			            	<th></th>
@@ -121,6 +122,7 @@
 				            	<td>{{ pq.position }}</td>
 				            	<td>{{ pq.cessco_weld_procedure }}</td>
 								<td>{{ pq.start_date|date:"Y-m-d" }}</td>
+								<td>{{ pq.renewal_date|date:"Y-m-d" }}</td>
 								<td>{{ pq.end_date|date:"Y-m-d" }}</td>
 								<td>
 									{% if pq.active %}
@@ -147,9 +149,9 @@
 			        		<tr><td colspan=
 
 							{% if perms.welderlist.edit_welder %}
-							"12"
+							"13"
 							{% else %}
-							"11"
+							"12"
 							{% endif %}
 
 							>Sorry, there is no performance qualifications for welder for id {{welder.pk }}</td></tr>

@@ -33,14 +33,14 @@ class PerformanceQualification(TimeStampedModel):
 	position = models.ForeignKey('core.PositionLov', verbose_name='Position')
 	cessco_weld_procedure = models.ForeignKey('core.CesscoWeldProcedureLov', verbose_name='Cessco Weld Procedure')
 	start_date = models.DateField(null=True, blank=True, verbose_name='Original Test Date')
-	end_date = models.DateField(null=True, blank=True, verbose_name='Renewal Date')
+	end_date = models.DateField(null=True, blank=True, verbose_name='End Date')
 	active = models.BooleanField()
 
 	def get_absolute_url(self):
 		return reverse('performancequalification_detail', kwargs={'pk': self.pk})
 
 	@property
-	def calculated_renewal_date(self):
+	def renewal_date(self):
 		days_in_year=365.2425
 
 		# Get the current date

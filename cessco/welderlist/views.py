@@ -25,7 +25,8 @@ from forms import PerformanceQualificationCreateForm
 from forms import PerformanceQualificationUpdateForm
 
 # tables.py import
-from tables import WelderTable, PerformanceQualificationTable
+# from tables import WelderTable
+from tables import PerformanceQualificationTable
 
 # search/util.py import
 from search.utils import generic_search
@@ -56,13 +57,26 @@ class WelderListActionMixin(object):
         return super(WelderListActionMixin, self).form_valid(form)
 
 
-class WelderListView(SingleTableView, LoginRequiredMixin, ListView):
+class WelderListView(LoginRequiredMixin, ListView):
     login_url = "/login/"
     template_name = 'welder_list.html'
-    model = Welder
+    model = WelderHistory
     context_object_name = 'welder_list'
-    table_class = WelderTable
-    table_pagination = {'per_page': 200}
+    # table_class = WelderTable
+    # table_data = 'welder_list'
+    # table_pagination = {'per_page': 200}
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(WelderListView, self).get_context_data(**kwargs)
+
+        # Create an object to store query results
+        active_welder_list = []
+        active_welder_list = WelderHistory.objects.filter(end_date__isnull=True).values('id', 'welder_id', 'welder__first_name', 'welder__last_name', 'welder__welder_stamp__welder_stamp_code', 'start_date', 'end_date').order_by('welder__welder_stamp__welder_stamp_code')
+
+        context['welder_list'] = active_welder_list
+        context['welder_list_count'] = len(active_welder_list)
+        return context
 	
 	
 class SearchResultView(LoginRequiredMixin, TemplateView):
