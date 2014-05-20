@@ -120,6 +120,8 @@ class WelderDetailView(LoginRequiredMixin, DetailView):
         self.request.session['current_welder_first_name'] = kwargs["object"].first_name
         self.request.session['current_welder_last_name'] = kwargs["object"].last_name
 
+        print "*** welder_id = %s" % kwargs_welder_id
+
         return context
 
 class WelderCreateView(LoginRequiredMixin, WelderListActionMixin, CreateView):
@@ -168,6 +170,16 @@ class PerformanceQualificationDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super(PerformanceQualificationDetailView, self).get_context_data(**kwargs)
+
+        current_pq = self.kwargs['pk']
+        current_welder_pq= PerformanceQualification.objects.get(id=current_pq)
+        current_welder = Welder.objects.get(id=current_welder_pq.welder_id)
+
+        # Reset session variables so they change if user searches for a welder instead of selecting from a list
+        self.request.session['current_welder'] = current_welder.id
+        self.request.session['current_welder_first_name'] = current_welder.first_name
+        self.request.session['current_welder_last_name'] = current_welder.last_name
+
         context['current_welder'] = self.request.session['current_welder']
         context['current_welder_first_name'] = self.request.session['current_welder_first_name']
         context['current_welder_last_name'] = self.request.session['current_welder_last_name']
@@ -361,7 +373,10 @@ def render_to_pdf(template_src, context_dict):
     return HttpResponse('There were errors when generating the report:<pre>%s</pre>' % escape(html))
     
 def WelderReport(request):
-    welder_list = get_list_or_404(Welder.objects.order_by('last_name'))
+    #welder_list = get_list_or_404(Welder.objects.order_by('last_name'))
+    welder_list = get_list_or_404(WelderHistory.objects.filter(end_date__isnull=True).values('id', 'welder_id', 'welder__first_name', 'welder__last_name', 'welder__welder_stamp__welder_stamp_code', 'start_date', 'end_date').order_by('welder__welder_stamp__welder_stamp_code'))
+
+
     performance_qualification_list = get_list_or_404(PerformanceQualification.objects.filter(active=True))
 
     return render_to_pdf( 'welder_report.html', 
