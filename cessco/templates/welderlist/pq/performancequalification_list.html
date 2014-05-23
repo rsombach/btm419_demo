@@ -83,8 +83,8 @@
 		            	<td align="right" padding="2">
 							{% if perms.welderlist.add_welder %}
 								<a href="/welderlist/pq/add/">
-									<button type="button" class="btn btn-default btn-lg">
-		  								<span class="glyphicon icon-plus"></span>Add
+									<button type="button" class="btn btn-default btn-sm">
+		  								<span class="glyphicon glyphicon-plus"></span>Add
 									</button>
 								</a>
 							{% endif %}
@@ -134,12 +134,11 @@
 								
 								{% if perms.welderlist.add_welder %}
 					            	<td>
-		            	    
-						            	<button type="button" class="btn btn-default btn-lg">
-						            	    <a href="/welderlist/pq/update/{{ pq.id }}/">
-						  					<span class="glyphicon icon-pencil"></span> 
-						  					</a>       		
-						            	</button>
+					            	    <a href="/welderlist/pq/update/{{ pq.id }}/">
+							            	<button type="button" class="btn btn-default btn-sm">
+							  					<span class="glyphicon glyphicon-pencil"></span> 
+							            	</button>
+						            	</a> 
 
 									</td>
 								{% endif %}	

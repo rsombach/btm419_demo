@@ -23,25 +23,6 @@
 
 {% block nav-global %}{% endblock %}
 
-{% block navbar-right %}
-
-{% if user.is_authenticated and perms.welderlist.select_welderlist %}
-	
-	<h4>Welder</h4>
-	<li><a href="/welderlist/welder/">List</a>
-
-	{% if perms.welderlist.add_welder %}
-		<li><a href="/welderlist/welder/add/">Create</a>
-	
-		<h4>Report</h4>
-		<li><a href="/welderlist/report/">All Welders</a>
-	{% endif %}
-
-{% endif %}
-
-{% endblock %}
-
-
 {% block content %}
 	{% if user.is_authenticated %}
 	
@@ -74,11 +55,11 @@
 
 		    <h4>Welder Details
 		        {% if welder and perms.welderlist.add_welder %}
-	                <button type="button" class="btn btn-default btn-lg">
-	                    <a href="/welderlist/welder/update/{{ welder.id }}/">
-	                    <span class="glyphicon icon-pencil"></span> 
-	                    </a>       		
-	                </button>
+		        	<a href="/welderlist/welder/update/{{ welder.id }}/">
+		                <button type="button" class="btn btn-default btn-xs">
+		                    <span class="glyphicon glyphicon-pencil"></span> 
+		                </button>
+	                </a> 
 	            {% endif %}
 		    </h4>
 		
@@ -95,10 +76,10 @@
 							{% else %}
 								No start date
 							{% endif %}
-							<a href="/welderlist/history/"><button type="button" class="btn btn-default btn-xs"><span class="glyphicon icon-list-alt"></span></button></a>
+							<a href="/welderlist/history/"><button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-list-alt"></span></button></a>
 						
 							{% if perms.welderlist.add_welder %}
-								<a href="/welderlist/history/add/"><button type="button" class="btn btn-default btn-xs"><span class="glyphicon icon-plus"></span></button></a>
+								<a href="/welderlist/history/add/"><button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus"></span></button></a>
 							{% endif %}					
 						</td></tr>
 					
@@ -110,9 +91,9 @@
 			            		<h4>Performance Qualifications</h4>
 			            	</td>
 			            	<td align="right" padding="2">
-								<a href="/welderlist/pq/"><button type="button" class="btn btn-default btn-lg"><span class="glyphicon icon-list-alt"></span> History</button></a>
+								<a href="/welderlist/pq/"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-list-alt"></span> History</button></a>
 								{% if perms.welderlist.add_welder %}
-									<a href="/welderlist/pq/add/"><button type="button" class="btn btn-default btn-lg"><span class="glyphicon icon-plus"> </span> Add</button></a>
+									<a href="/welderlist/pq/add/"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"> </span> Add</button></a>
 								{% endif %}
 			            	</td>
 			            </tr>
@@ -151,12 +132,11 @@
 									{% if perms.welderlist.edit_welder %}
 					            	<td>
 				            	    
-
-						            	<button type="button" class="btn btn-default btn-lg">
-						            	    <a href="/welderlist/pq/update/{{ pq.id }}/">
-						  					<span class="glyphicon icon-pencil"></span> 
-						  					</a>       		
-						            	</button>
+									<a href="/welderlist/pq/update/{{ pq.id }}/">
+						            	<button type="button" class="btn btn-default btn-sm">
+						  					<span class="glyphicon glyphicon-pencil"></span> 
+	  					            	</button>
+  					            	</a>
 
 									</td>
 									{% endif %}
