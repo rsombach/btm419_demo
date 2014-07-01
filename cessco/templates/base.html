@@ -9,10 +9,9 @@
     </style>
 
     <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet" />
-    <link href="/static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" />	
     <link rel="stylesheet" type="text/css" href="http://jquery-ui.googlecode.com/svn/tags/latest/themes/base/jquery-ui.css" media="all" />
     <!-- <link rel="stylesheet" href="{{ STATIC_URL }}django_tables2/themes/paleblue/css/screen.css" /> -->
-    <link href="/static/css/cessco.css" rel="stylesheet" />
+    <link href="/static/cessco/css/cessco.css" rel="stylesheet" />
 
 
     <title>Cessco {% block title %}{% endblock %}</title>
@@ -42,13 +41,10 @@
   </div>
 
    <div id="slidemenu">
-     
-
-
 
       <form class="navbar-form navbar-right" role="form" action="/search/" method="get">
         <div class="form-group">
-          <input id="id_q" name="q" type="search" placeholder="search" class="form-control">
+          <input id="id_q" name="q" type="search" class="form-control">
         </div>
       <button type="submit" class="btn btn-primary">Search</button>
       </form>
@@ -78,7 +74,12 @@
           <li role="presentation" class="dropdown-header">Welders</li>
 
           <li><a href="/welderlist/welder/">List</a>
-          <li><a href="/welderlist/welder/add/">Create</a>
+          <li><a href="/welderlist/welder/add/">Add</a>
+
+          <li class="divider"></li>
+          <li class="dropdown-header">Calibration</li>
+          <li><a href="/calibration/unit/">List</a></li>
+          <li><a href="/calibration/unit/add">Add Unit</a></li>
 
           <li class="divider"></li>
           <li class="dropdown-header">Reports</li>
@@ -134,7 +135,7 @@
     <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
       <div class="container" align="center">
         <table border="0">
-          <tr align="center"><td>&copy 2013 Cessco Fabrication and Engineering Ltd.<br>version: 1.40.00</td></tr>
+          <tr align="center"><td>&copy 2013-2014 Cessco Fabrication and Engineering Ltd.<br>version: 1.50.00</td></tr>
         </table>
       </div>
     </nav>
@@ -143,11 +144,11 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     
-    <script type="text/javascript" src="/static/js/tablesorter/jquery.tablesorter.min.js"></script>
-    <script type="text/javascript" src="/static/js/tablesorter/jquery.tablesorter.widgets.js"></script>
+    <script type="text/javascript" src="/static/cessco/js/tablesorter/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="/static/cessco/js/tablesorter/jquery.tablesorter.widgets.js"></script>
 
     <script type="text/javascript" src="/static/bootstrap/js/bootstrap.js"></script>
-    <script type="text/javascript" src="/static/js/slide-menu.js"></script>
+    <script type="text/javascript" src="/static/cessco/js/slide-menu.js"></script>
 
 
     {% block js_scripts %}{% endblock %}

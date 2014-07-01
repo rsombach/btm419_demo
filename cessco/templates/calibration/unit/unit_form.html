@@ -4,16 +4,6 @@
 {% load crispy_forms_tags %}
 {% load django_bootstrap_breadcrumbs %}
 
-{% block js_scripts %}
-    
-    <script type="text/javascript">
-        $( function() {
-            $('.dateinput').datepicker({ dateFormat: 'yy-mm-dd' });
-        } );
-    </script>
-
-{% endblock %}
-
 {% block title %}{{ title }} | Home {% endblock %}
 
 {% block branding %}
@@ -25,27 +15,19 @@
 {% block content %}
 
 	{% if user.is_authenticated %}
-
+	
 		{% if perms.welderlist.edit_welder %}
-
+	
 			{% block breadcrumbs %}
-
+	
 				{{ block.super }}
-				{% breadcrumb "Welder List" "welder_list" %}
-			
-				{% breadcrumb_for welder_detail current_welder %}
-					{{ current_welder_first_name }}
-				    {{ current_welder_last_name }}
-				{% endbreadcrumb_for %}
-				
-				{% breadcrumb "Welder History" "welderhistory_list" %}
-				
-				{% breadcrumb "Add" "welderhistory_add" %}
-
+				{% breadcrumb "Calibration" "calibration_list" %}
+				{% breadcrumb "Add Unit" "unit_add" %}
+		
 			{% endblock %}
-
+	
 			{% render_breadcrumbs %}
-	    
+
 		    <table width="90%" border=0>
 
 		        <tr><td>{% crispy form %}</td></tr>
@@ -53,9 +35,9 @@
 		    </table>
 
 		{% else %}
-		
+	
 			You do not have permission to access this page. Please contact your System Administrator.
-		
+	
 		{% endif %}
 
 	{% else %}

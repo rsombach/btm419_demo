@@ -322,7 +322,7 @@ class PerformanceQualificationContinuityReport(LoginRequiredMixin, ListView):
         today = datetime.now().date()
 
         # add initial two years to original test date
-        pq_date = pq.start_date + timedelta(days=(days_in_year*2))
+        pq_date = pq.start_date + timedelta(days=(days_in_year/2))
         pq_continuity.append(pq_date)
 
         if pq_date < today:

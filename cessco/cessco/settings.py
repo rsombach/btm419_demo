@@ -77,7 +77,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    join(DIR, "media"),
+    join(DIR, "static"),
 )
 
 # List of finder classes that know how to find static files in
@@ -122,11 +122,13 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     join(DIR, "templates"),
+    join(DIR, "templates/admin/"),
     join(DIR, "templates/search/"),
     join(DIR, "templates/welderlist/welder"),
     join(DIR, "templates/welderlist/history"),
     join(DIR, "templates/welderlist/pq"),
     join(DIR, "templates/welderlist/report"),
+    join(DIR, "templates/calibration/unit"),
 )
 
 INSTALLED_APPS = (
@@ -148,6 +150,7 @@ INSTALLED_APPS = (
     'core', # Core models / functionality that can be used by all apps
 	'search', # simple search utilities
     'welderlist', # [1] Cessco Qualified Pressure Welder List
+    'calibration', # [2] Cessco Calibration Check List
 )
 
 # A sample logging configuration. The only tangible logging
