@@ -15,7 +15,7 @@ class Migration(SchemaMigration):
             ('modified', self.gf('model_utils.fields.AutoLastModifiedField')(default=datetime.datetime.now)),
             ('business_unit', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.BusinessUnitLov'])),
             ('unit_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.UnitTypeLov'])),
-            ('unit_make', self.gf('django.db.models.fields.CharField')(max_length=256)),
+            ('unit_make', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.UnitMakeLov'])),
             ('model', self.gf('django.db.models.fields.CharField')(max_length=256)),
             ('serial_number', self.gf('django.db.models.fields.CharField')(max_length=32)),
             ('start_date', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
@@ -56,7 +56,7 @@ class Migration(SchemaMigration):
             'modified': ('model_utils.fields.AutoLastModifiedField', [], {'default': 'datetime.datetime.now'}),
             'serial_number': ('django.db.models.fields.CharField', [], {'max_length': '32'}),
             'start_date': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
-            'unit_make': ('django.db.models.fields.CharField', [], {'max_length': '256'}),
+            'unit_make': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.UnitMakeLov']"}),
             'unit_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.UnitTypeLov']"})
         },
         u'calibration.unithistory': {
@@ -72,18 +72,26 @@ class Migration(SchemaMigration):
         },
         u'core.businessunitlov': {
             'Meta': {'object_name': 'BusinessUnitLov'},
-            'business_unit_code': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '16'}),
+            'business_unit_code': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '32'}),
             'business_unit_description': ('django.db.models.fields.CharField', [], {'max_length': '256', 'blank': 'True'}),
             'created': ('model_utils.fields.AutoCreatedField', [], {'default': 'datetime.datetime.now'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'modified': ('model_utils.fields.AutoLastModifiedField', [], {'default': 'datetime.datetime.now'})
+        },
+        u'core.unitmakelov': {
+            'Meta': {'object_name': 'UnitMakeLov'},
+            'created': ('model_utils.fields.AutoCreatedField', [], {'default': 'datetime.datetime.now'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'modified': ('model_utils.fields.AutoLastModifiedField', [], {'default': 'datetime.datetime.now'}),
+            'unit_make_code': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '32'}),
+            'unit_make_description': ('django.db.models.fields.CharField', [], {'max_length': '256', 'blank': 'True'})
         },
         u'core.unittypelov': {
             'Meta': {'object_name': 'UnitTypeLov'},
             'created': ('model_utils.fields.AutoCreatedField', [], {'default': 'datetime.datetime.now'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'modified': ('model_utils.fields.AutoLastModifiedField', [], {'default': 'datetime.datetime.now'}),
-            'unit_type_code': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '16'}),
+            'unit_type_code': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '32'}),
             'unit_type_description': ('django.db.models.fields.CharField', [], {'max_length': '256', 'blank': 'True'})
         }
     }

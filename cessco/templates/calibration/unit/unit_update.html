@@ -4,16 +4,6 @@
 {% load crispy_forms_tags %}
 {% load django_bootstrap_breadcrumbs %}
 
-{% block js_scripts %}
-    
-    <script type="text/javascript">
-        $( function() {
-            $('.dateinput').datepicker({ dateFormat: 'yy-mm-dd' });
-        } );
-    </script>
-
-{% endblock %}
-
 {% block title %}{{ title }} | Home {% endblock %}
 
 {% block branding %}
@@ -25,17 +15,23 @@
 {% block content %}
 
 	{% if user.is_authenticated %}
-	
+
 		{% if perms.calibration.edit_unit %}
 	
 			{% block breadcrumbs %}
-	
+
 				{{ block.super }}
-				{% breadcrumb "Calibration" "calibration_list" %}
-				{% breadcrumb "Add Unit" "unit_add" %}
-		
+				{% breadcrumb "Calibration" "unit_list" %}
+
+				{% breadcrumb_for unit_detail %}
+					{{ unit.serial_number }}
+					{{ unit.unit_make }}
+					{{ unit.unit_model }}
+					{{ unit.unit_type }}
+				{% endbreadcrumb_for %}
+
 			{% endblock %}
-	
+
 			{% render_breadcrumbs %}
 
 		    <table width="90%" border=0>
@@ -43,11 +39,11 @@
 		        <tr><td>{% crispy form %}</td></tr>
 
 		    </table>
-
+			
 		{% else %}
-	
+		
 			You do not have permission to access this page. Please contact your System Administrator.
-	
+		
 		{% endif %}
 
 	{% else %}

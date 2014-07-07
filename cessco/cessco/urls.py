@@ -137,5 +137,9 @@ urlpatterns = patterns('',
         view=calibration_views.UnitCreateView.as_view(),
         name='unit_add',
         ),
-
+    url(
+        regex=r"^calibration/unit/update/(?P<pk>\d+)/$",
+        view=calibration_views.UnitUpdateView.as_view(),
+        name="unit_update",
+        ),
 )

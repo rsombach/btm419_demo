@@ -26,12 +26,19 @@
 {% block content %}
 	{% if user.is_authenticated %}
 	
-		{% if perms.welderlist.select_welderlist %}
+		{% if perms.calibration.select_calibration %}
 		
 			{% block breadcrumbs %}
 
 				{{ block.super }}
-				{% breadcrumb "Calibration" "calibration_list" %}
+				{% breadcrumb "Calibration" "unit_list" %}
+
+				{% breadcrumb_for unit_detail %}
+					{{ unit.serial_number }}
+					{{ unit.unit_make }}
+					{{ unit.unit_model }}
+					{{ unit.unit_type }}
+				{% endbreadcrumb_for %}
 
 			{% endblock %}
 
@@ -47,6 +54,38 @@
 					{% endfor %} 
 				</ul> 
 			{% endif %}
+
+		    <h4>Unit Details
+		        {% if unit and perms.welderlist.add_welder %}
+		        	<a href="/calibration/unit/update/{{ unit.id }}/">
+		                <button type="button" class="btn btn-default btn-xs">
+		                    <span class="glyphicon glyphicon-pencil"></span> 
+		                </button>
+	                </a> 
+	            {% endif %}
+		    </h4>
+
+		    {% if unit %}
+	        	<table width="90%" border=0 class="table table-striped table-bordered table-condensed">
+		        	<tr><td width="20%">Serial Number</td><td>{{ unit.serial_number }}</td></tr>
+					<tr><td width="20%">Type</td><td>{{ unit.unit_type }}</td></tr>
+		            <tr><td width="20%">Make</td><td>{{ unit.unit_make }}</td></tr>
+		            <tr><td width="20%">Model</td><td>{{ unit.model }}</td></tr>
+					<tr><td width="20%">In-service Date</td><td>{{ unit.start_date|date:"Y-m-d" }}</td></tr>
+					<tr><td width="20%">Calibration Due Date</td><td>-</td></tr>
+					<tr><td width="20%">Calibrated By</td><td>-</td></tr>
+					<tr><td width="20%">Certificate Issued</td><td>-</td></tr>
+					<tr><td width="20%">Notes</td><td>-</td></tr>
+					<tr><td width="20%">Active</td>
+					<td>
+						{% if unit.active %}
+						Yes
+						{% else %}
+						No
+						{% endif %}							
+					</td></tr>
+		        </table>
+	       {% endif %}
 
 		{% else %}
 		

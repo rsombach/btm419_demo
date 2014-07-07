@@ -18,6 +18,7 @@ from tables import UnitTable
 
 # forms.py import
 from forms import UnitCreateForm
+from forms import UnitUpdateForm
 
 class CalibrationListActionMixin(object): 
     @property 
@@ -47,13 +48,13 @@ class UnitListView(LoginRequiredMixin, ListView):
 
         # Create an object to store query results
         active_unit_list = []
-        active_unit_list = Unit.objects.filter(active=True).values('id', 'unit_type', 'unit_make', 'model', 'serial_number', 'start_date', 'active')
+        active_unit_list = Unit.objects.filter(active=True).values('id', 'unit_type__unit_type_code', 'unit_make__unit_make_code', 'model', 'serial_number', 'start_date', 'active')
+
+        print active_unit_list
 
         context['unit_list'] = active_unit_list
         context['unit_list_count'] = len(active_unit_list)
         return context
-
-
 
 
 class UnitCreateView(LoginRequiredMixin, CalibrationListActionMixin, CreateView):
@@ -82,5 +83,15 @@ class UnitDetailView(LoginRequiredMixin, DetailView):
         context = super(UnitDetailView, self).get_context_data(**kwargs)
         return context
 
+
+class UnitUpdateView(LoginRequiredMixin, CalibrationListActionMixin, UpdateView):
+    login_url = "/login/"
+    template_name = 'unit_update.html'
+    form_class = UnitUpdateForm
+    model = Unit
+    action = "updated"
+
+    # def get_form_kwargs(self, *args, **kwargs):
+    #     return dict ( super(WelderUpdateView, self).get_form_kwargs(*args, **kwargs), **{'current_welder_id':  self.request.session['current_welder']} )
 
         

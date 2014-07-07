@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+
+
+
     <style>
         body {
             /* padding-top: 60px;  60px to make the container go all the way to the bottom of the topbar */
@@ -13,9 +16,19 @@
     <!-- <link rel="stylesheet" href="{{ STATIC_URL }}django_tables2/themes/paleblue/css/screen.css" /> -->
     <link href="/static/cessco/css/cessco.css" rel="stylesheet" />
 
-
     <title>Cessco {% block title %}{% endblock %}</title>
-        
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    
+    <script type="text/javascript" src="/static/cessco/js/tablesorter/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="/static/cessco/js/tablesorter/jquery.tablesorter.widgets.js"></script>
+
+    <script type="text/javascript" src="/static/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/static/cessco/js/slide-menu.js"></script>
+
+    {% block js_scripts %}{% endblock %}
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -68,22 +81,33 @@
         </ul>
        </li>
 
-      {% if perms.welderlist.select_welderlist %}
+      {% if perms.welderlist.select_welderlist or perms.calibration.select_calibration %}
        <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Quality Control <b class="caret"></b></a>
         <ul class="dropdown-menu">
-          <li role="presentation" class="dropdown-header">Welders</li>
+          
+          {% if perms.welderlist.select_welderlist %}
+            <li role="presentation" class="dropdown-header">Welders</li>
 
-          <li><a href="/welderlist/welder/">List</a>
-          <li><a href="/welderlist/welder/add/">Add</a>
+            <li><a href="/welderlist/welder/">List</a>
+            <li><a href="/welderlist/welder/add/">Add</a>
 
-          <li class="divider"></li>
-          <li class="dropdown-header">Calibration</li>
-          <li><a href="/calibration/unit/">List</a></li>
-          <li><a href="/calibration/unit/add">Add Unit</a></li>
+            <li class="divider"></li>
+          {% endif %}
 
-          <li class="divider"></li>
+          {% if perms.calibration.select_calibration %}
+            <li class="dropdown-header">Calibration</li>
+            <li><a href="/calibration/unit/">List</a></li>
+            <li><a href="/calibration/unit/add">Add Unit</a></li>
+
+            <li class="divider"></li>
+          {% endif %}
+
           <li class="dropdown-header">Reports</li>
-          <li><a href="/welderlist/report/">All Welders</a>
+          
+          {% if perms.welderlist.select_welderlist %}
+            <li><a href="/welderlist/report/">All Welders</a>
+          {% endif %}
+
         </ul>
        </li>
       {% endif %}
@@ -135,23 +159,13 @@
     <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
       <div class="container" align="center">
         <table border="0">
-          <tr align="center"><td>&copy 2013-2014 Cessco Fabrication and Engineering Ltd.<br>version: 1.50.00</td></tr>
+          <tr align="center"><td>&copy 2013-2014 Cessco Fabrication and Engineering Ltd.<br>version: 1.60.00</td></tr>
         </table>
       </div>
     </nav>
     <!-- /footer -->
 </div> <!-- page-content -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-    
-    <script type="text/javascript" src="/static/cessco/js/tablesorter/jquery.tablesorter.min.js"></script>
-    <script type="text/javascript" src="/static/cessco/js/tablesorter/jquery.tablesorter.widgets.js"></script>
 
-    <script type="text/javascript" src="/static/bootstrap/js/bootstrap.js"></script>
-    <script type="text/javascript" src="/static/cessco/js/slide-menu.js"></script>
-
-
-    {% block js_scripts %}{% endblock %}
 
 
   </body>

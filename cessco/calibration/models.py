@@ -7,16 +7,16 @@ class Unit(TimeStampedModel):
 	# id
 	business_unit = models.ForeignKey('core.BusinessUnitLov', verbose_name='Business Unit')
 	unit_type = models.ForeignKey('core.UnitTypeLov', verbose_name='Unit Type')
-	unit_make = models.CharField(max_length=256)
+	unit_make = models.ForeignKey('core.UnitMakeLov', verbose_name='Unit Make')
 	model = models.CharField(max_length=256)
 	serial_number =models.CharField(max_length=32)
 	start_date = models.DateField(null=True, blank=True, verbose_name='Inservice Date')
 	active = models.BooleanField()
 
-	# class Meta:
-	# 	permissions = (
-	# 		("select_calibration", "Can select calibration"),
-	# 	)
+	class Meta:
+		permissions = (
+			("select_calibration", "Can select unit"),
+		)
 
 	def __unicode__(self):
 		return self.id
