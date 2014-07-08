@@ -5,6 +5,8 @@ from crispy_forms.bootstrap import *
 from crispy_forms.layout import *
 
 from .models import Unit
+from .models import UnitHistory
+
 from core.models import BusinessUnitLov
 
 
@@ -41,3 +43,21 @@ class UnitUpdateForm(forms.ModelForm):
 
 	class Meta:
 		model = Unit
+
+
+class UnitHistoryCreateForm(forms.ModelForm):
+	def __init__(self, *args, **kwargs):
+		super(UnitHistoryCreateForm, self).__init__(*args, **kwargs)
+
+		self.helper = FormHelper(self)
+		self.helper.form_method = 'POST'
+		self.helper.form_class = 'form-horizontal'
+		self.helper.label_class = 'col-lg-2'
+		self.helper.field_class = 'col-lg-8'
+
+		self.helper.add_input(Submit('submit', 'Save Unit History'))
+
+	class Meta:
+		model = UnitHistory
+
+		exclude = [ 'unit' ]

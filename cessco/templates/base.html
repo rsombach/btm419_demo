@@ -11,6 +11,8 @@
         }
     </style>
 
+    {% block cessco_styles %}{% endblock %}
+
     <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="http://jquery-ui.googlecode.com/svn/tags/latest/themes/base/jquery-ui.css" media="all" />
     <!-- <link rel="stylesheet" href="{{ STATIC_URL }}django_tables2/themes/paleblue/css/screen.css" /> -->
@@ -95,16 +97,16 @@
           {% endif %}
 
           {% if perms.calibration.select_calibration %}
-            <li class="dropdown-header">Calibration</li>
+            <li class="dropdown-header">Calibration Units</li>
             <li><a href="/calibration/unit/">List</a></li>
-            <li><a href="/calibration/unit/add">Add Unit</a></li>
+            <li><a href="/calibration/unit/add">Add</a></li>
 
             <li class="divider"></li>
           {% endif %}
 
-          <li class="dropdown-header">Reports</li>
-          
+          <!-- reports are only visible to groups that have reports -->
           {% if perms.welderlist.select_welderlist %}
+            <li class="dropdown-header">Reports</li>
             <li><a href="/welderlist/report/">All Welders</a>
           {% endif %}
 
@@ -159,7 +161,7 @@
     <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
       <div class="container" align="center">
         <table border="0">
-          <tr align="center"><td>&copy 2013-2014 Cessco Fabrication and Engineering Ltd.<br>version: 1.60.00</td></tr>
+          <tr align="center"><td>&copy 2013-2014 Cessco Fabrication and Engineering Ltd.<br>version: 1.70.00</td></tr>
         </table>
       </div>
     </nav>

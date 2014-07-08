@@ -19,6 +19,7 @@ from tables import UnitTable
 # forms.py import
 from forms import UnitCreateForm
 from forms import UnitUpdateForm
+from forms import UnitHistoryCreateForm
 
 class CalibrationListActionMixin(object): 
     @property 
@@ -81,6 +82,13 @@ class UnitDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super(UnitDetailView, self).get_context_data(**kwargs)
+
+        kwargs_unit_id = kwargs["object"].id
+
+        print "1_unit_id = %d" % kwargs_unit_id
+        self.request.session['current_unit'] = kwargs_unit_id
+        print "2_unit_id = %d" % self.request.session['current_unit']
+
         return context
 
 
@@ -94,4 +102,34 @@ class UnitUpdateView(LoginRequiredMixin, CalibrationListActionMixin, UpdateView)
     # def get_form_kwargs(self, *args, **kwargs):
     #     return dict ( super(WelderUpdateView, self).get_form_kwargs(*args, **kwargs), **{'current_welder_id':  self.request.session['current_welder']} )
 
+
+class UnitHistoryCreateView(LoginRequiredMixin, CalibrationListActionMixin, CreateView):
+    login_url = "/login/"
+    model = UnitHistory
+    template_name = 'unithistory_form.html'
+    form_class = UnitHistoryCreateForm
+    action = "created"
+    
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(UnitHistoryCreateView, self).get_context_data(**kwargs)
         
+        return context
+
+    def form_valid(self, form):
+        form.instance.unit_id = self.request.session['current_unit']
+
+        print "3_unit_id = %d" % self.request.session['current_unit']
+        return super(UnitHistoryCreateView, self).form_valid(form)
+
+
+class UnitHistoryDetailView(LoginRequiredMixin, DetailView):
+    login_url = "/login/"
+    template_name = 'unithistory_detail.html'
+    model = UnitHistory
+    
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(UnitHistoryDetailView, self).get_context_data(**kwargs)
+        
+        return context

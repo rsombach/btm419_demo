@@ -1,15 +1,16 @@
 {% extends "base.html" %}
 {% load i18n %}
-
-{% load crispy_forms_tags %}
+{% load render_table from django_tables2 %}
 {% load django_bootstrap_breadcrumbs %}
 
 {% block js_scripts %}
-    
+
     <script type="text/javascript">
-        $( function() {
-            $('.dateinput').datepicker({ dateFormat: 'yy-mm-dd' });
-        } );
+        $(document).ready(function() 
+            { 
+                $("#unitTable").tablesorter(); 
+            } 
+        );
     </script>
 
 {% endblock %}
@@ -23,32 +24,37 @@
 {% block nav-global %}{% endblock %}
 
 {% block content %}
-
 	{% if user.is_authenticated %}
 	
-		{% if perms.calibration.edit_unit %}
-	
+		{% if perms.calibration.select_calibration %}
+		
 			{% block breadcrumbs %}
-	
+
 				{{ block.super }}
 				{% breadcrumb "Calibration" "unit_list" %}
-				
-				{% breadcrumb "Add Unit" "unit_add" %}
-		
+
 			{% endblock %}
-	
+
 			{% render_breadcrumbs %}
+		
+			{% if messages %} 
+				<ul class="messages"> 
+					{% for message in messages %} 
+						<li id="message_{{ forloop.counter }}"
+						{% if message.tags %} class="{{ message.tags }}"{% endif %}> 
+						{{ message }} 
+						</li> 
+					{% endfor %} 
+				</ul> 
+			{% endif %}
 
-		    <table width="90%" border=0>
+		    <h4>Unit History Details</h4>
 
-		        <tr><td>{% crispy form %}</td></tr>
-
-		    </table>
 
 		{% else %}
-	
+		
 			You do not have permission to access this page. Please contact your System Administrator.
-	
+		
 		{% endif %}
 
 	{% else %}
