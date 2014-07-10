@@ -143,11 +143,11 @@ urlpatterns = patterns('',
         name="unit_update",
         ),
     # Patterns for Calibration Unit History
-    # url(
-    #     regex=r'^calibration/history/$',
-    #     view=calibration_views.UnitHistoryListView.as_view(),
-    #     name='unithistroy_list',
-    #     ),
+    url(
+        regex=r'^calibration/history/$',
+        view=calibration_views.UnitHistoryListView.as_view(),
+        name='unithistory_list',
+        ),
     url(
         regex=r'^calibration/history/add/$',
         view=calibration_views.UnitHistoryCreateView.as_view(),
@@ -157,5 +157,10 @@ urlpatterns = patterns('',
         regex=r'^calibration/history/(?P<pk>\d+)/$',
         view=calibration_views.UnitHistoryDetailView.as_view(),
         name='unithistory_detail',
+        ),
+    url(
+        regex=r"^calibration/history/update/(?P<pk>\d+)/$",
+        view=calibration_views.UnitHistoryUpdateView.as_view(),
+        name="unithistory_update",
         ),
 )

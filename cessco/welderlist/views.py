@@ -120,8 +120,6 @@ class WelderDetailView(LoginRequiredMixin, DetailView):
         self.request.session['current_welder_first_name'] = kwargs["object"].first_name
         self.request.session['current_welder_last_name'] = kwargs["object"].last_name
 
-        print "*** welder_id = %s" % kwargs_welder_id
-
         return context
 
 class WelderCreateView(LoginRequiredMixin, WelderListActionMixin, CreateView):

@@ -20,6 +20,7 @@ from tables import UnitTable
 from forms import UnitCreateForm
 from forms import UnitUpdateForm
 from forms import UnitHistoryCreateForm
+from forms import UnitHistoryUpdateForm
 
 class CalibrationListActionMixin(object): 
     @property 
@@ -84,11 +85,15 @@ class UnitDetailView(LoginRequiredMixin, DetailView):
         context = super(UnitDetailView, self).get_context_data(**kwargs)
 
         kwargs_unit_id = kwargs["object"].id
-
-        print "1_unit_id = %d" % kwargs_unit_id
         self.request.session['current_unit'] = kwargs_unit_id
-        print "2_unit_id = %d" % self.request.session['current_unit']
 
+        unithistory_list = []
+        unithistory_list = UnitHistory.objects.filter(unit_id=kwargs_unit_id).order_by('-calibration_date_time')
+
+        print "unit history count: %d" % len(unithistory_list)
+
+        context['unit_history_list'] = unithistory_list
+        
         return context
 
 
@@ -113,13 +118,16 @@ class UnitHistoryCreateView(LoginRequiredMixin, CalibrationListActionMixin, Crea
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super(UnitHistoryCreateView, self).get_context_data(**kwargs)
-        
+
+        session_unit_id = self.request.session['current_unit']
+        current_unit = Unit.objects.get(id=session_unit_id)
+
+        context['current_unit'] = current_unit      
         return context
 
     def form_valid(self, form):
         form.instance.unit_id = self.request.session['current_unit']
 
-        print "3_unit_id = %d" % self.request.session['current_unit']
         return super(UnitHistoryCreateView, self).form_valid(form)
 
 
@@ -131,5 +139,54 @@ class UnitHistoryDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super(UnitHistoryDetailView, self).get_context_data(**kwargs)
+
+        session_unit_id = self.request.session['current_unit']
+        current_unit = Unit.objects.get(id=session_unit_id)
+
+        context['current_unit'] = current_unit
+        
+        return context
+
+
+class UnitHistoryListView(LoginRequiredMixin, ListView):
+    login_url = "/login/"
+    template_name = 'unithistory_list.html'
+    model = UnitHistory
+    context_object_name = 'unithistory_list'
+    # table_class = UnitHistoryTable
+    # table_data = 'unithistory_list'
+    # table_pagination = {'per_page': 200}
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(UnitHistoryListView, self).get_context_data(**kwargs)
+
+        session_unit_id = self.request.session['current_unit']
+        current_unit = Unit.objects.get(id=session_unit_id)
+
+        current_unithistory_list = []
+        current_unithistory_list = UnitHistory.objects.filter(unit_id=session_unit_id).order_by('id')
+
+        context['unithistory_list'] = current_unithistory_list
+        context['unithistory_list_count'] = len(current_unithistory_list)
+        context['current_unit'] = current_unit
+
+        return context
+
+class UnitHistoryUpdateView(LoginRequiredMixin, CalibrationListActionMixin, UpdateView):
+    login_url = "/login/"
+    template_name = 'unithistory_update.html'
+    form_class = UnitHistoryUpdateForm
+    model = UnitHistory
+    action = "updated"
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(UnitHistoryUpdateView, self).get_context_data(**kwargs)
+
+        session_unit_id = self.request.session['current_unit']
+        current_unit = Unit.objects.get(id=session_unit_id)
+
+        context['current_unit'] = current_unit
         
         return context

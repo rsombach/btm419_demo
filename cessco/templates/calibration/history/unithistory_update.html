@@ -23,17 +23,14 @@
 				{{ block.super }}
 				{% breadcrumb "Calibration" "unit_list" %}
 
-				{% breadcrumb_for unit_detail unit.id %}
-					{{ unit.serial_number }}
-					{{ unit.unit_make }}
-					{{ unit.unit_model }}
-					{{ unit.unit_type }}
+				{% breadcrumb_for unit_detail current_unit.id %}
+					{{ current_unit.serial_number }}
+					{{ current_unit.unit_make }}
+					{{ current_unit.unit_model }}
+					{{ current_unit.unit_type }}
 				{% endbreadcrumb_for %}
 
-				{% breadcrumb_for unit_detail %}
-					Update Unit
-				    {{ unit.serial_number }}
-				{% endbreadcrumb_for %}
+				{% breadcrumb "Update Calibration Unit History Detail" "unithistory_detail" %}
 
 			{% endblock %}
 

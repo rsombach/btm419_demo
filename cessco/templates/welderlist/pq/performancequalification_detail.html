@@ -43,26 +43,27 @@
 				</ul> 
 			{% endif %}
 			    
-			        {% if performancequalification %}
-			        	<table width="90%" border=0 class="table table-striped table-bordered table-condensed">
-				            <tr><td width="20%">PQ Card Number</td><td>{{ performancequalification.id }}</td></tr>
-				            <tr><td width="20%">ABSA Number</td><td>{{ performancequalification.absa_number }}</td></tr>
-		                    <tr><td width="20%">f Number</td><td>{{ performancequalification.f_number }}</td></tr>
-		                    <tr><td width="20%">Process</td><td>{{ performancequalification.process }}</td></tr>
-				            <tr><td width="20%">t Qual Number</td><td>{{ performancequalification.t_qual }}</td></tr>
-				            <tr><td width="20%">Minimum Diameter</td><td>{{ performancequalification.minimum_diameter }}</td></tr>
-				            <tr><td width="20%">Position</td><td>{{ performancequalification.position }}</td></tr>
-				            <tr><td width="20%">Cessco Weld Procedure</td><td>{{ performancequalification.cessco_weld_procedure }}</td></tr>
-				            <tr><td width="20%">Original Test Date</td><td>{{ performancequalification.start_date|date:"Y-m-d" }}</td></tr>
-				            <tr><td width="20%">Renewal Date</td><td>{{ performancequalification.renewal_date|date:"Y-m-d" }}</td></tr>
-				            <tr><td width="20%">Active</td><td>{{ performancequalification.active }}</td></tr>
-				        </table>
+	        {% if performancequalification %}
+	        	<table width="90%" border=0 class="table table-striped table-bordered table-condensed">
+		            <tr><td width="20%">PQ Card Number</td><td>{{ performancequalification.id }}</td></tr>
+		            <tr><td width="20%">ABSA Number</td><td>{{ performancequalification.absa_number }}</td></tr>
+                    <tr><td width="20%">f Number</td><td>{{ performancequalification.f_number }}</td></tr>
+                    <tr><td width="20%">Process</td><td>{{ performancequalification.process }}</td></tr>
+		            <tr><td width="20%">t Qual Number</td><td>{{ performancequalification.t_qual }}</td></tr>
+		            <tr><td width="20%">Minimum Diameter</td><td>{{ performancequalification.minimum_diameter }}</td></tr>
+		            <tr><td width="20%">Position</td><td>{{ performancequalification.position }}</td></tr>
+		            <tr><td width="20%">Cessco Weld Procedure</td><td>{{ performancequalification.cessco_weld_procedure }}</td></tr>
+		            <tr><td width="20%">Original Test Date</td><td>{{ performancequalification.start_date|date:"Y-m-d" }}</td></tr>
+		            <tr><td width="20%">Renewal Date</td><td>{{ performancequalification.renewal_date|date:"Y-m-d" }}</td></tr>
+		            <tr><td width="20%">Active</td><td>{{ performancequalification.active }}</td></tr>
+		        </table>
 
-			        {% else %}
-			    		<table width="90%" border=0 class="table table-striped table-bordered table-condensed">
-			        		<tr><td>Sorry, there is no information for welder for id {{welder.pk }}</td></tr>
-			        	</table>
-			        {% endif %}
+	        {% else %}
+	    		<table width="90%" border=0 class="table table-striped table-bordered table-condensed">
+	        		<tr><td>Sorry, there is no information for welder for id {{welder.pk }}</td></tr>
+	        	</table>
+	        {% endif %}
+	        
 		{% else %}
 
 			You do not have permission to access this page. Please contact your System Administrator.
