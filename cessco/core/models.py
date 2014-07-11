@@ -127,4 +127,16 @@ class UnitTypeLov(TimeStampedModel):
 		verbose_name = "Unit Type "
 		verbose_name_plural = "Unit Type "
 
+class UnitRenewalPeriodLov(TimeStampedModel):
+	# id
+	unit_renewal_period_code = models.CharField(verbose_name="Unit Renewal Period Code", max_length=32, unique=True)
+	unit_renewal_period_description = models.CharField(verbose_name="Unit Renewal Period Description", max_length=256, blank=True)
+
+	def __unicode__(self):
+		return self.unit_renewal_period_code
+
+	class Meta:
+		verbose_name = "Unit Renewal Period "
+		verbose_name_plural = "Unit Renewal Period "
+
 

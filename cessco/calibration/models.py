@@ -12,6 +12,7 @@ class Unit(TimeStampedModel):
 	serial_number =models.CharField(null=True, blank=True, max_length=32)
 	start_date = models.DateField(null=True, blank=True, verbose_name='Inservice Date')
 	active = models.BooleanField()
+	renewal_period = models.ForeignKey('core.UnitRenewalPeriodLov', verbose_name='Renewal Period')
 
 	class Meta:
 		permissions = (
@@ -29,9 +30,10 @@ class UnitHistory(TimeStampedModel):
 	# id
 	unit = models.ForeignKey('calibration.Unit', verbose_name='Unit')
 	calibrated_by = models.CharField(max_length=256)
-	comment = models.CharField(null=True, blank=True, max_length=256)
+	comment = models.CharField(null=True, blank=True, max_length=2048)
 	certificate_issued = models.BooleanField(verbose_name='Certificate Issued')
-	calibration_date_time = models.DateField(verbose_name='Callibration Date')
+	service_date_time = models.DateField(verbose_name='Callibration Date')
+	calibrated = models.BooleanField(verbose_name='Calibrated')
 
 	def __unicode__(self):
 		return self.id
