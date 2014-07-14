@@ -52,10 +52,8 @@ class UnitListView(LoginRequiredMixin, ListView):
         active_unit_list = []
         active_unit_list = Unit.objects.filter(active=True).values('id', 'unit_type__unit_type_code', 'unit_make__unit_make_code', 'model', 'serial_number', 'start_date', 'active')
 
-        print active_unit_list
-
         context['unit_list'] = active_unit_list
-        context['unit_list_count'] = len(active_unit_list)
+        context['unit_list_count'] = active_unit_list.count()
         return context
 
 
@@ -88,9 +86,7 @@ class UnitDetailView(LoginRequiredMixin, DetailView):
         self.request.session['current_unit'] = kwargs_unit_id
 
         unithistory_list = []
-        unithistory_list = UnitHistory.objects.filter(unit_id=kwargs_unit_id).order_by('-calibration_date_time')
-
-        print "unit history count: %d" % len(unithistory_list)
+        unithistory_list = UnitHistory.objects.filter(unit_id=kwargs_unit_id).order_by('-service_date_time')
 
         context['unit_history_list'] = unithistory_list
         
@@ -165,7 +161,7 @@ class UnitHistoryListView(LoginRequiredMixin, ListView):
         current_unit = Unit.objects.get(id=session_unit_id)
 
         current_unithistory_list = []
-        current_unithistory_list = UnitHistory.objects.filter(unit_id=session_unit_id).order_by('id')
+        current_unithistory_list = UnitHistory.objects.filter(unit_id=session_unit_id).order_by('-service_date_time')
 
         context['unithistory_list'] = current_unithistory_list
         context['unithistory_list_count'] = len(current_unithistory_list)

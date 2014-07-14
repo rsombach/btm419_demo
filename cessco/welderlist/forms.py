@@ -14,7 +14,7 @@ class WelderCreateForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
 		super(WelderCreateForm, self).__init__(*args, **kwargs)
 
-		self.fields['welder_stamp'] = forms.ModelChoiceField(queryset=WelderStampLov.objects.exclude(id__in=Welder.objects.values_list('welder_stamp', flat=True)))
+		self.fields['welder_stamp'] = forms.ModelChoiceField(queryset=WelderStampLov.objects.exclude(id__in=Welder.objects.values_list('welder_stamp', flat=True)), label=('Welder Stamp'))
 
 		self.helper = FormHelper(self)
 		self.helper.form_method = 'POST'

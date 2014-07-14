@@ -90,9 +90,21 @@
 					<tr><td width="20%">Type</td><td>{{ unit.unit_type }}</td></tr>
 		            <tr><td width="20%">Make</td><td>{{ unit.unit_make }}</td></tr>
 		            <tr><td width="20%">Model</td><td>{{ unit.model }}</td></tr>
-					<tr><td width="20%">In-service Date</td><td>{{ unit.start_date|date:"Y-m-d" }}</td></tr>
-					<tr><td width="20%">Renewal Period</td><td>-</td></tr>
-					<tr><td width="20%">Calibration Due Date</td><td>-</td></tr>
+					<tr><td width="20%">In-service Date</td>
+					<td>{{ unit.start_date|date:"Y-m-d" }}</td></tr>
+					<tr><td width="20%">Renewal Period</td><td>{{ unit.renewal_period }}</td></tr>
+
+					<tr>
+					<td width="20%">Calibration Due Date</td>
+					<td>
+						{% if unit.calibration_due_date %}
+						{{ unit.calibration_due_date|date:"Y-m-d" }}
+						{% else %}
+						No calibration record
+						{% endif %}	
+					</td>
+					</tr>
+
 					<tr><td width="20%">Active</td>
 					<td>
 						{% if unit.active %}
@@ -107,10 +119,10 @@
 					{% if unit_history_list %}
 						{% with unit_history_list.all|first as recent_unit_history %}
 							
-							<tr><td width="20%">Last Service Date</td><td>{{ recent_unit_history.calibration_date_time|date:"Y-m-d" }}</td></tr>
+							<tr><td width="20%">Last Service Date</td><td>{{ recent_unit_history.service_date_time|date:"Y-m-d" }}</td></tr>
 							<tr><td width="20%">Serviced By</td><td>{{ recent_unit_history.calibrated_by }}</td></tr>
 							<tr>
-							<td width="20%">Certificate Issued</td>
+							<td width="20%">Certificate Issued?</td>
 							<td>
 								{% if recent_unit_history.certificate_issued %}
 								Yes
@@ -119,12 +131,21 @@
 								{% endif %}
 							</td>
 							</tr>
-							<tr><td width="20%">Calibrated?</td><td>-</td></tr>
+							<tr>
+							<td width="20%">Calibrated?</td>
+							<td>
+								{% if recent_unit_history.calibrated %}
+								Yes
+								{% else %}
+								No
+								{% endif %}
+							</td>
+							</tr>
 							<tr><td width="20%">Comment</td><td>{{ recent_unit_history.comment }}</td></tr>
 						
 						{% endwith %}
 					{% else %}
-						<tr><td width="20%">Calibration Date</td><td>This unit has no calibration history</td></tr>
+						<tr><td width="20%">Last Service Date</td><td>This unit has no service history</td></tr>
 					{% endif %}
 		        </table>
 
@@ -135,7 +156,7 @@
 		            	</td>
 		            	<td align="right" class="cessco_td">
 							<a href="/calibration/history/"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-list-alt"></span> View</button></a>
-							{% if perms.welderlist.add_welder %}
+							{% if perms.calibration.add_calibration %}
 								<a href="/calibration/history/add/"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"> </span> Add</button></a>
 							{% endif %}
 		            	</td>

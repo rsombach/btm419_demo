@@ -15,6 +15,7 @@ from core.models import WelderStampLov
 # Calibration
 from core.models import UnitTypeLov
 from core.models import UnitMakeLov
+from core.models import UnitRenewalPeriodLov
 
 
 # Globally disable delete selected on list views
@@ -90,7 +91,11 @@ class UnitMakeLovAdmin(admin.ModelAdmin):
 	def has_delete_permission(self, request, obj=None):
 	        return_value = False
 
-
+class UnitRenewalPeriodLovAdmin(admin.ModelAdmin):
+	list_display = ['unit_renewal_period_code', 'unit_renewal_period_description']
+	
+	def has_delete_permission(self, request, obj=None):
+	        return_value = False
 
 admin.site.register(BusinessUnitLov, BusinessUnitLovAdmin)
 
@@ -104,3 +109,4 @@ admin.site.register(WelderStampLov, WelderStampLovAdmin)
 
 admin.site.register(UnitTypeLov, UnitTypeLovAdmin)
 admin.site.register(UnitMakeLov, UnitMakeLovAdmin)
+admin.site.register(UnitRenewalPeriodLov, UnitRenewalPeriodLovAdmin)

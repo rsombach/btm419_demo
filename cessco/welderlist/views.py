@@ -75,7 +75,7 @@ class WelderListView(LoginRequiredMixin, ListView):
         active_welder_list = WelderHistory.objects.filter(end_date__isnull=True).values('id', 'welder_id', 'welder__first_name', 'welder__last_name', 'welder__welder_stamp__welder_stamp_code', 'start_date', 'end_date').order_by('welder__welder_stamp__welder_stamp_code')
 
         context['welder_list'] = active_welder_list
-        context['welder_list_count'] = len(active_welder_list)
+        context['welder_list_count'] = active_welder_list.count()
         return context
 	
 	

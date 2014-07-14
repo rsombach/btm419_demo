@@ -7,12 +7,14 @@ from crispy_forms.layout import *
 from .models import Unit
 from .models import UnitHistory
 
-from core.models import BusinessUnitLov
+from core.models import BusinessUnitLov, UnitMakeLov
 
 
 class UnitCreateForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
 		super(UnitCreateForm, self).__init__(*args, **kwargs)
+
+		self.fields['unit_make'] = forms.ModelChoiceField(queryset=UnitMakeLov.objects.order_by('unit_make_code'), label=('Unit Make'))
 
 		self.helper = FormHelper(self)
 		self.helper.form_method = 'POST'
@@ -24,6 +26,7 @@ class UnitCreateForm(forms.ModelForm):
 
 	class Meta:
 		model = Unit
+		fields = ['business_unit', 'unit_type', 'unit_make', 'model', 'serial_number', 'start_date', 'renewal_period', 'active']
 
 
 class UnitUpdateForm(forms.ModelForm):
@@ -61,7 +64,7 @@ class UnitHistoryCreateForm(forms.ModelForm):
 		model = UnitHistory
 
 		exclude = [ 'unit' ]
-
+		fields = ['service_date_time', 'calibrated_by', 'comment', 'certificate_issued', 'calibrated' ]
 
 class UnitHistoryUpdateForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
