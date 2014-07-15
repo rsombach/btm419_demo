@@ -51,6 +51,18 @@ class UnitListView(LoginRequiredMixin, ListView):
         # Create an object to store query results
         active_unit_list = []
         active_unit_list = Unit.objects.filter(active=True).values('id', 'unit_type__unit_type_code', 'unit_make__unit_make_code', 'model', 'serial_number', 'start_date', 'active')
+        
+        active_unit_list_calibration_due_date = []
+        active_unit_list_calibration_due_date = Unit.objects.filter(active=True)
+
+        # for active_unit_calibration_date in active_unit_list_calibration_due_date:
+        #     print "%d - %s" % (active_unit_calibration_date.id, active_unit_calibration_date.calibration_due_date)
+
+        index = 0
+        for row in active_unit_list:
+            # update some variable we want to use in the template
+            row['calibration_due_date'] = active_unit_list_calibration_due_date[index].calibration_due_date
+            index = index + 1
 
         context['unit_list'] = active_unit_list
         context['unit_list_count'] = active_unit_list.count()
