@@ -33,7 +33,7 @@
 
 		    {% if unit_list %}
 				<table width="90%" border="0" class="table table-striped table-bordered table-condensed">
-					<thead>
+
 					<tr>
 		            	<td><strong>Type</strong></td>
 		            	<td><strong>Make</strong></td>
@@ -41,28 +41,25 @@
 						<td><strong>Serial Number</strong></td>
 		            	<td><strong>Calibration Due Date</strong></td>
 					</tr>
-					</thead>
-					<tbody>
 
-						{% for unit in unit_list %}
-					        <tr>
-								<td><a href="/calibration/unit/{{ unit.id }}/">{{ unit.unit_type__unit_type_code }}</a></td>
-								<td><a href="/calibration/unit/{{ unit.id }}/">{{ unit.unit_make__unit_make_code }}</a></td>
-								<td><a href="/calibration/unit/{{ unit.id }}/">{{ unit.model }}</a></td>
-								<td><a href="/calibration/unit/{{ unit.id }}/">{{ unit.serial_number }}</a></td>
-								<td>
-								<a href="/calibration/unit/{{ unit.id }}/">
-								{% if unit.calibration_due_date %}
-									{{ unit.calibration_due_date|date:"Y-m-d" }}
-								{% else %}
-									No calibration record
-								{% endif %}	
-								</a>
-								</td>
-							</tr>
-					    {% endfor %}
+					{% for unit in unit_list %}
+				        <tr>
+							<td><a href="/calibration/unit/{{ unit.id }}/">{{ unit.unit_type__unit_type_code }}</a></td>
+							<td><a href="/calibration/unit/{{ unit.id }}/">{{ unit.unit_make__unit_make_code }}</a></td>
+							<td><a href="/calibration/unit/{{ unit.id }}/">{{ unit.model }}</a></td>
+							<td><a href="/calibration/unit/{{ unit.id }}/">{{ unit.serial_number }}</a></td>
+							<td>
+							<a href="/calibration/unit/{{ unit.id }}/">
+							{% if unit.calibration_due_date %}
+								{{ unit.calibration_due_date|date:"Y-m-d" }}
+							{% else %}
+								No calibration record
+							{% endif %}	
+							</a>
+							</td>
+						</tr>
+				    {% endfor %}
 
-				    </tbody>
 			    </table>
 
 			    <table width="90%" border="5" class="table table-striped table-bordered table-condensed">

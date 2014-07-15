@@ -50,7 +50,7 @@
 		        </table>
 
 				<table id="unitTable" width="90%" border="0" class="table table-striped table-bordered table-condensed">
-					<thead>
+
 					<tr>
 						<td><strong>Service Date</strong></td>
 		            	<td><strong>Service By</strong></td>
@@ -62,8 +62,7 @@
 			            	<th></th>
 						{% endif %}
 					</tr>
-					</thead>
-					<tbody>
+
 					{% for unithistory in unithistory_list %}
 				        <tr>
 							<td>{{ unithistory.service_date_time|date:"Y-m-d" }}</td>
@@ -96,7 +95,7 @@
 							{% endif %}	
 						</tr>
 				    {% endfor %}
-				    </tbody>
+
 			    </table>
 
 			    <table width="90%" border="5" class="table table-striped table-bordered table-condensed">
