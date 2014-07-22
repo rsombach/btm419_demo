@@ -50,11 +50,15 @@
 							<td><a href="/calibration/unit/{{ unit.id }}/">{{ unit.serial_number }}</a></td>
 							<td>
 							<a href="/calibration/unit/{{ unit.id }}/">
-							{% if unit.calibration_due_date %}
-								{{ unit.calibration_due_date|date:"Y-m-d" }}
+							{% if unit.renewal_period > 1 %}
+								{% if unit.calibration_due_date %}
+									{{ unit.calibration_due_date|date:"Y-m-d" }}
+								{% else %}
+									No calibration record
+								{% endif %}
 							{% else %}
-								No calibration record
-							{% endif %}	
+								As needed
+							{% endif %}
 							</a>
 							</td>
 						</tr>

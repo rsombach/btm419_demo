@@ -50,7 +50,7 @@ class UnitListView(LoginRequiredMixin, ListView):
 
         # Create an object to store query results
         active_unit_list = []
-        active_unit_list = Unit.objects.filter(active=True).values('id', 'unit_type__unit_type_code', 'unit_make__unit_make_code', 'model', 'serial_number', 'start_date', 'active')
+        active_unit_list = Unit.objects.filter(active=True).values('id', 'unit_type__unit_type_code', 'unit_make__unit_make_code', 'model', 'serial_number', 'start_date', 'renewal_period', 'active').order_by('unit_type__unit_type_code')
         
         active_unit_list_calibration_due_date = []
         active_unit_list_calibration_due_date = Unit.objects.filter(active=True)

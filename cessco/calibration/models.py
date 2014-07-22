@@ -16,6 +16,7 @@ class Unit(TimeStampedModel):
 	start_date = models.DateField(null=True, blank=True, verbose_name='Inservice Date')
 	active = models.BooleanField()
 	renewal_period = models.ForeignKey('core.UnitRenewalPeriodLov', verbose_name='Renewal Period')
+	comment = models.CharField(null=True, blank=True, max_length=2048, verbose_name='Notes')
 
 	class Meta:
 		permissions = (

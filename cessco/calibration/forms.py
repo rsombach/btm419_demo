@@ -26,7 +26,7 @@ class UnitCreateForm(forms.ModelForm):
 
 	class Meta:
 		model = Unit
-		fields = ['business_unit', 'unit_type', 'unit_make', 'model', 'serial_number', 'start_date', 'renewal_period', 'active']
+		fields = ['business_unit', 'unit_type', 'unit_make', 'model', 'serial_number', 'start_date', 'renewal_period', 'comment', 'active']
 
 
 class UnitUpdateForm(forms.ModelForm):
@@ -46,7 +46,7 @@ class UnitUpdateForm(forms.ModelForm):
 
 	class Meta:
 		model = Unit
-
+		fields = ['business_unit', 'unit_type', 'unit_make', 'model', 'serial_number', 'start_date', 'renewal_period', 'comment', 'active']
 
 class UnitHistoryCreateForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):

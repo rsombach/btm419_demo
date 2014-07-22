@@ -97,14 +97,18 @@
 					<tr>
 					<td width="20%">Calibration Due Date</td>
 					<td>
+					{% ifnotequal unit.renewal_period|cut:" months" "0" %}
 						{% if unit.calibration_due_date %}
-						{{ unit.calibration_due_date|date:"Y-m-d" }}
+							{{ unit.calibration_due_date|date:"Y-m-d" }}
 						{% else %}
-						No calibration record
-						{% endif %}	
+							No calibration record
+						{% endif %}
+					{% else %}
+						As needed
+					{% endifnotequal %}
 					</td>
 					</tr>
-
+					<tr><td width="20%">Notes</td><td>{{ unit.comment }}</td></tr>
 					<tr><td width="20%">Active</td>
 					<td>
 						{% if unit.active %}
