@@ -75,7 +75,7 @@
 			{% endif %}
 
 		    <h4>Unit Details
-		        {% if unit and perms.welderlist.add_welder %}
+		        {% if unit and perms.calibration.add_unit %}
 		        	<a href="/calibration/unit/update/{{ unit.id }}/">
 		                <button type="button" class="btn btn-default btn-xs">
 		                    <span class="glyphicon glyphicon-pencil"></span> 
@@ -160,7 +160,7 @@
 		            	</td>
 		            	<td align="right" class="cessco_td">
 							<a href="/calibration/history/"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-list-alt"></span> View</button></a>
-							{% if perms.calibration.add_calibration %}
+							{% if perms.calibration.add_unit %}
 								<a href="/calibration/history/add/"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"> </span> Add</button></a>
 							{% endif %}
 		            	</td>

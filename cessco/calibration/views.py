@@ -49,23 +49,32 @@ class UnitListView(LoginRequiredMixin, ListView):
         context = super(UnitListView, self).get_context_data(**kwargs)
 
         # Create an object to store query results
-        active_unit_list = []
-        active_unit_list = Unit.objects.filter(active=True).values('id', 'unit_type__unit_type_code', 'unit_make__unit_make_code', 'model', 'serial_number', 'start_date', 'renewal_period', 'active').order_by('unit_type__unit_type_code')
+        sorted_active_unit_list = []
+        unsorted_active_unit_list = []
+        unsorted_active_unit_list = Unit.objects.filter(active=True).values('id', 'unit_type__unit_type_code', 'unit_make__unit_make_code', 'model', 'serial_number', 'start_date', 'renewal_period', 'active')#.order_by('unit_type__unit_type_code')
         
-        active_unit_list_calibration_due_date = []
-        active_unit_list_calibration_due_date = Unit.objects.filter(active=True)
+        unsorted_active_unit_list_calibration_due_date = []
+        unsorted_active_unit_list_calibration_due_date = Unit.objects.filter(active=True)#.order_by('unit_type__unit_type_code')
 
-        # for active_unit_calibration_date in active_unit_list_calibration_due_date:
-        #     print "%d - %s" % (active_unit_calibration_date.id, active_unit_calibration_date.calibration_due_date)
+        # print type(unsorted_active_unit_list)
+        # print type(unsorted_active_unit_list_calibration_due_date)
 
         index = 0
-        for row in active_unit_list:
+
+        for row in unsorted_active_unit_list:
+            # print "                     unsorted active_unit_list.id = %d" % row['id']
+            # print "unsorted_active_unit_list_calibration_due_date.id = %d" % unsorted_active_unit_list_calibration_due_date[index].id
+
             # update some variable we want to use in the template
-            row['calibration_due_date'] = active_unit_list_calibration_due_date[index].calibration_due_date
+            row['calibration_due_date'] = unsorted_active_unit_list_calibration_due_date[index].calibration_due_date
             index = index + 1
 
-        context['unit_list'] = active_unit_list
-        context['unit_list_count'] = active_unit_list.count()
+        # active_unit_list = sorted(unsorted_active_unit_list, key=lambda k: k['unit_type__unit_type_code'])
+        # sorted_active_unit_list = unsorted_active_unit_list.objects.order_by('unit_type__unit_type_code')
+        sorted_active_unit_list = unsorted_active_unit_list
+
+        context['unit_list'] = sorted_active_unit_list
+        context['unit_list_count'] = sorted_active_unit_list.count()
         return context
 
 

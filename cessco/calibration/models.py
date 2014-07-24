@@ -40,6 +40,7 @@ class Unit(TimeStampedModel):
 		# return the lastest service date that is a calibration and add the renwal period to the date
 		if unithistory_qs.count() > 0:
 			last_service_date = unithistory_qs[0].service_date_time
+
 			s = str(self.renewal_period)
 			renewal_period = map(int, re.findall('\d+', s))
 

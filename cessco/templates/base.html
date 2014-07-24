@@ -99,13 +99,16 @@
           {% if perms.calibration.select_calibration %}
             <li class="dropdown-header">Calibration</li>
             <li><a href="/calibration/unit/">List</a></li>
-            <li><a href="/calibration/unit/add">Add</a></li>
 
-            <li class="divider"></li>
+            {% if perms.calibration.add_unit %}
+              <li><a href="/calibration/unit/add">Add</a></li>
+            {% endif %}
           {% endif %}
 
           <!-- reports are only visible to groups that have reports -->
           {% if perms.welderlist.select_welderlist %}
+            <li class="divider"></li>
+
             <li class="dropdown-header">Reports</li>
             <li><a href="/welderlist/report/">All Welders</a>
           {% endif %}
@@ -161,7 +164,7 @@
     <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
       <div class="container" align="center">
         <table border="0">
-          <tr align="center"><td>&copy 2013-2014 Cessco Fabrication and Engineering Ltd.<br>version: 1.90.05</td></tr>
+          <tr align="center"><td>&copy 2013-2014 Cessco Fabrication and Engineering Ltd.<br>version: 1.95.00</td></tr>
         </table>
       </div>
     </nav>
