@@ -28,20 +28,6 @@ from forms import PerformanceQualificationUpdateForm
 # from tables import WelderTable
 from tables import PerformanceQualificationTable
 
-# search/util.py import
-from search.utils import generic_search
-from django.shortcuts  import render_to_response, redirect
-
-
-
-QUERY="q"
-WELDER_MODEL_MAP = { 	
-				Welder: [ "first_name", "last_name", "welder_stamp__welder_stamp_code" ],
-			}
-			
-PERFORMANCE_QUALIFICATION_MODEL_MAP = {
-				PerformanceQualification  : [ "id", "f_number__f_number_code", "process__process_code", "cessco_weld_procedure__cessco_weld_procedure_code" ], 
-}
 
 class WelderListActionMixin(object): 
     @property 
@@ -77,26 +63,6 @@ class WelderListView(LoginRequiredMixin, ListView):
         context['welder_list'] = active_welder_list
         context['welder_list_count'] = active_welder_list.count()
         return context
-	
-	
-class SearchResultView(LoginRequiredMixin, TemplateView):
-	login_url = "/login/"
-	template_name = 'search_results.html'
-
-	def get_context_data(self, **kwargs):
-		context = super(SearchResultView, self).get_context_data(**kwargs)
-		welder_search_result = []
-		performance_qualification_search_result = []
-	
-		for model, fields in WELDER_MODEL_MAP.iteritems():
-			welder_search_result += generic_search( self.request, model, fields, QUERY)
-			
-		for model, fields in PERFORMANCE_QUALIFICATION_MODEL_MAP.iteritems():
-			performance_qualification_search_result += generic_search( self.request, model, fields, QUERY)	
-		
-		context['welder_search_result'] = welder_search_result
-		context['performance_qualification_search_result'] = performance_qualification_search_result
-		return context
 
 class WelderDetailView(LoginRequiredMixin, DetailView):
     login_url = "/login/"

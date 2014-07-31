@@ -5,6 +5,7 @@ from django.conf.urls import url
 # from welderlist.views import WelderListView
 # from welderlist.views import WelderCreateView
 
+from core import views as core_views
 from welderlist import views as welderlist_views
 from calibration import views as calibration_views
 
@@ -36,7 +37,7 @@ urlpatterns = patterns('',
     # welderlist
     url(
         regex=r'^search/$',
-        view=welderlist_views.SearchResultView.as_view(),
+        view=core_views.SearchResultView.as_view(),
         name='searchresult',
         ),
 

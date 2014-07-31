@@ -16,9 +16,7 @@
     
 	    <h2>Search Results</h2>
 		
-	
-		
-		{% if welder_search_result %}
+		{% if welder_search_result and perms.welderlist.select_welderlist %}
 			<table width="90%" border="0" class="table table-striped table-bordered table-condensed">
 
 		        <tr><td colspan="3"><h4>Welders</h4></td></tr>
@@ -38,9 +36,7 @@
 			</table>
 		{% endif %}
 
-	
-
-		{% if performance_qualification_search_result %}
+		{% if performance_qualification_search_result and perms.welderlist.select_welderlist %}
 			<table width="90%" border="0" class="table table-striped table-bordered table-condensed">
 			    <tr><td colspan="11"><h4>Performance Qualification</h4></td></tr>
 				<tr>
@@ -71,13 +67,61 @@
 			    {% endfor %}
 			</table>
 		{% endif %}
-		
-		{% if not welder_search_result and not performance_qualification_search_result %}
+
+		{% if unit_search_result and perms.calibration.select_calibration %}
+			<table width="90%" border="0" class="table table-striped table-bordered table-condensed">
+				<tr><td colspan="11"><h4>Calibration Unit</h4></td></tr>
+				<tr>
+					<td><strong>Business Unit</strong></td>
+	            	<td><strong>Type</strong></td>
+	            	<td><strong>Make</strong></td>
+	            	<td><strong>Model</strong></td>
+					<td><strong>Serial Number</strong></td>
+	            	<td><strong>Calibration Due Date</strong></td>
+				</tr>
+
+				{% for unit in unit_search_result %}
+			        <tr>
+			        	<td><a href="/calibration/unit/{{ unit.id }}/">{{ unit.business_unit }}</a></td>
+						<td><a href="/calibration/unit/{{ unit.id }}/">{{ unit.unit_type }}</a></td>
+						<td><a href="/calibration/unit/{{ unit.id }}/">{{ unit.unit_make }}</a></td>
+						<td><a href="/calibration/unit/{{ unit.id }}/">{{ unit.model }}</a></td>
+						<td><a href="/calibration/unit/{{ unit.id }}/">{{ unit.serial_number }}</a></td>
+						<td>
+						<a href="/calibration/unit/{{ unit.id }}/">
+						{% if unit.renewal_period > 1 %}
+							{% if unit.calibration_due_date %}
+								{{ unit.calibration_due_date|date:"Y-m-d" }}
+							{% else %}
+								No calibration record
+							{% endif %}
+						{% else %}
+							As needed
+						{% endif %}
+						</a>
+						</td>
+					</tr>
+			    {% endfor %}
+
+		    </table>
+		{% endif %}
+
+
+		{% if not welder_search_result and not performance_qualification_search_result and not unit_search_result %}
 			<table width="90%" border="0" class="table table-striped table-bordered table-condensed">
 				<tr><td><h4>No matches found.</h4></td></tr>
 			</table>
 		{% endif %}
 		
+		<table width="90%" border="5" class="table table-striped table-bordered table-condensed">
+			<tr>
+				{% if search_result_count > 1 %}
+            		<td><div class="text-right">{{ search_result_count }} records</div></td>
+            	{% else %}
+            		<td><div class="text-right">{{ search_result_count }} record</div></td>
+				{% endif %}
+			</tr>
+		</table>
 
 	    
 	{% else %}
