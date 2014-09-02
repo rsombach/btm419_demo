@@ -148,6 +148,8 @@ INSTALLED_APPS = (
     'crispy_forms',
     'django_tables2',
     'django_bootstrap_breadcrumbs',
+    'bootstrap_pagination',
+    'django_filters',
     'core', # Core models / functionality that can be used by all apps
 	'search', # simple search utilities
     'welderlist', # [1] Cessco Qualified Pressure Welder List

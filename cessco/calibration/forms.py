@@ -9,6 +9,9 @@ from .models import UnitHistory
 
 from core.models import BusinessUnitLov, UnitMakeLov
 
+class UnitListFormHelper(FormHelper):
+    model = Unit
+    form_tag = False
 
 class UnitCreateForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):

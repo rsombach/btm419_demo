@@ -22,6 +22,14 @@ from forms import UnitUpdateForm
 from forms import UnitHistoryCreateForm
 from forms import UnitHistoryUpdateForm
 
+from .forms import UnitListFormHelper
+
+# filter.py import
+from .filters import UnitListFilter
+
+# utils.py import
+from utils import PagedFilteredTableView
+
 
 class CalibrationListActionMixin(object): 
     @property 
@@ -36,48 +44,18 @@ class CalibrationListActionMixin(object):
         messages.info(self.request, msg) 
         return super(CalibrationListActionMixin, self).form_valid(form)
 
-class UnitListView(LoginRequiredMixin, ListView):
-    login_url = "/login/"
-    template_name = 'unit_list.html'
+class UnitListView(PagedFilteredTableView):
     model = Unit
-    context_object_name = 'unit_list'
+    template_name = 'unit_list.html'
     table_class = UnitTable
-    table_data = 'unit_list'
-    table_pagination = {'per_page': 200}
-
+    filter_class = UnitListFilter
+    formhelper_class = UnitListFormHelper
+    table_pagination = {'per_page': 100}
+    
     def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
-        context = super(UnitListView, self).get_context_data(**kwargs)
-
-        # Create an object to store query results
-        sorted_active_unit_list = []
-        unsorted_active_unit_list = []
-        unsorted_active_unit_list = Unit.objects.filter(active=True).values('id', 'unit_type__unit_type_code', 'unit_make__unit_make_code', 'model', 'serial_number', 'start_date', 'renewal_period', 'active')#.order_by('unit_type__unit_type_code')
-        
-        unsorted_active_unit_list_calibration_due_date = []
-        unsorted_active_unit_list_calibration_due_date = Unit.objects.filter(active=True)#.order_by('unit_type__unit_type_code')
-
-        # print type(unsorted_active_unit_list)
-        # print type(unsorted_active_unit_list_calibration_due_date)
-
-        index = 0
-
-        for row in unsorted_active_unit_list:
-            # print "                     unsorted active_unit_list.id = %d" % row['id']
-            # print "unsorted_active_unit_list_calibration_due_date.id = %d" % unsorted_active_unit_list_calibration_due_date[index].id
-
-            # update some variable we want to use in the template
-            row['calibration_due_date'] = unsorted_active_unit_list_calibration_due_date[index].calibration_due_date
-            index = index + 1
-
-        # active_unit_list = sorted(unsorted_active_unit_list, key=lambda k: k['unit_type__unit_type_code'])
-        # sorted_active_unit_list = unsorted_active_unit_list.objects.order_by('unit_type__unit_type_code')
-        sorted_active_unit_list = unsorted_active_unit_list
-
-        context['unit_list'] = sorted_active_unit_list
-        context['unit_list_count'] = sorted_active_unit_list.count()
-        return context
-
+            # Call the base implementation first to get a context
+            context = super(UnitListView, self).get_context_data(**kwargs)
+            return context
 
 class UnitCreateView(LoginRequiredMixin, CalibrationListActionMixin, CreateView):
     login_url = "/login/"

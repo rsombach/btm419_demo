@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load render_table from django_tables2 %}
+{% load crispy_forms_tags %}
 {% load django_bootstrap_breadcrumbs %}
+{% load bootstrap_pagination %}
 
 {% block js_scripts %}
 {% endblock %}
@@ -31,56 +33,36 @@
 		
 		    <h2>Calibration Unit List</h2>
 
-		    {% if unit_list %}
-				<table width="90%" border="0" class="table table-striped table-bordered table-condensed">
-
+		    {% if table.rows|length > 0 %}
+				
+			    <table border="0" class="table">
 					<tr>
-		            	<td><strong>Type</strong></td>
-		            	<td><strong>Make</strong></td>
-		            	<td><strong>Model</strong></td>
-						<td><strong>Serial Number</strong></td>
-		            	<td><strong>Calibration Due Date</strong></td>
-					</tr>
-
-					{% for unit in unit_list %}
-				        <tr>
-							<td><a href="/calibration/unit/{{ unit.id }}/">{{ unit.unit_type__unit_type_code }}</a></td>
-							<td><a href="/calibration/unit/{{ unit.id }}/">{{ unit.unit_make__unit_make_code }}</a></td>
-							<td><a href="/calibration/unit/{{ unit.id }}/">{{ unit.model }}</a></td>
-							<td><a href="/calibration/unit/{{ unit.id }}/">{{ unit.serial_number }}</a></td>
-							<td>
-							<a href="/calibration/unit/{{ unit.id }}/">
-							{% if unit.renewal_period > 1 %}
-								{% if unit.calibration_due_date %}
-									{{ unit.calibration_due_date|date:"Y-m-d" }}
-								{% else %}
-									No calibration record
-								{% endif %}
-							{% else %}
-								As needed
-							{% endif %}
-							</a>
-							</td>
-						</tr>
-				    {% endfor %}
-
-			    </table>
-
-			    <table width="90%" border="5" class="table table-striped table-bordered table-condensed">
-					<tr>
-						{% if unit_list_count > 1 %}
-		            		<td><div class="text-right">{{ unit_list_count }} units</div></td>
-		            	{% else %}
-		            		<td><div class="text-right">{{ unit_list_count }} unit</div></td>
-						{% endif %}
-		            	
+	            		<td>{% render_table table %}</td>
+	            		<td valign="top" width="20%">
+							<div class="text-right">
+							<form action="" method="get">
+							{% crispy filter.form filter.form.helper %}
+							<input type="submit" value="Apply Filter"/>
+							</form>
+	            			</div>
+						</td>
 					</tr>
 				</table>
 
 			{% else %}
 
-	    		<table width="90%" border=0 class="table table-striped table-bordered table-condensed">
-	        		<tr><td>Sorry, there are no calibration units in the database.</td></tr>
+	    		<table width="90%" border=0 class="table">
+	        		<tr>
+						<td>Sorry, there are no calibration units in the database.</td>
+						<td valign="top" width="20%">
+							<div class="text-right">
+							<form action="" method="get">
+							{% crispy filter.form filter.form.helper %}
+							<input type="submit" value="Apply Filter"/>
+							</form>
+	            			</div>
+						</td>
+					</tr>
 	        	</table>
 
 	        {% endif %}
