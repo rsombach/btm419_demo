@@ -16,6 +16,8 @@
     <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="http://jquery-ui.googlecode.com/svn/tags/latest/themes/base/jquery-ui.css" media="all" />
     
+    <link rel="stylesheet" href="/static/cessco/js/tablesorter/css/theme.cessco.min.css">
+
     <link href="/static/cessco/css/cessco.css" rel="stylesheet" />
 
     <title>Cessco {% block title %}{% endblock %}</title>
@@ -23,8 +25,11 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     
-    <script type="text/javascript" src="/static/cessco/js/tablesorter/jquery.tablesorter.min.js"></script>
-    <script type="text/javascript" src="/static/cessco/js/tablesorter/jquery.tablesorter.widgets.js"></script>
+    <!-- load jQuery and tablesorter scripts -->
+    <script type="text/javascript" src="/static/cessco/js/tablesorter/js/jquery.tablesorter.js"></script>
+    <script type="text/javascript" src="/static/cessco/js/tablesorter/js/jquery.tablesorter.widgets.js"></script>
+
+
 
     <script type="text/javascript" src="/static/bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript" src="/static/cessco/js/slide-menu.js"></script>
@@ -164,7 +169,7 @@
     <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
       <div class="container" align="center">
         <table border="0">
-          <tr align="center"><td>&copy 2013-2014 Cessco Fabrication and Engineering Ltd.<br>version: 2.00.00</td></tr>
+          <tr align="center"><td>&copy 2013-2014 Cessco Fabrication and Engineering Ltd.<br>version: 2.1.00 {{ django_version }}</td></tr>
         </table>
       </div>
     </nav>

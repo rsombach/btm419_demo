@@ -8,13 +8,14 @@ from django.core.urlresolvers import reverse_lazy
 
 from django.views.generic import (CreateView, ListView, DetailView, UpdateView, TemplateView)
 from django_tables2 import SingleTableView
-# import django_tables2 as tables
 
 from braces.views import LoginRequiredMixin
 
 from .models import Unit, UnitHistory
+from core.models import UnitRenewalPeriodLov
 
-from tables import UnitTable
+# from tables import UnitTable
+from tables import UnitHistoryTable
 
 # forms.py import
 from forms import UnitCreateForm
@@ -24,11 +25,7 @@ from forms import UnitHistoryUpdateForm
 
 from .forms import UnitListFormHelper
 
-# filter.py import
-from .filters import UnitListFilter
-
-# utils.py import
-from utils import PagedFilteredTableView
+import re
 
 
 class CalibrationListActionMixin(object): 
@@ -44,17 +41,34 @@ class CalibrationListActionMixin(object):
         messages.info(self.request, msg) 
         return super(CalibrationListActionMixin, self).form_valid(form)
 
-class UnitListView(PagedFilteredTableView):
-    model = Unit
+class UnitListView(LoginRequiredMixin, ListView):
+    model = UnitHistory
     template_name = 'unit_list.html'
-    table_class = UnitTable
-    filter_class = UnitListFilter
-    formhelper_class = UnitListFormHelper
-    table_pagination = {'per_page': 100}
+    context_object_name = 'calibration_unit_list'
     
     def get_context_data(self, **kwargs):
             # Call the base implementation first to get a context
             context = super(UnitListView, self).get_context_data(**kwargs)
+
+            days_in_a_month = (365.2425 / 12)
+
+            # unit_list = []
+            unit_list = UnitHistory.objects.filter().values('unit_id', 'unit__unit_type__unit_type_code', 'unit__unit_make__unit_make_code', 'unit__model', 'unit__serial_number', 'service_date_time', 'unit__renewal_period__unit_renewal_period_code').order_by('unit_id', '-service_date_time').distinct('unit_id')
+
+            for unit in unit_list:
+
+                # print unit['service_date_time']
+                # print unit['unit__unit_type__unit_type_code']
+                # print unit['unit__unit_make__unit_make_code']
+                renewal_period = map(int, re.findall('\d+', unit['unit__renewal_period__unit_renewal_period_code']))
+
+                unit['calibration_due_date'] = unit['service_date_time'] + timedelta(days=(renewal_period[0] * days_in_a_month))
+                # print unit['calibration_due_date']
+
+            # print unit_list
+
+            context['calibration_unit_list'] = unit_list
+            
             return context
 
 class UnitCreateView(LoginRequiredMixin, CalibrationListActionMixin, CreateView):
@@ -74,7 +88,7 @@ class UnitDetailView(LoginRequiredMixin, DetailView):
     login_url = "/login/"
     template_name = 'unit_detail.html'
     model = Unit
-    table_class = UnitTable
+    table_class = UnitHistoryTable
     
     # form_class = WelderPerformanceQualificationForm
 

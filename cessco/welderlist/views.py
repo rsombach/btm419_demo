@@ -333,7 +333,7 @@ def render_to_pdf(template_src, context_dict):
 
     pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("ISO-8859-1")), result)
     if not pdf.err:
-        return HttpResponse(result.getvalue(), mimetype='application/pdf')
+        return HttpResponse(result.getvalue(), content_type='application/pdf')
     return HttpResponse('There were errors when generating the report:<pre>%s</pre>' % escape(html))
     
 def WelderReport(request):

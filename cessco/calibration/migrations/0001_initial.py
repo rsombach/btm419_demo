@@ -1,99 +1,53 @@
 # -*- coding: utf-8 -*-
-import datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+from __future__ import unicode_literals
+
+from django.db import models, migrations
+import django.utils.timezone
+import model_utils.fields
 
 
-class Migration(SchemaMigration):
+class Migration(migrations.Migration):
 
-    def forwards(self, orm):
-        # Adding model 'Unit'
-        db.create_table(u'calibration_unit', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('created', self.gf('model_utils.fields.AutoCreatedField')(default=datetime.datetime.now)),
-            ('modified', self.gf('model_utils.fields.AutoLastModifiedField')(default=datetime.datetime.now)),
-            ('business_unit', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.BusinessUnitLov'])),
-            ('unit_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.UnitTypeLov'])),
-            ('unit_make', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.UnitMakeLov'])),
-            ('model', self.gf('django.db.models.fields.CharField')(max_length=256)),
-            ('serial_number', self.gf('django.db.models.fields.CharField')(max_length=32)),
-            ('start_date', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
-            ('active', self.gf('django.db.models.fields.BooleanField')(default=False)),
-        ))
-        db.send_create_signal(u'calibration', ['Unit'])
+    dependencies = [
+        ('core', '0001_initial'),
+    ]
 
-        # Adding model 'UnitHistory'
-        db.create_table(u'calibration_unithistory', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('created', self.gf('model_utils.fields.AutoCreatedField')(default=datetime.datetime.now)),
-            ('modified', self.gf('model_utils.fields.AutoLastModifiedField')(default=datetime.datetime.now)),
-            ('unit', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['calibration.Unit'])),
-            ('calibrated_by', self.gf('django.db.models.fields.CharField')(max_length=256)),
-            ('comment', self.gf('django.db.models.fields.CharField')(max_length=256)),
-            ('certificate_issued', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('calibration_date_time', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
-        ))
-        db.send_create_signal(u'calibration', ['UnitHistory'])
-
-
-    def backwards(self, orm):
-        # Deleting model 'Unit'
-        db.delete_table(u'calibration_unit')
-
-        # Deleting model 'UnitHistory'
-        db.delete_table(u'calibration_unithistory')
-
-
-    models = {
-        u'calibration.unit': {
-            'Meta': {'object_name': 'Unit'},
-            'active': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'business_unit': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.BusinessUnitLov']"}),
-            'created': ('model_utils.fields.AutoCreatedField', [], {'default': 'datetime.datetime.now'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'model': ('django.db.models.fields.CharField', [], {'max_length': '256'}),
-            'modified': ('model_utils.fields.AutoLastModifiedField', [], {'default': 'datetime.datetime.now'}),
-            'serial_number': ('django.db.models.fields.CharField', [], {'max_length': '32'}),
-            'start_date': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
-            'unit_make': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.UnitMakeLov']"}),
-            'unit_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.UnitTypeLov']"})
-        },
-        u'calibration.unithistory': {
-            'Meta': {'object_name': 'UnitHistory'},
-            'calibrated_by': ('django.db.models.fields.CharField', [], {'max_length': '256'}),
-            'calibration_date_time': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
-            'certificate_issued': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'comment': ('django.db.models.fields.CharField', [], {'max_length': '256'}),
-            'created': ('model_utils.fields.AutoCreatedField', [], {'default': 'datetime.datetime.now'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'modified': ('model_utils.fields.AutoLastModifiedField', [], {'default': 'datetime.datetime.now'}),
-            'unit': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['calibration.Unit']"})
-        },
-        u'core.businessunitlov': {
-            'Meta': {'object_name': 'BusinessUnitLov'},
-            'business_unit_code': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '32'}),
-            'business_unit_description': ('django.db.models.fields.CharField', [], {'max_length': '256', 'blank': 'True'}),
-            'created': ('model_utils.fields.AutoCreatedField', [], {'default': 'datetime.datetime.now'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'modified': ('model_utils.fields.AutoLastModifiedField', [], {'default': 'datetime.datetime.now'})
-        },
-        u'core.unitmakelov': {
-            'Meta': {'object_name': 'UnitMakeLov'},
-            'created': ('model_utils.fields.AutoCreatedField', [], {'default': 'datetime.datetime.now'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'modified': ('model_utils.fields.AutoLastModifiedField', [], {'default': 'datetime.datetime.now'}),
-            'unit_make_code': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '32'}),
-            'unit_make_description': ('django.db.models.fields.CharField', [], {'max_length': '256', 'blank': 'True'})
-        },
-        u'core.unittypelov': {
-            'Meta': {'object_name': 'UnitTypeLov'},
-            'created': ('model_utils.fields.AutoCreatedField', [], {'default': 'datetime.datetime.now'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'modified': ('model_utils.fields.AutoLastModifiedField', [], {'default': 'datetime.datetime.now'}),
-            'unit_type_code': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '32'}),
-            'unit_type_description': ('django.db.models.fields.CharField', [], {'max_length': '256', 'blank': 'True'})
-        }
-    }
-
-    complete_apps = ['calibration']
+    operations = [
+        migrations.CreateModel(
+            name='Unit',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('created', model_utils.fields.AutoCreatedField(default=django.utils.timezone.now, verbose_name='created', editable=False)),
+                ('modified', model_utils.fields.AutoLastModifiedField(default=django.utils.timezone.now, verbose_name='modified', editable=False)),
+                ('model', models.CharField(max_length=256, null=True, blank=True)),
+                ('serial_number', models.CharField(max_length=32, null=True, verbose_name=b'Serial Number', blank=True)),
+                ('start_date', models.DateField(null=True, verbose_name=b'Inservice Date', blank=True)),
+                ('active', models.BooleanField()),
+                ('comment', models.CharField(max_length=2048, null=True, verbose_name=b'Notes', blank=True)),
+                ('business_unit', models.ForeignKey(verbose_name=b'Business Unit', to='core.BusinessUnitLov')),
+                ('renewal_period', models.ForeignKey(verbose_name=b'Renewal Period', to='core.UnitRenewalPeriodLov')),
+                ('unit_make', models.ForeignKey(verbose_name=b'Unit Make', to='core.UnitMakeLov')),
+                ('unit_type', models.ForeignKey(verbose_name=b'Unit Type', to='core.UnitTypeLov')),
+            ],
+            options={
+                'permissions': (('select_calibration', 'Can select unit'),),
+            },
+        ),
+        migrations.CreateModel(
+            name='UnitHistory',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('created', model_utils.fields.AutoCreatedField(default=django.utils.timezone.now, verbose_name='created', editable=False)),
+                ('modified', model_utils.fields.AutoLastModifiedField(default=django.utils.timezone.now, verbose_name='modified', editable=False)),
+                ('calibrated_by', models.CharField(max_length=256, verbose_name=b'Serviced By')),
+                ('comment', models.CharField(max_length=2048, null=True, blank=True)),
+                ('certificate_issued', models.BooleanField(verbose_name=b'Certificate Issued')),
+                ('service_date_time', models.DateField(verbose_name=b'Service Date')),
+                ('calibrated', models.BooleanField(verbose_name=b'Calibrated')),
+                ('unit', models.ForeignKey(verbose_name=b'Unit', to='calibration.Unit')),
+            ],
+            options={
+                'abstract': False,
+            },
+        ),
+    ]

@@ -26,6 +26,7 @@ class WelderCreateForm(forms.ModelForm):
 
 	class Meta:
 		model = Welder
+		exclude = '__all__'
 
 class WelderUpdateForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
@@ -50,6 +51,7 @@ class WelderUpdateForm(forms.ModelForm):
 
 	class Meta:
 		model = Welder
+		exclude = '__all__'
 		
 		
 class PerformanceQualificationCreateForm(forms.ModelForm):

@@ -100,6 +100,7 @@ TEMPLATE_LOADERS = (
 
 TEMPLATE_CONTEXT_PROCESSORS += (
     'django.core.context_processors.request',
+    'cessco.context_processors.django_version',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -144,7 +145,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'south',
+    # 'south', -- removed, migrations are part of Django 1.8
     'crispy_forms',
     'django_tables2',
     'django_bootstrap_breadcrumbs',
