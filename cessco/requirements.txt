@@ -1,18 +1,16 @@
-bootstrap-admin (0.3.6)
-Django (1.8.2)
-django-bootstrap-breadcrumbs (0.7.1)
-django-bootstrap-pagination (1.5.1)
-django-braces (1.8.0)
-django-crispy-forms (1.4.0)
-django-filter (0.10.0)
-django-model-utils (2.2)
-django-tables2 (1.0.4)
-html5lib (0.99999)
-Pillow (2.8.1)
-pip (7.0.1)
-pisa (3.0.33)
-psycopg2 (2.6)
-reportlab (3.1.44)
-setuptools (16.0)
-six (1.9.0)
-South (1.0.2)
+bootstrap-admin==0.3.6
+Django==1.8.2
+django-bootstrap-breadcrumbs==0.7.1
+django-bootstrap-pagination==1.5.1
+django-braces==1.8.0
+django-crispy-forms==1.4.0
+django-filter==0.10.0
+django-model-utils==2.2
+django-tables2==1.0.4
+html5lib==0.99999
+Pillow==2.8.1
+pisa==3.0.33
+psycopg2==2.6
+reportlab==3.1.44
+six==1.9.0
+South==1.0.2
