@@ -68,7 +68,8 @@ class UnitListView(LoginRequiredMixin, ListView):
             # print unit_list
 
             context['calibration_unit_list'] = unit_list
-            
+            context['calibration_unit_list_count'] = len(unit_list)
+
             return context
 
 class UnitCreateView(LoginRequiredMixin, CalibrationListActionMixin, CreateView):

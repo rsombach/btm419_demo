@@ -29,8 +29,6 @@
     <script type="text/javascript" src="/static/cessco/js/tablesorter/js/jquery.tablesorter.js"></script>
     <script type="text/javascript" src="/static/cessco/js/tablesorter/js/jquery.tablesorter.widgets.js"></script>
 
-
-
     <script type="text/javascript" src="/static/bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript" src="/static/cessco/js/slide-menu.js"></script>
 
@@ -96,12 +94,14 @@
             <li role="presentation" class="dropdown-header">Welders</li>
 
             <li><a href="/welderlist/welder/">List</a>
-            <li><a href="/welderlist/welder/add/">Add</a>
-
-            <li class="divider"></li>
+            {% if perms.calibration.add_unit %}
+              <li><a href="/welderlist/welder/add/">Add</a>
+            {% endif %}
+            
           {% endif %}
 
           {% if perms.calibration.select_calibration %}
+            <li class="divider"></li>
             <li class="dropdown-header">Calibration</li>
             <li><a href="/calibration/unit/">List</a></li>
 
@@ -169,7 +169,7 @@
     <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
       <div class="container" align="center">
         <table border="0">
-          <tr align="center"><td>&copy 2013-2014 Cessco Fabrication and Engineering Ltd.<br>version: 2.1.00 {{ django_version }}</td></tr>
+          <tr align="center"><td>&copy 2013-2014 Cessco Fabrication and Engineering Ltd.<br>version: 2.1.50 {{ django_version }}</td></tr>
         </table>
       </div>
     </nav>
