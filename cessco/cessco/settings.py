@@ -125,6 +125,7 @@ TEMPLATE_DIRS = (
     join(DIR, "templates"),
     join(DIR, "templates/admin/"),
     join(DIR, "templates/search/"),
+    join(DIR, "templates/core/"),
     join(DIR, "templates/welderlist/welder"),
     join(DIR, "templates/welderlist/history"),
     join(DIR, "templates/welderlist/pq"),

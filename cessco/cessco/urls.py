@@ -30,7 +30,13 @@ urlpatterns = patterns('',
     url(r'^logout/$', 'django.contrib.auth.views.logout'),
 
     # Pattern for core app ~ index.html
-    url(r'^$', 'core.views.index'),
+    # url(r'^$', 'core.views.index'),
+    
+    url(
+        regex=r'^$',
+        view=core_views.CoreDashboardListView.as_view(),
+        name='coredashboard_list',
+        ),
 
 	# Patterns for Simple search
 
